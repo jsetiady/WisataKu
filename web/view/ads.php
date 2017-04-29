@@ -2,14 +2,14 @@
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item"> <img class="d-block img-fluid" src="../assets/images/ads1.jpg" data-holder-rendered="true">
                 <div class="carousel-caption">
-                  <h3>First slide label</h3>
-                  <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  <h3>Get 10% discount</h3>
+                  <p>For any Souvenir purchased from WisataKu</p>
                 </div>
               </div>
               <div class="carousel-item active"> <img class="d-block img-fluid" src="../assets/images/ads2.jpg" data-holder-rendered="true">
                 <div class="carousel-caption">
-                  <h3>Second slide label</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <h3>Rent a car</h3>
+                  <p>Rental Car ads</p>
                 </div>
               </div>
             </div>
