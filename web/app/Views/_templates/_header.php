@@ -1,7 +1,0 @@
-<?php
-/**
- * @author jsetiady
- *
- */
-?>
-

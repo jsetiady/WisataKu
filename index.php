@@ -41,8 +41,8 @@
 <hr/>
 <h1>Welcome to WisataKu</h1>
 <ol>
-	<li><a href="#">Go to WisataKu website</a></li>
-	<li><a href="#">WisataKu API Documentation</a></li>
+	<li><a href="web">Go to WisataKu website</a></li>
+	<li><a href="web">WisataKu API Documentation</a></li>
 </ol>
 
 </body>
