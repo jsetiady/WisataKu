@@ -1,18 +1,7 @@
-  <?php
-    include("_header.php");
-  ?>
+<?php 
+	include_once("controller/Controller.php");
 
-  <!--
-    Content
-  -->
-  
-  <?php
-    include("login.php");
-  ?>
+	$controller = new Controller();
+	$controller->invoke();
 
-    <?php
-      include("_footer.php");
-    ?>
-</body>
-
-</html>
+?>
