@@ -8,12 +8,12 @@
     <div class="row">
       <div class="col-md-6">
         <?php
-        	include("simple_search_form.php");
+        	include("templates/_simpleSearchForm.php");
         ?>
       </div>
         
         <div class="col-md-6">
-            <?php include("ads.php");?>
+            <?php include("templates/_ads.php");?>
         </div>
       
     </div>
