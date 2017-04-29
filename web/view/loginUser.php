@@ -1,3 +1,9 @@
+<?php
+    include("templates/_header.php");
+?>
+
+
+
 <a class="navbar-brand" href="#">
     <div class="py-5">
       <div class="container">
@@ -13,3 +19,9 @@
       </div>
     </div>
   </a>
+
+
+<?php
+    include("templates/_footer.php");
+?>
+

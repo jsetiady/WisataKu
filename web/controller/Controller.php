@@ -12,6 +12,14 @@ class Controller {
 	
 	public function invoke()
 	{
+
+		//session_start();
+		//if(isset($_SESSION['userWisataku'])) {
+		  	//show login page
+			include 'view/loginUser.php';
+		//}
+
+		/*
 		if (!isset($_GET['book']))
 		{
 			// no special book is requested, we'll show a list of all available books
@@ -24,7 +32,19 @@ class Controller {
 			$book = $this->model->getBook($_GET['book']);
 			include 'view/viewbook.php';
 		}
+
+		*/
 	}
+
+	public function home() {
+		session_start();
+		if(isset($_SESSION['userWisataku'])) {
+		  	//show login page
+			include 'view/login.php';
+		}
+
+	}
+
 }
 
 ?>
