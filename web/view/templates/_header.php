@@ -41,11 +41,15 @@
 
         <!-- Navigation -->
         <?php
-         include("_nav_user.php")
+         include("_userMenu.php");
         ?>
 
-        <!-- Sign in / Sign out button -->
-        <form class="form-inline ml-md-4 my-sm-0" action="#"><button class="mx-auto mx-md-0 btn btn-primary" type="submit">Sign in</button> </form>
+        <!-- Sign in button / User account button -->
+       <?php
+        include("_userAccountButton.php")
+       ?>
+
+
       </div>
     </div>
 
