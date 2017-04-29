@@ -41,7 +41,7 @@
 
         <!-- Navigation -->
         <?php
-         //include("_nav.php")
+         include("_nav_user.php")
         ?>
 
         <!-- Sign in / Sign out button -->
