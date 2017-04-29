@@ -1,0 +1,11 @@
+/* Custom CSS for WisataKu Web Application */
+
+
+.footer {
+	background-color:black;
+	vertical-align:middle;
+	text-align:center;
+	color:white;
+	font-size:12;
+	height:25px;
+}
