@@ -25,10 +25,14 @@
 <div class="row">
   <div class="col-md-4">
     <div class="thumbnail">
-      <a href="/w3images/lights.jpg">
+      <a class="tour-item" href="../assets/images/1.jpg">
         <img src="../assets/images/1.jpg" alt="Tour Package" style="width:100%">
         <div class="caption">
-          <p>Lorem ipsum...</p>
+          <span class="tour-title">Sailing Trip Komodo (Personal)</span>
+          <span class="tour-date">20 May 2017 - 24 May 2017</span>
+          <span class="tour-price">Rp 3.456.000,-</span><span class="tour-pax">/pax</span>
+          <span class="tour-bonus">Bonus: 5000 points</span>
+          </ul>
         </div>
       </a>
     </div>
@@ -55,6 +59,7 @@
   </div>
 </div>
 
+<br/>
 
 <h4>Best Seller</h4>    
 <div class="row">
