@@ -1,8 +1,8 @@
 <?php
 
 class Status {
-	public $statusId;
-	public $statusDesc;
+	private $statusId;
+	private $statusDesc;
 	
 	public function __construct($statusId, $statusDesc)  
     {  

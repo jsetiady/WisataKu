@@ -1,22 +1,26 @@
 <?php
 
 class TransactionTour {
-	public $transId;
-	public $transUserId;
-	public $transUserTelp;
-	public $transTotalPerson;
-	public $transPrefStartDate;
-	public $transPrefEndDate;
-	public $transPricePerson;
-	public $transDate;
-	public $transTotalPrice;
-	public $transExpiredDate;
-	public $transTourId;
-	public $transInvoiceNo;
-	public $transStatusId;
-	public $transNotes;
+	private $transId;
+	private $transUserId;
+	private $transUserTelp;
+	private $transTotalPerson;
+	private $transPrefStartDate;
+	private $transPrefEndDate;
+	private $transPricePerson;
+	private $transDate;
+	private $transTotalPrice;
+	private $transExpiredDate;
+	private $transTourId;
+	private $transInvoiceNo;
+	private $transStatusId;
+	private $transNotes;
+	private $transPaymentType;
+	private $transPaymentDate;
+	private $transPaymentAccNo;
 	
-	public function __construct($transId, $transUserId, $transUserTelp,$transTotalPerson,$transPrefStartDate,$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTourId,$transInvoiceNo,$transStatusId,$transNotes)  
+	public function __construct($transId, $transUserId, $transUserTelp,$transTotalPerson,$transPrefStartDate,$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTourId,$transInvoiceNo,$transStatusId,$transNotes,
+		$transPaymentType,$transPaymentDate,$transPaymentAccNo)  
     {  
         $this->transId = $transId;
 	    $this->transUserId = $transUserId;
@@ -32,6 +36,9 @@ class TransactionTour {
 	    $this->transInvoiceNo = $transInvoiceNo;
 	    $this->transStatusId = $transStatusId;
 	    $this->transNotes = $transNotes;
+	    $this->transPaymentType = $transPaymentType;
+	    $this->transPaymentDate = $transPaymentDate;
+	    $this->transPaymentAccNo = $transPaymentAccNo;
     }
     
 }

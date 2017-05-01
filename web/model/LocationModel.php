@@ -1,6 +1,6 @@
 <?php
 
-include_once("config/Connection.php");
+require_once("config/Connection.php");
 include_once("model/Location.php");
 
 class LocationModel {
@@ -10,7 +10,7 @@ class LocationModel {
     	$allLocation = array();
 
     	$sql = "SELECT loc_id,loc_name from ws_location";
-    	$resSql = mysqli_query($sql,$con);
+    	$resSql = mysqli_query($con,$sql);
 
     	while($row = mysqli_fetch_assoc($resSql))
     	{
@@ -27,7 +27,7 @@ class LocationModel {
     	$sql = "SELECT loc_id,loc_name 
     			from ws_location
     			where loc_id=".$loc_id;
-    	$resSql = mysqlli_query($sql,$con);
+    	$resSql = mysqlli_query($con,$sql);
     	
     	while($row = mysqli_fetch_assoc($resSql)){
     		$loc = new Location($row['loc_id'],$row['loc_name']);

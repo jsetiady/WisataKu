@@ -1,6 +1,6 @@
 <?php
 
-include_once("config/Connection.php");
+require_once("config/Connection.php");
 include_once("model/TourItinerary.php");
 
 class TourItineraryModel {
@@ -9,16 +9,18 @@ class TourItineraryModel {
     {
     	$itineraries = array();
 
-    	$sql = "SELECT itinerary_seq,itinerary_title,itinerary_desc 
+    	$sql = "SELECT itinerary_tour_id,itinerary_seq,itinerary_title,itinerary_desc 
                 from ws_tour_itinerary
-                where ";
-    	$resSql = mysqli_query($sql,$con);
+                where ititerary_tour_id = ".$tourId."
+                order by itinerary_seq asc";
+    	$resSql = mysqli_query($con,$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
-    		array_push($allStatus, new Status($row['status_id'],$row['status_desc']));
+    		array_push($itineraries, new TourItinerary($row['itinerary_tour_id'],$row['itinerary_seq'],
+                $row['itinerary_title'],$row['itinerary_desc']));
     	}
 
-    	return $allStatus;
+    	return $itineraries;
     }
 }
 

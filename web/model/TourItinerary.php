@@ -1,10 +1,10 @@
 <?php
 
 class TourItinerary {
-	public $itineraryTourId;
-	public $itinerarySeq;
-	public $itineraryTitle;
-	public $itineraryDesc;
+	private $itineraryTourId;
+	private $itinerarySeq;
+	private $itineraryTitle;
+	private $itineraryDesc;
 
 	
 	public function __construct($itineraryTourId, $itinerarySeq, $itineraryTitle, $itineraryDesc)  
@@ -14,7 +14,6 @@ class TourItinerary {
 	    $this->itineraryTitle = $itineraryTitle;
 	    $this->itineraryDesc = $itineraryDesc;
     }
-    
 }
 
 ?>

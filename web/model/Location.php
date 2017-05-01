@@ -1,8 +1,8 @@
 <?php
 
 class Location {
-	public $locId;
-	public $locName;
+	private $locId;
+	private $locName;
 	
 	public function __construct($locId, $locName)  
     {  

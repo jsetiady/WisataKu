@@ -1,6 +1,6 @@
 <?php
 
-include_once("config/Connection.php");
+require_once("config/Connection.php");
 include_once("model/User.php");
 
 class UserModel {
@@ -13,7 +13,7 @@ class UserModel {
                 from ws_user
                 where user_username = '".$username."'
                 and user_password = '".md5($password)."'";
-    	$resSql = mysqli_query($sql,$con);
+    	$resSql = mysqli_query($con,$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
     		$user = new User($row['user_id'],$row['user_username'],$row['user_name']);
@@ -31,7 +31,7 @@ class UserModel {
                 where user_username = '".$username."'
                 and user_password = '".md5($password)."'
                 and user_isAdmin = 'Y'";
-        $resSql = mysqli_query($sql,$con);
+        $resSql = mysqli_query($con,$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
             $user = new User($row['user_id'],$row['user_username'],$row['user_name']);
@@ -47,7 +47,7 @@ class UserModel {
         $sql = "SELECT user_id,user_username,user_name,user_isAdmin
                 from ws_user
                 where user_id = '".$userId."'";
-        $resSql = mysqli_query($sql,$con);
+        $resSql = mysqli_query($con,$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
             $user = new User($row['user_id'],$row['user_username'],$row['user_name']);
