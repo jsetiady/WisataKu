@@ -1,23 +1,23 @@
 <?php
 
 class TourPackage {
-	public $tourId;
-	public $tourName;
-	public $tourDesc;
-	public $tourMinPerson;
-	public $tourMaxPerson;
-	public $tourStartDate;
-	public $tourEndDate;
-	public $tourDuration;
-	public $tourType;
-	public $tourTc;
-	public $tourPrice;
-	public $tourPoints;
-	public $tourCreatedDate;
-	public $tourLoc;
-	public $tourUserAdmin;
-	public $tourImageFilename;
-	public $tourItinerary;
+	private $tourId;
+	private $tourName;
+	private $tourDesc;
+	private $tourMinPerson;
+	private $tourMaxPerson;
+	private $tourStartDate;
+	private $tourEndDate;
+	private $tourDuration;
+	private $tourType;
+	private $tourTc;
+	private $tourPrice;
+	private $tourPoints;
+	private $tourCreatedDate;
+	private $tourLoc;
+	private $tourUserAdmin;
+	private $tourImageFilename;
+	private $tourItinerary;
 
 	
 	public function __construct($tourId,$tourName,$tourMinPerson,$tourMaxPerson,$tourStartDate,
@@ -41,6 +41,47 @@ class TourPackage {
 	    $this->tourUserAdmin = $tourUserAdmin;
 	    $this->tourImageFilename = $tourImageFilename;
 	    $this->tourItinerary = $tourItinerary;
+    }
+
+    public static function create()
+    {
+    	$instance = new self();
+    	return $instance;
+    }
+
+    public function setTourId($tourId)
+    {
+    	$this->tourId = $tourId;
+    	return $this;
+    }
+
+    public function setTourName($tourName)
+    {
+    	$this->tourName = $tourName;
+    	return $this;
+    }
+
+    public function setTourDesc($tourDesc)
+    {
+    	$this->tourDesc = $tourDesc;
+    	return $this;
+    }
+
+    public function setTourMinPerson($tourMinPerson)
+    {
+    	$this->tourMinPerson = $tourMinPerson;
+    	return $this;
+    }
+
+    public function setTourMaxPerson($tourMaxPerson)
+    {
+    	$this->tourMaxPerson = $tourMaxPerson;
+    	return $this;
+    }
+
+    public function setTourStartDate($tourStartDate)
+    {
+    	$this->tourStartDate = $tourStartDate;
     }
 }
 

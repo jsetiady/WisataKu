@@ -9,10 +9,7 @@ class TransactionTourModel {
     {
     	$transactions = array();
 
-    	$sql = "SELECT itinerary_tour_id,itinerary_seq,itinerary_title,itinerary_desc 
-                from ws_tour_itinerary
-                where ititerary_tour_id = ".$tourId."
-                order by itinerary_seq asc";
+    	$sql = "";
     	$resSql = mysqli_query($con,$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {

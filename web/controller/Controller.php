@@ -1,12 +1,13 @@
 <?php
-include_once("model/Model.php");
+
+include_once("ModelLoadController.php");
 
 class Controller {
 	public $model;
-	
+
 	public function __construct()  
     {  
-        $this->model = new Model();
+        // $this->model = new Model();
 
     } 
 	
@@ -20,9 +21,7 @@ class Controller {
 			//show user home page
 			include 'view/home.php';
 		}
-
 	}
-
 }
 
 ?>

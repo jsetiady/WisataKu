@@ -9,6 +9,35 @@ class Location {
         $this->locId = $locId;
 	    $this->locName = $locName;
     }
+
+    public static function create() 
+    {
+    	$instance = new self();
+    	return $this;
+    }
+
+    public function setLocId($locId)
+    {
+    	$this->locId = $locId;
+    	return $this;
+    }
+
+    public function setLocName($locName) 
+    {
+    	$this->locName = $locName;
+    	return $this;
+    }
+
+    public function getLocId() 
+    {
+    	return $this->locId;
+   	}
+
+    public function getLocName() 
+    {
+    	return $this->locName;
+
+    }
     
 }
 
