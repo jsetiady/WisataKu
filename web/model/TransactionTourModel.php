@@ -1,6 +1,4 @@
 <?php
-
-require_once("config/Connection.php");
 include_once("model/TransactionTour.php");
 
 class TransactionTourModel {
@@ -17,7 +15,7 @@ class TransactionTourModel {
                 from ws_transaction_tour,ws_user
                 where trans_user_id = user_id
                 order by trans_id";
-    	$resSql = mysqli_query($con,$sql);
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
     		array_push($transactions, 

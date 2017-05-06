@@ -1,6 +1,4 @@
 <?php
-
-require_once("config/Connection.php");
 include_once("model/TransactionRentVehicle.php");
 
 class TransactionRentVehicleModel {
@@ -15,7 +13,7 @@ class TransactionRentVehicleModel {
                 from ws_transaction_rent_vehicle
                 where trans_veh_trans_id = ".$transId;
 
-    	$resSql = mysqli_query($con,$sql);
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
     		array_push($rentVehicles, new TransactionRentVehicle($row['trans_veh_trans_id'],$row['trans_veh_plate_no'],$row['trans_veh_start_date'],$row['trans_veh_end_date'],$row['trans_veh_desc'],$row['trans_veh_pickup_addr'],$row['trans_veh_return_addr'],$row['trans_veh_total_day'],$row['trans_veh_price'],$row['trans_trans_veh_total_price']));

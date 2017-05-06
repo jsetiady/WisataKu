@@ -1,6 +1,4 @@
 <?php
-
-require_once("config/Connection.php");
 include_once("model/TransactionSouvenir.php");
 
 class TransactionSouvenirModel {
@@ -14,7 +12,7 @@ class TransactionSouvenirModel {
     			trans_payment_acc_no,trans_payment_date,trans_expired_date,trans_tour_id,trans_invoice_no,trans_status_id,trans_notes
                 from ws_transaction_tour
                 order by trans_id";
-    	$resSql = mysqli_query($con,$sql);
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
     		array_push($itineraries, new TourItinerary($row['itinerary_tour_id'],$row['itinerary_seq'],

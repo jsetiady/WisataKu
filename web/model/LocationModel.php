@@ -32,7 +32,6 @@ class LocationModel {
     		$loc = new Location($row['loc_id'],$row['loc_name']);
     	}
     	
-    	Connection::closeCon();
     	
     	return $loc;
     }

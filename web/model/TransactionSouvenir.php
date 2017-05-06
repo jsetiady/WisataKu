@@ -11,18 +11,23 @@ class TransactionSouvenir {
 	private $transSovInvoiceNo;
 	private $transSovStatus;
 	
-	public function __construct($transSovId, $transSovUserId, $transSovDate,$transSovPrice,$transSovDelivAddr,$transSovContactNo,$transSovTotalQty,$transSovInvoiceNo,$transSovStatus)  
-    {  
-        $this->transSovId = $transSovId;
-	    $this->transSovUserId = $transSovUserId;
-	    $this->transSovDate = $transSovDate;
-	    $this->transSovPrice = $transSovPrice;
-	    $this->transSovDelivAddr = $transSovDelivAddr;
-	    $this->transSovContactNo = $transSovContactNo;
-	    $this->transSovTotalQty = $transSovTotalQty;
-	    $this->transSovInvoiceNo = $transSovInvoiceNo;
-	    $this->transSovStatus = $transSovStatus;
-    }
+// 	public function __construct($transSovId, $transSovUserId, $transSovDate,$transSovPrice,$transSovDelivAddr,$transSovContactNo,$transSovTotalQty,$transSovInvoiceNo,$transSovStatus)  
+//     {  
+//         $this->transSovId = $transSovId;
+// 	    $this->transSovUserId = $transSovUserId;
+// 	    $this->transSovDate = $transSovDate;
+// 	    $this->transSovPrice = $transSovPrice;
+// 	    $this->transSovDelivAddr = $transSovDelivAddr;
+// 	    $this->transSovContactNo = $transSovContactNo;
+// 	    $this->transSovTotalQty = $transSovTotalQty;
+// 	    $this->transSovInvoiceNo = $transSovInvoiceNo;
+// 	    $this->transSovStatus = $transSovStatus;
+//     }
+	
+	public function __construct()
+	{
+		
+	}
     
     public static function create()
     {

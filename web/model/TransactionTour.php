@@ -19,28 +19,33 @@ class TransactionTour {
 	private $transPaymentDate;
 	private $transPaymentAccNo;
 	
-	public function __construct($transId, $transUser, $transUserTelp,$transTotalPerson,$transPrefStartDate,
-		$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTour,
-		$transInvoiceNo,$transStatus,$transNotes,
-		$transPaymentType,$transPaymentDate,$transPaymentAccNo)  
-    {  
-        $this->transId = $transId;
-	    $this->transUser = $transUser;
-	    $this->transUserTelp = $transUserTelp;
-	    $this->transTotalPerson = $transTotalPerson;
-	    $this->transPrefStartDate = $transPrefStartDate;
-	    $this->transPrefEndDate = $transPrefEndDate;
-	    $this->transPricePerson = $transPricePerson;
-	    $this->transDate = $transDate;
-	    $this->transTotalPrice = $transTotalPrice;
-	    $this->transExpiredDate = $transExpiredDate;
-	    $this->transTour = $transTour;
-	    $this->transInvoiceNo = $transInvoiceNo;
-	    $this->transStatus = $transStatus;
-	    $this->transNotes = $transNotes;
-	    $this->transPaymentType = $transPaymentType;
-	    $this->transPaymentDate = $transPaymentDate;
-	    $this->transPaymentAccNo = $transPaymentAccNo;
+// 	public function __construct($transId, $transUser, $transUserTelp,$transTotalPerson,$transPrefStartDate,
+// 		$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTour,
+// 		$transInvoiceNo,$transStatus,$transNotes,
+// 		$transPaymentType,$transPaymentDate,$transPaymentAccNo)  
+//     {  
+//         $this->transId = $transId;
+// 	    $this->transUser = $transUser;
+// 	    $this->transUserTelp = $transUserTelp;
+// 	    $this->transTotalPerson = $transTotalPerson;
+// 	    $this->transPrefStartDate = $transPrefStartDate;
+// 	    $this->transPrefEndDate = $transPrefEndDate;
+// 	    $this->transPricePerson = $transPricePerson;
+// 	    $this->transDate = $transDate;
+// 	    $this->transTotalPrice = $transTotalPrice;
+// 	    $this->transExpiredDate = $transExpiredDate;
+// 	    $this->transTour = $transTour;
+// 	    $this->transInvoiceNo = $transInvoiceNo;
+// 	    $this->transStatus = $transStatus;
+// 	    $this->transNotes = $transNotes;
+// 	    $this->transPaymentType = $transPaymentType;
+// 	    $this->transPaymentDate = $transPaymentDate;
+// 	    $this->transPaymentAccNo = $transPaymentAccNo;
+//     }
+    
+    public function __construct()
+    {
+    	
     }
 
     public static function create()
