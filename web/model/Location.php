@@ -4,16 +4,14 @@ class Location {
 	private $locId;
 	private $locName;
 	
-	public function __construct($locId, $locName)  
-    {  
-        $this->locId = $locId;
-	    $this->locName = $locName;
+	public function __construct()  
+    {
     }
 
     public static function create() 
     {
     	$instance = new self();
-    	return $this;
+    	return $instance;
     }
 
     public function setLocId($locId)

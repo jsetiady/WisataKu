@@ -7,14 +7,17 @@ class User {
 	private $isAdmin;
 	private $name;
 	
-	public function __construct($userId, $username, $password,$isAdmin,$name)  
-    {  
-        $this->userId = $userId;
-	    $this->username = $username;
-	    $this->password = $password;
-	    $this->isAdmin = $isAdmin;
-	    $this->name = $isAdmin;
-    }
+// 	public function __construct($userId, $username, $password,$isAdmin,$name)  
+//     {  
+//         $this->userId = $userId;
+// 	    $this->username = $username;
+// 	    $this->password = $password;
+// 	    $this->isAdmin = $isAdmin;
+// 	    $this->name = $isAdmin;
+//     }
+
+	public function __construct()
+	{}
 
     public static function create()
     {

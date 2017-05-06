@@ -9,8 +9,9 @@ class TourItineraryModel {
 
     	$sql = "SELECT itinerary_tour_id,itinerary_seq,itinerary_title,itinerary_desc 
                 from ws_tour_itinerary
-                where ititerary_tour_id = ".$tourId."
+                where itinerary_tour_id = ".$tourId."
                 order by itinerary_seq asc";
+//     	echo $sql;
     	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
