@@ -1,14 +1,12 @@
 <?php
     include("templates/_header.php");
 ?>
-
-
 <div class="py-5">
   <div class="container">
     <div class="row">
       <div class="col-md-6">
         <?php
-        	include("simple_search_form.php");
+          include("simple_search_form.php");
         ?>
       </div>
         
@@ -75,8 +73,6 @@
     </div>
   </div>
 </div>
-
-
 </div>
 <?php
     include("templates/_footer.php");

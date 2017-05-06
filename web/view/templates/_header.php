@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <title><?php echo $this->data['title']; ?></title>
   <!-- css -->
   <link rel="stylesheet" href="../assets/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="../assets/css/bootstrap-4.0.0-alpha.6.css"> </head>
-  <link rel="stylesheet" href="../assets/css/wisataku-custom.css"> </head>
-
+  <link rel="stylesheet" href="../assets/css/bootstrap-4.0.0-alpha.6.css"> 
+  <link rel="stylesheet" href="../assets/css/wisataku-custom.css">
+</head>
   <!-- js -->
   <script src="../assets/js/jquery-3.1.1.slim.min.js"></script>
   <script src="../assets/js/tether.min.js"></script>
@@ -41,11 +42,15 @@
 
         <!-- Navigation -->
         <?php
-         include("_nav_user.php")
+         include("_userMenu.php");
         ?>
 
-        <!-- Sign in / Sign out button -->
-        <form class="form-inline ml-md-4 my-sm-0" action="#"><button class="mx-auto mx-md-0 btn btn-primary" type="submit">Sign in</button> </form>
+        <!-- Sign in button / User account button -->
+       <?php
+        include("_userAccountButton.php")
+       ?>
+
+
       </div>
     </div>
 

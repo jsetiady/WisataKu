@@ -1,7 +1,5 @@
 <?php
-
 include_once("ModelLoadController.php");
-
 class Controller {
 	public $locationModel;
 	public $tourPackageModel;
@@ -26,5 +24,4 @@ class Controller {
 		}
 	}
 }
-
 ?>
