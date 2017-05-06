@@ -4,6 +4,7 @@ require_once("config/Connection.php");
 include_once("model/User.php");
 include_once("model/Location.php");
 include_once("model/TourItineraryModel.php");
+include_once("model/TourPackage.php");
 
 class TourPackageModel {
 

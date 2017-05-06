@@ -1,7 +1,7 @@
 <?php
 
-require_once("../config/Connection.php");
-include_once("../model/TransactionRentVehicle.php");
+require_once("config/Connection.php");
+include_once("model/TransactionRentVehicle.php");
 
 class TransactionRentVehicleModel {
 

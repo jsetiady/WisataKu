@@ -1,7 +1,7 @@
 <?php
 
-require_once("{$base_dir}config{$ds}Connection.php");
-include_once("{$base_dir}model{$ds}Location.php");
+require_once("config/Connection.php");
+include_once("model/Location.php");
 
 class LocationModel {
 
