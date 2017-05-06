@@ -1,6 +1,4 @@
 <?php
-
-require_once("config/Connection.php");
 include_once("model/TourItinerary.php");
 
 class TourItineraryModel {
@@ -13,7 +11,7 @@ class TourItineraryModel {
                 from ws_tour_itinerary
                 where ititerary_tour_id = ".$tourId."
                 order by itinerary_seq asc";
-    	$resSql = mysqli_query($con,$sql);
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
     		array_push($itineraries, new TourItinerary($row['itinerary_tour_id'],$row['itinerary_seq'],

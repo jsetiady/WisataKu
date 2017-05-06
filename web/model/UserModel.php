@@ -4,7 +4,14 @@ require_once("config/Connection.php");
 include_once("model/User.php");
 
 class UserModel {
-
+	
+	private $con;
+	
+	public function __construct()
+	{
+		$con = new Connection();
+	}
+	
 	public function validateUser($username,$password)
     {
     	$user = null;

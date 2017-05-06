@@ -3,12 +3,14 @@
 include_once("ModelLoadController.php");
 
 class Controller {
-	public $model;
-
+	public $locationModel;
+	public $tourPackageModel;
+	
 	public function __construct()  
     {  
-        // $this->model = new Model();
-
+         $this->locationModel = new LocationModel();
+         $this->tourPackageModel = new TourPackageModel();
+	
     } 
 	
 	public function invoke()
@@ -18,7 +20,8 @@ class Controller {
 		  	//show login page
 			include 'view/loginUser.php';
 		} else {
-			//show user home page
+			$listLoc = $this->locationModel->getAllLocation();
+			$allTourPackage = $this->tourPackageModel->getAllTourPackages();
 			include 'view/home.php';
 		}
 	}

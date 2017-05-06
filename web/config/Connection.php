@@ -1,12 +1,25 @@
 <?php
 
 class Connection {
-	public $link;
-
-	public function __construct()  
-    {  
-       	$this->link = mysqli_connect("localhost","root","","jazzleme_wisataku") or die("Couldn't connect");
-    }
+	static $link;
+	
+	static function connect(){
+		if(self::$link = mysqli_connect("localhost","root","","jazzleme_wisataku") or die("Couldn't connect")){
+			return self::$link;
+		} else {
+			die('could not connect to db');
+		}
+	}
+	
+	static function getCon()
+	{
+		return isset(self::$link) ? self::$link : self::connect();
+	}
+	
+	static function closeCon()
+	{
+		return mysqli_close(self::$link);
+	}
 }
 
 ?>

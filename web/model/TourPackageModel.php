@@ -1,6 +1,5 @@
 <?php
 
-require_once("config/Connection.php");
 include_once("model/User.php");
 include_once("model/Location.php");
 include_once("model/TourItineraryModel.php");
@@ -18,15 +17,22 @@ class TourPackageModel {
                 from ws_tour,ws_user,ws_location
                 where tour_loc_id = loc_id
                 and tour_user_admin_id = user_id";
-        $resSql = mysqli_query($con,$sql);
+        $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
-            array_push($allTourPackages, new TourPackage($row['tour_id'],
-                $row['tour_name'],$row['tour_desc']),$row['tour_min_person'],$row['tour_max_person'],
+            array_push($allTourPackages, 
+            		TourPackage::create()
+            		->setTourId($row['tour_id'])
+            		->setTourName($row['tour_name'])
+            		->setTourDesc($row['tour_desc']),$row['tour_min_person'],$row['tour_max_person'],
                 $row['tour_start_date'],$row['tour_end_date'],$row['tour_duration'],$row['tour_type'],
                 $row['tour_tc'],$row['tour_price'],$row['tour_points'],$row['tour_created_date'],
-                new Location($row['tour_loc_id'],$row['loc_name']),new User($row['tour_user_admin_id'],
-                $row['user_username'],$row['user_name']),$row['tour_image_filename'],
+                new Location($row['tour_loc_id'],$row['loc_name']),
+            		User::create()
+            		->setUserId($row['tour_user_admin_id'])
+            		->setUsername($row['user_username'])
+            		->setName($row['user_name']),
+                $row['tour_image_filename'],
                 $this->getAllTourItineraryByTourId($row['tour_id']));
         }
         return $allTourPackages;
@@ -43,7 +49,7 @@ class TourPackageModel {
                 where tour_loc_id = loc_id
                 and tour_user_admin_id = user_id
                 and tour_id = ".$tourId;
-        $resSql = mysqli_query($con,$sql);
+        $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
             $tourPackage = new TourPackage($allTourPackages, new TourPackage($row['tour_id'],
