@@ -1,23 +1,24 @@
-
-<h4>Find Tour Packages</h4>
-<form class="">
-	<div class="row">
-		<div class="col-md-4">
-			<div class="form-group"><label>Tour Type</label></div>
+<hr/>
+<h6>Find Tour Packages</h6>
+<hr/>
+<form class="search-form" style="line-height: 2px;">
+	<div class="row row-bottom-margin">
+		<div class="col-sm-3">
+			<div class="form-group form-control-sm"><label>Tour Type</label></div>
 		</div>
-		<div class="col-md-8">
-			<label class="radio-inline"><input type="radio" checked="checked" name="tour_type">&nbsp;All</label>
-			<label class="radio-inline"><input type="radio" name="tour_type">&nbsp;Personal</label>
-			<label class="radio-inline"><input type="radio" name="tour_type">&nbsp;Group</label>
+		<div class="col-sm-8">
+			<label class="radio-inline form-control-sm"><input type="radio" checked="checked" name="tour_type">&nbsp;All</label>
+			<label class="radio-inline form-control-sm"><input type="radio" name="tour_type">&nbsp;Personal</label>
+			<label class="radio-inline form-control-sm"><input type="radio" name="tour_type">&nbsp;Group</label>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-4">
-			<div class="form-group"><label>Location</label></div>
+	<div class="row row-bottom-margin">
+		<div class="col-sm-3">
+			<div class="form-group form-control-sm"><label>Location</label></div>
 		</div>
-		<div class="col-md-8">
-			<div class="form-inline">
-			<select class="form-control" id="location">
+		<div class="col-sm-8">
+			<div class="form-inline form-control-sm">
+			<select class="form-control form-control-sm" id="location" style="width:235px;">
 				<option>All</option>
 				<?php 
 				foreach($listLoc as $loc) 
@@ -31,13 +32,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-4">
-			<div class="form-group"><label>Month</label></div>
+	<div class="row row-bottom-margin">
+		<div class="col-sm-3">
+			<div class="form-group form-control-sm"><label>Month</label></div>
 		</div>
-		<div class="col-md-8">
-			<div class="form-inline">
-				<select class="form-control" id="month">
+		<div class="col-sm-8">
+			<div class="form-inline form-control-sm">
+				<select class="form-control form-control-sm" id="month">
 					<option value="0">All</option>
 					<option value="1">January</option>
 					<option value="2">February</option>
@@ -52,26 +53,20 @@
 					<option value="11">November</option>
 					<option value="12">December</option>
 				</select>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4">
-			<div class="form-group"><label>Year</label></div>
-		</div>
-		<div class="col-md-8">
-			<div class="form-inline">
-				<select class="form-control" id="year">
+				&nbsp;&nbsp;
+				<select class="form-control form-control-sm" id="year">
 					<option value="2017">2017</option>
 					<option value="2018">2018</option>
 				</select>
 			</div>
+			<div class="form-inline form-control-sm">
+				
+			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6"></div>
 		<div class="col-md-6">
-			<button type="submit" class="btn btn-primary">Find</button>
+			<button type="submit" class="btn btn-primary form-control-sm">Find</button>
 		</div>		
 	</div>
 </form>

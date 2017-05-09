@@ -46,3 +46,11 @@ a.tour-item:hover {
 	font-size: 12;
 	font-weight: normal;
 }
+
+.row-bottom-margin {
+	margin-bottom:5px;
+}
+
+.py-5 {
+	padding-top:5px;
+}

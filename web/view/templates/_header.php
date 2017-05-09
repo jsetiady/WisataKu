@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><?php echo $this->data['title']; ?></title>
+  <title><?php echo $title; ?></title>
   <!-- css -->
   <link rel="stylesheet" href="../assets/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="../assets/css/bootstrap-4.0.0-alpha.6.css"> 
@@ -32,7 +32,7 @@
                             <tspan x="32" y="20">WisataKu</tspan>
                         </text>
                         <text id="l" font-family="BodoniOrnamentsITCTT, Bodoni Ornaments" font-size="18" font-weight="normal">
-                            <tspan x="0" y="17">l</tspan>
+                            <tspan x="0" y="17">|</tspan>
                         </text>
                     </g>
                 </g>

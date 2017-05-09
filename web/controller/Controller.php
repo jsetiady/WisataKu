@@ -18,6 +18,7 @@ class Controller {
 		  	//show login page
 			include 'view/loginUser.php';
 		} else {
+			$title = "Home - WisataKu";
 			$listLoc = $this->locationModel->getAllLocation();
 			$allTourPackage = $this->tourPackageModel->getAllTourPackages();
 			include 'view/home.php';
