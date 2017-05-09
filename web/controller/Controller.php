@@ -24,5 +24,13 @@ class Controller {
 			include 'view/home.php';
 		}
 	}
+	
+	public function viewDetailTourPackage($tourId)
+	{
+		$title = "View Tour Detail - WisataKu";
+		$tourDet = $this->tourPackageModel->getTourPackageByTourId($tourId);
+		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
+		include 'view/viewDetailTour.php';
+	}
 }
 ?>

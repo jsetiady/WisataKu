@@ -16,7 +16,7 @@
         </div>
     </div>
     <hr/>
-<h4>All Trips</h4>    
+<h4>Search Result</h4>    
 <hr/>
 <div class="row">
   <?php foreach ($allTourPackage as $tour)
@@ -24,7 +24,7 @@
   ?>
   <div class="col-md-4">
     <div class="thumbnail">
-      <a href="?cont=tour&action=detail&id=<?= $tour->getTourId() ?>">
+      <a href="/w3images/lights.jpg">
         <img src="../assets/images/1.jpg" alt="Tour Package" style="width:100%"> </a>
         <hr/>
         <?php
@@ -35,7 +35,7 @@
         	}
         ?>
         <div class="caption" style="height:150px">
-          <a href="?cont=tour&action=detail&id=<?= $tour->getTourId() ?>"><p><b><?= $tour->getTourName() ?> (<?= $tourType ?>)</b></p></a>
+          <a href="#"><p><b><?= $tour->getTourName() ?> (<?= $tourType ?>)</b></p></a>
           <p style="font-size:12"><?= $tour->getTourDesc() ?></p>
           <p style="font-size:12">Date : <?= $tour->getTourStartDate() ?> - <?= $tour->getTourEndDate() ?></p>
           
