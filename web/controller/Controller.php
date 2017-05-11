@@ -76,6 +76,15 @@ class Controller {
 	
 	
 	//tour
+	public function findTour()
+	{
+		$title = "Home - WisataKu";
+		$listLoc = $this->locationModel->getAllLocation();
+		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
+		include 'view/tour/findTour.php';
+	}
+	
+	
 	public function viewDetailTourPackage($tourId)
 	{
 		$title = "View Tour Detail - WisataKu";
@@ -98,18 +107,36 @@ class Controller {
 		else
 		{
 			$tourDet = $this->tourPackageModel->getTourPackageByTourId($tourId);
-			
 			include 'view/tour/bookingForm.php';
 		}
+	}
+	
+	public function confirmBooking()
+	{
+		$title = "Booking Confirmation - WisataKu";
 		
+		$tourDet = $this->tourPackageModel->getTourPackageByTourId($_POST['tour_id']);
+		$fromDate = $_POST['fromDate'];
+		$toDate = $_POST['toDate'];
+		$totalPax = $_POST['totalPax'];
+		$addNotes = $_POST['additionalNotes'];
+		$prefix = $_POST['prefix'];
+		$personName = $_POST['personName'];
+		$personContactNo = $_POST['personContactNo'];
+		$rentVehicleStat = $_POST['rentVehicleStatus'];
 		
-		
+		include 'view/tour/bookingConfirmation.php';
 	}
 	
 	public function confirmPayment()
 	{
 		$title= "Confirm Payment - WisataKu";
 		include 'view/account/confirmPayment.php';
+	}
+	
+	public function doConfirmPayment()
+	{
+		
 	}
 	
 	public function viewOrderHistory()

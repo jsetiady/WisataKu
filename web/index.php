@@ -10,11 +10,17 @@
 		{
 			switch($action)
 			{
+				case "find" :
+					$controller->findTour();
+					break;
 				case "detail" :
 					$controller->viewDetailTourPackage($_GET['id']);
 					break;
 				case "doBooking" :
 					$controller->doBooking($_GET['id']);
+					break;
+				case "confirmBooking" :
+					$controller->confirmBooking($_GET['id']);
 					break;
 			}
 		}

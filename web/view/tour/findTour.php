@@ -1,22 +1,21 @@
 <?php
-    include("templates/_header.php");
+include(ABS_PATH."templates/_header.php");
 ?>
 <div class="py-5">
-	<h4 style="margin-left:110px;">Welcome To WisataKu, Your Holiday Partner</h4>
   <div class="container" style="margin-top:0px;clear:both;">
     <div class="row" style="margin-top:0px;margin-bottom:0px;">
-      <div class="col-md-6">
+      <div class="col-md-3">
         <?php
-          include("templates/_simpleSearchForm.php");
+          include(ABS_PATH."templates/_simpleSearchForm.php");
         ?>
       </div>
         
         <div class="col-md-6" style="margin-top:0px;">
-            <?php include("templates/_ads.php");?>
+            <?php include(ABS_PATH."templates/_ads.php");?>
         </div>
     </div>
     <hr/>
-<h4>Search Result</h4>    
+<h4>All Trips</h4>    
 <hr/>
 <div class="row">
   <?php foreach ($allTourPackage as $tour)
@@ -24,7 +23,7 @@
   ?>
   <div class="col-md-4">
     <div class="thumbnail">
-      <a href="/w3images/lights.jpg">
+      <a href="?cont=tour&action=detail&id=<?= $tour->getTourId() ?>">
         <img src="../assets/images/1.jpg" alt="Tour Package" style="width:100%"> </a>
         <hr/>
         <?php
@@ -35,7 +34,7 @@
         	}
         ?>
         <div class="caption" style="height:150px">
-          <a href="#"><p><b><?= $tour->getTourName() ?> (<?= $tourType ?>)</b></p></a>
+          <a href="?cont=tour&action=detail&id=<?= $tour->getTourId() ?>"><p><b><?= $tour->getTourName() ?> (<?= $tourType ?>)</b></p></a>
           <p style="font-size:12"><?= $tour->getTourDesc() ?></p>
           <p style="font-size:12">Date : <?= $tour->getTourStartDate() ?> - <?= $tour->getTourEndDate() ?></p>
           
@@ -45,7 +44,7 @@
         </div>
         <br/>
         <div class="caption" >
-        	<button type="submit" class="btn btn-primary form-control-sm">Book Now</button>
+        	<a href="?cont=tour&action=doBooking&id=<?= $tour->getTourId() ?>" class="btn btn-primary form-control-sm">Book Now</a>
         </div>
     </div>
   </div>
@@ -57,5 +56,5 @@
 </div>
 </div>
 <?php
-    include("templates/_footer.php");
+include(ABS_PATH."templates/_footer.php");
 ?>

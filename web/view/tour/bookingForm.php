@@ -2,8 +2,6 @@
  include(ABS_PATH."templates/_header.php");
 ?>
 	<script type="text/javascript">
-		
-
 	</script>
     <div class="py-5">
       <div class="container">
@@ -15,6 +13,8 @@
            <br/><br/>
           <div class="col-md-12 form-control-sm" style="margin:auto;">
           	<div class="row">
+          	<form method="post" action="?cont=tour&action=confirmBooking">
+          		<input type="hidden" name="tourId" value="<?= $tourDet->getTourId() ?>" />
           		<table>
           			<tr style="">
           				<td colspan="6" style=""><b>Tour Information</b></td>
@@ -114,23 +114,23 @@
           			</tr>
           			<tr>
           				<td colspan="6">
-          					<input type="radio" name="prename" /> Mr.
-          					<input type="radio" name="prename" /> Mrs.
-          					<input type="radio" name="prename" /> Ms.
+          					<input type="radio" name="prefix" value="Mr." checked="checked" /> Mr.
+          					<input type="radio" name="prefix" value="Mrs."/> Mrs.
+          					<input type="radio" name="prefix" value="Ms."/> Ms.
           				</td>
           			</tr>
           			<tr >
           				<td style="width:150px;">Name</td>
           				<td style="width:40px">:</td>
           				<td style="width:70px">
-          					<input type="text" class="form-control form-control-sm" value="" style="width:250px;" name="totalPax" />
+          					<input type="text" class="form-control form-control-sm" value="" style="width:250px;" name="personName" />
           				</td>
           			</tr>
           			<tr >
           				<td style="width:150px;">Contact No</td>
           				<td style="width:40px">:</td>
           				<td style="width:70px">
-          					<input type="text" class="form-control form-control-sm" style="width:250px;" name="totalPax" />
+          					<input type="text" class="form-control form-control-sm" style="width:250px;" name="personContactNo" />
           				</td>
           			</tr>
           			<tr>
@@ -154,10 +154,12 @@
           				<td colspan="6"><hr/></td>
           			</tr>
           			<tr>
-          				<td colspan="6"><p><a href="?cont=tour&action=doBooking&id=<?= $tourDet->getTourId() ?>" class="btn btn-primary">Next</a></p></td>
+          				<td colspan="6"><input type="submit" class="btn btn-primary" value="Next" />
+          								<button type="button" class="btn">Cancel</button>
+          				</td>
           			</tr>
           		</table>
-          		
+          		</form>
           	</div>
           </div>
         </div>
