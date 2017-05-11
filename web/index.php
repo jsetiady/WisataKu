@@ -39,7 +39,7 @@
 				{
 					if($action == "confirmPayment")
 					{
-						$controller->confirmPayMent();
+						$controller->confirmPayment();
 					}
 					else {
 						if($action == "doConfirmPayment")

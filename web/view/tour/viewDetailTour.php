@@ -1,5 +1,5 @@
 <?php
-    include("templates/_header.php");
+    include(ABS_PATH."templates/_header.php");
 ?>
 <div class="py-5">
     <hr/>
@@ -96,5 +96,5 @@
 </div>
 </div>
 <?php
-    include("templates/_footer.php");
+include(ABS_PATH."templates/_footer.php");
 ?>

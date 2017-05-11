@@ -1,5 +1,7 @@
 <?php
 include_once("ModelLoadController.php");
+define("ABS_PATH", $_SERVER['DOCUMENT_ROOT']."/wisataku/web/view/");
+
 class Controller {
 	public $locationModel;
 	public $tourPackageModel;
@@ -86,7 +88,7 @@ class Controller {
 	
 	public function confirmPayment()
 	{
-		
+		include 'view/account/confirmPayment.php';
 	}
 	
 	//end of transaction

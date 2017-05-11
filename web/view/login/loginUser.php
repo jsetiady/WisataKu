@@ -1,5 +1,5 @@
 <?php
-    include("templates/_header.php");
+    include(ABS_PATH."templates/_header.php");
 ?>
 
 
@@ -29,6 +29,6 @@
 
 
 <?php
-    include("templates/_footer.php");
+	include(ABS_PATH."templates/_footer.php");
 ?>
 
