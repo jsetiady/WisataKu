@@ -7,11 +7,7 @@
             "email": "jeje@jazzle.me"
         }
     ],
-    "_comment": "
-    extras dan middleware untuk content type parsing and basic authentication,
-    PHPUnit pake versi lama (5.7), karena versi PHP yang dipakai versi 5.6.30,
-    custom classes di bawah namespace API lokasinya di direktori lib.
-    ",
+    "_comment": "Extras dan middleware untuk content type parsing and basic authentication, PHPUnit pake versi lama (5.7), karena versi PHP yang dipakai versi 5.6.30, custom classes di bawah namespace API lokasinya di direktori lib.",
     "require-dev": {
         "slim/slim": "*",
         "slim/extras": "*",
