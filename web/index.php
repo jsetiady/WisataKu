@@ -6,46 +6,50 @@
 	if(isset($_GET['cont']) && isset($_GET['action'])){
 		$cont = $_GET['cont'];
 		$action = $_GET['action'];
-		
-		if($cont== "tour")
+		if($cont == "tour")
 		{
-			if($action == "detail")
+			switch($action)
 			{
-				$controller->viewDetailTourPackage($_GET['id']);
+				case "detail" :
+					$controller->viewDetailTourPackage($_GET['id']);
+					break;
+				case "doBooking" :
+					$controller->doBooking($_GET['id']);
+					break;
 			}
 		}
 		else
 		{
 			if($cont == "login")
 			{
-				if($action == "showLogin")
+				switch($action)
 				{
-					$controller->showLogin();
-				}
-				else
-				{
-					if($action == "doLogin")
-					{
+					case "showLogin" :
+						$controller->showLogin();
+						break;
+					case "doLogin" :
 						$controller->doLogin();
-					}
-					else {
+						break;
+					case "doLogout" :
 						$controller->doLogout();
-					}
+						break;
 				}
 			}
 			else
 			{
 				if($cont == "transaction")
 				{
-					if($action == "confirmPayment")
+					switch($action)
 					{
-						$controller->confirmPayment();
-					}
-					else {
-						if($action == "doConfirmPayment")
-						{
-							
-						}
+						case "confirmPayment" :
+							$controller->confirmPayment();
+							break;
+						case "doConfirmPayment" :
+							$controller->doConfirmPayment();
+							break;
+						case "showHistory" :
+							$controller->viewOrderHistory();
+							break;
 					}
 				}
 			}

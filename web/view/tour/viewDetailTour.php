@@ -30,7 +30,7 @@
              
              <h5><b>Price : IDR <?= number_format($tourDet->getTourPrice(),0,",",".") ?>,- / person</b></h5>
         	 <br/>
-        	 <p><a href="cont=tour&action=book&id=<?= $tourDet->getTourId() ?>" class="btn btn-primary form-control-sm">Book Now</a></p>
+        	 <p><a href="?cont=tour&action=doBooking&id=<?= $tourDet->getTourId() ?>" class="btn btn-primary form-control-sm">Book Now</a></p>
         </div>
     </div>
     <hr/>

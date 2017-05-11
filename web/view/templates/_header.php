@@ -9,12 +9,18 @@
   <link rel="stylesheet" href="../assets/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="../assets/css/bootstrap-4.0.0-alpha.6.css"> 
   <link rel="stylesheet" href="../assets/css/wisataku-custom.css">
+  <link rel="stylesheet" href="../assets/css/wisataku-custom.css">
+  <link rel="stylesheet" href="../assets/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../assets/css/jquery.dataTables.css">
+  
+  
 </head>
   <!-- js -->
   <script src="../assets/js/jquery-3.1.1.slim.min.js"></script>
   <script src="../assets/js/tether.min.js"></script>
   <script src="../assets/js/bootstrap-4.0.0-alpha.6.min.js"></script>
-
+  <script src="../assets/js/dataTables.bootstrap4.min.js"></script>
+  <script src="../assets/js/jquery.dataTables.js"></script>
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-faded">

@@ -45,7 +45,7 @@
         </div>
         <br/>
         <div class="caption" >
-        	<button type="submit" class="btn btn-primary form-control-sm">Book Now</button>
+        	<a href="?cont=tour&action=doBooking&id=<?= $tour->getTourId() ?>" class="btn btn-primary form-control-sm">Book Now</a>
         </div>
     </div>
   </div>

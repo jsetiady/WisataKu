@@ -10,6 +10,7 @@ class Controller {
 	
 	public function __construct()  
     {  
+    	 session_start();
          $this->locationModel = new LocationModel();
          $this->tourPackageModel = new TourPackageModel();
          $this->userModel = new UserModel();
@@ -18,7 +19,6 @@ class Controller {
 	
 	public function invoke()
 	{
-		session_start();
 		if(isset($_SESSION['userWisataku'])) {
 		  	//show login page
 			include 'view/loginUser.php';
@@ -31,10 +31,10 @@ class Controller {
 	}
 	
 	//login page
-	public function showLogin()
+	public function showLogin($redirectVal = "false")
 	{
 		$title = "Login - WisataKu";
-		$redirect = "false";
+		$redirect = $redirectVal;
 		include 'view/login/loginUser.php';
 	}
 	
@@ -48,12 +48,15 @@ class Controller {
 		
 		if($user != null)
 		{
-			session_start();
 			$_SESSION['user'] = $user;
 			
 			if($redirect == "false")
 			{
 				header("Location:".$this->baseurl);
+			}
+			else
+			{
+				header("Location:".$this->baseurl."/?cont=tour&action=doBooking&id=".$redirect);
 			}
 		}
 		else {
@@ -64,7 +67,6 @@ class Controller {
 	
 	public function doLogout()
 	{
-		session_start();
 		unset($_SESSION['user']);
 		header("Location:".$this->baseurl);
 		echo "<script>alert('Logout sucessfully')</script>";
@@ -85,12 +87,38 @@ class Controller {
 	//end of tour
 	
 	//transaction
+	public function doBooking($tourId)
+	{
+		$title = "Booking - WisataKu";
+		
+		if(!isset($_SESSION['user']))
+		{
+			$this->showLogin($tourId);
+		}
+		else
+		{
+			$tourDet = $this->tourPackageModel->getTourPackageByTourId($tourId);
+			
+			include 'view/tour/bookingForm.php';
+		}
+		
+		
+		
+	}
 	
 	public function confirmPayment()
 	{
+		$title= "Confirm Payment - WisataKu";
 		include 'view/account/confirmPayment.php';
 	}
 	
+	public function viewOrderHistory()
+	{
+		$title= "View Order History - WisataKu";
+		include 'view/account/orderHistory.php';
+	}
+	
 	//end of transaction
+	
 }
 ?>
