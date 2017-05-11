@@ -1,0 +1,28 @@
+{
+    "name": "api.wisataku.jazzle.me",
+    "description": "WisataKu simple RESTful API",
+    "authors": [
+        {
+            "name": "Jeje",
+            "email": "jeje@jazzle.me"
+        }
+    ],
+    "require": {
+        "slim/slim": "*",
+        "slim/extras": "*", //untuk content type parsing and basic authentication
+        "slim/middleware": "*",
+        "monolog/monolog": "*",
+        "j4mie/paris": "*",
+        "flynsarmy/slim-monolog": "*"
+    },
+    "archive": {
+        "exclude": ["vendor", ".DS_Store", "*.log"]
+    },
+    "autoload": {
+        "psr-0": {
+            "API": "lib/"
+        }
+    }
+}
+
+//Notes: custom classes di bawah namespace API lokasinya di direktori lib.
