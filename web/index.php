@@ -14,6 +14,7 @@
 				$controller->viewDetailTourPackage($_GET['id']);
 			}
 		}
+		else
 		{
 			if($cont == "login")
 			{
@@ -29,6 +30,22 @@
 					}
 					else {
 						$controller->doLogout();
+					}
+				}
+			}
+			else
+			{
+				if($cont == "transaction")
+				{
+					if($action == "confirmPayment")
+					{
+						$controller->confirmPayMent();
+					}
+					else {
+						if($action == "doConfirmPayment")
+						{
+							
+						}
 					}
 				}
 			}

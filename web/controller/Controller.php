@@ -33,7 +33,7 @@ class Controller {
 	{
 		$title = "Login - WisataKu";
 		$redirect = "false";
-		include 'view/loginUser.php';
+		include 'view/login/loginUser.php';
 	}
 	
 	public function doLogin()
@@ -68,14 +68,27 @@ class Controller {
 		echo "<script>alert('Logout sucessfully')</script>";
 		
 	}
+	//end of login
 	
 	
+	//tour
 	public function viewDetailTourPackage($tourId)
 	{
 		$title = "View Tour Detail - WisataKu";
 		$tourDet = $this->tourPackageModel->getTourPackageByTourId($tourId);
 		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
-		include 'view/viewDetailTour.php';
+		include 'view/tour/viewDetailTour.php';
 	}
+	
+	//end of tour
+	
+	//transaction
+	
+	public function confirmPayment()
+	{
+		
+	}
+	
+	//end of transaction
 }
 ?>
