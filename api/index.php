@@ -1,17 +1,7 @@
 <?php
 require_once 'config/autoload.php';
+require_once 'config/DBConnection.php';
 
-$app->get('/', function ($request, $response, $args) {
-    $response->getBody()->write("Welcome to WisataKu API 1.0<br/>");
-    return $response;
-});
-
-//GET tourpackage/list
-$app->get('/tourpackage/list', function ($request, $response, $args) {
-    $response->getBody()->write("List Tour Package");
-    return $response;
-});
-
+$db = new DBConnection();
                
 $app->run();
-
