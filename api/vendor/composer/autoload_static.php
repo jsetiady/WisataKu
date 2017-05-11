@@ -8,6 +8,7 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
 {
     public static $files = array (
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
+        '0ccdf99b8f62f02c52cba55802e0c2e7' => __DIR__ . '/..' . '/zircote/swagger-php/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -22,6 +23,8 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
         'S' => 
         array (
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Finder\\' => 25,
+            'Swagger\\' => 8,
             'Slim\\' => 5,
         ),
         'P' => 
@@ -45,6 +48,7 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
             'DeepCopy\\' => 9,
         ),
     );
@@ -63,6 +67,14 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
         'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
+        ),
+        'Symfony\\Component\\Finder\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/finder',
+        ),
+        'Swagger\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zircote/swagger-php/src',
         ),
         'Slim\\' => 
         array (
@@ -95,6 +107,10 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
         ),
         'DeepCopy\\' => 
         array (
@@ -137,6 +153,13 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
             'Flynsarmy\\SlimMonolog' => 
             array (
                 0 => __DIR__ . '/..' . '/flynsarmy/slim-monolog',
+            ),
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Lexer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
             ),
         ),
         'A' => 
