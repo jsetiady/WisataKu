@@ -3,11 +3,14 @@ include_once("ModelLoadController.php");
 class Controller {
 	public $locationModel;
 	public $tourPackageModel;
+	public $userModel;
+	public $baseurl = "http://localhost/wisataku/web";
 	
 	public function __construct()  
     {  
          $this->locationModel = new LocationModel();
          $this->tourPackageModel = new TourPackageModel();
+         $this->userModel = new UserModel();
 	
     } 
 	
@@ -24,6 +27,48 @@ class Controller {
 			include 'view/home.php';
 		}
 	}
+	
+	//login page
+	public function showLogin()
+	{
+		$title = "Login - WisataKu";
+		$redirect = "false";
+		include 'view/loginUser.php';
+	}
+	
+	public function doLogin()
+	{
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		$redirect = $_POST['redirect'];
+		
+		$user = $this->userModel->validateUser($username, $password);
+		
+		if($user != null)
+		{
+			session_start();
+			$_SESSION['user'] = $user;
+			
+			if($redirect == "false")
+			{
+				header("Location:".$this->baseurl);
+			}
+		}
+		else {
+			$this->showLogin();
+			echo "<script>alert('Username or password incorrect, Please Try Again')</script>";
+		}
+	}
+	
+	public function doLogout()
+	{
+		session_start();
+		unset($_SESSION['user']);
+		header("Location:".$this->baseurl);
+		echo "<script>alert('Logout sucessfully')</script>";
+		
+	}
+	
 	
 	public function viewDetailTourPackage($tourId)
 	{

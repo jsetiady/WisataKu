@@ -14,6 +14,25 @@
 				$controller->viewDetailTourPackage($_GET['id']);
 			}
 		}
+		{
+			if($cont == "login")
+			{
+				if($action == "showLogin")
+				{
+					$controller->showLogin();
+				}
+				else
+				{
+					if($action == "doLogin")
+					{
+						$controller->doLogin();
+					}
+					else {
+						$controller->doLogout();
+					}
+				}
+			}
+		}
 	}
 	else {
 		$controller->invoke();

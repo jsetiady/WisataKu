@@ -21,6 +21,7 @@
         ?>
         <div class="col-md-6" style="margin-top:0px;">
             <h3>"<?= $tourDet->getTourName() ?>"</h3>
+            <p><b>Location : <?= $tourDet->getTourLoc()->getLocName() ?></b></p>
             <p style="font-size:14;"><?= $tourDet->getTourDesc() ?></p>
             <p><b><u><?= $tourType ?> Tour</u></b> ( From <?= $tourDet->getTourMinPerson() ?> to 
             <?= $tourDet->getTourMaxPerson() ?> person(s) )</p>
