@@ -26,6 +26,6 @@
         "slim/middleware": "*",
         "monolog/monolog": "*",
         "j4mie/paris": "*",
-        "flynsarmy/slim-monolog": "*",
+        "flynsarmy/slim-monolog": "*"
     }
 }
