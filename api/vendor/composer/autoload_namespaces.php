@@ -13,5 +13,4 @@ return array(
     'Pimple' => array($vendorDir . '/pimple/pimple/src'),
     'Flynsarmy\\SlimMonolog' => array($vendorDir . '/flynsarmy/slim-monolog'),
     'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib'),
-    'API' => array($baseDir . '/lib'),
 );

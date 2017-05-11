@@ -18,6 +18,7 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
         ),
         'W' => 
         array (
+            'WisataKu\\WisataKuAPI\\' => 21,
             'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
@@ -59,6 +60,10 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+        ),
+        'WisataKu\\WisataKuAPI\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -160,13 +165,6 @@ class ComposerStaticInit1fb9da324350822946707d36b98e5182
             'Doctrine\\Common\\Lexer\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
-            ),
-        ),
-        'A' => 
-        array (
-            'API' => 
-            array (
-                0 => __DIR__ . '/../..' . '/lib',
             ),
         ),
     );
