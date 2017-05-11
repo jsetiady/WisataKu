@@ -15,8 +15,8 @@
         "exclude": ["vendor", ".DS_Store", "*.log"]
     },
     "autoload": {
-        "psr-0": {
-            "API": "lib/"
+        "psr-4": {
+            "WisataKu\\WisataKuAPI\\" : "src"
         }
     },
     "require": {
