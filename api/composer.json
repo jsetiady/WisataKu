@@ -7,13 +7,14 @@
             "email": "jeje@jazzle.me"
         }
     ],
-    "require": {
+    "require-dev": {
         "slim/slim": "*",
         "slim/extras": "*", //untuk content type parsing and basic authentication
         "slim/middleware": "*",
         "monolog/monolog": "*",
         "j4mie/paris": "*",
-        "flynsarmy/slim-monolog": "*"
+        "flynsarmy/slim-monolog": "*",
+        "phpunit/phpunit": "5.7.*" //Since we are using PHP version 5.6.30
     },
     "archive": {
         "exclude": ["vendor", ".DS_Store", "*.log"]
