@@ -1,10 +1,12 @@
 <?php
 namespace WisataKu\WisataKuAPI;
+include "db.php";
+    
 class Connection {
 	static $link;
 	
 	static function connect(){
-		if(self::$link = mysqli_connect("localhost","root","root","jazzleme_wisataku")){
+		if(self::$link = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME)){
 			return self::$link;
 		} else {
 			die('could not connect to db');
