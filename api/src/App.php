@@ -20,12 +20,12 @@ class App
             <ol>
                 <li>
                     <a href="location">
-                        GET list of locations
+                        GET list of tour locations
                     </a>
                 </li>
                 <li>
                     <a href="location/1">
-                        GET location/:id (location by id)
+                        GET tour location/:id (location by id)
                     </a>
                 </li>
                 <li>

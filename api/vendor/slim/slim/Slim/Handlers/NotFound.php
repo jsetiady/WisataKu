@@ -92,7 +92,7 @@ class NotFound extends AbstractHandler
         return <<<END
 <html>
     <head>
-        <title>Page Not Found</title>
+        <title>Service Not Found</title>
         <style>
             body{
                 margin:0;
@@ -112,13 +112,8 @@ class NotFound extends AbstractHandler
         </style>
     </head>
     <body>
-        <h1>Page Not Found</h1>
-        <p>
-            The page you are looking for could not be found. Check the address bar
-            to ensure your URL is spelled correctly. If all else fails, you can
-            visit our home page at the link below.
-        </p>
-        <a href='$homeUrl'>Visit the Home Page</a>
+        <h3>Sorry, service not found</h3>
+        <a href='$homeUrl'>Back to service list</a>
     </body>
 </html>
 END;
