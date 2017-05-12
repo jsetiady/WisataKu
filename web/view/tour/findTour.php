@@ -1,18 +1,17 @@
 <?php
-    include("templates/_header.php");
+include(ABS_PATH."templates/_header.php");
 ?>
 <div class="py-5">
-	<h4 style="margin-left:110px;">Welcome To WisataKu, Your Holiday Partner</h4>
   <div class="container" style="margin-top:0px;clear:both;">
     <div class="row" style="margin-top:0px;margin-bottom:0px;">
-      <div class="col-md-6">
+      <div class="col-md-3">
         <?php
-          include("templates/_simpleSearchForm.php");
+          include(ABS_PATH."templates/_simpleSearchForm.php");
         ?>
       </div>
         
         <div class="col-md-6" style="margin-top:0px;">
-            <?php include("templates/_ads.php");?>
+            <?php include(ABS_PATH."templates/_ads.php");?>
         </div>
     </div>
     <hr/>
@@ -57,5 +56,5 @@
 </div>
 </div>
 <?php
-    include("templates/_footer.php");
+include(ABS_PATH."templates/_footer.php");
 ?>

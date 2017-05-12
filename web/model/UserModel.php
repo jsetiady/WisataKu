@@ -14,7 +14,10 @@ class UserModel {
     	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql)) {
-    		$user = new User($row['user_id'],$row['user_username'],$row['user_name']);
+    		$user = User::create()
+    				->setUserId($row['user_id'])
+    				->setUsername($row['user_username'])
+    				->setName($row['user_name']);
     	}
 
     	return $user;
@@ -32,7 +35,10 @@ class UserModel {
         $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
-            $user = new User($row['user_id'],$row['user_username'],$row['user_name']);
+        	$user = User::create()
+	        	->setUserId($row['user_id'])
+	        	->setUsername($row['user_username'])
+	        	->setName($row['user_name']);
         }
 
         return $user;
@@ -48,7 +54,10 @@ class UserModel {
         $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
-            $user = new User($row['user_id'],$row['user_username'],$row['user_name']);
+        	$user = User::create()
+	        	->setUserId($row['user_id'])
+	        	->setUsername($row['user_username'])
+	        	->setName($row['user_name']);
         }
 
         return $user;
