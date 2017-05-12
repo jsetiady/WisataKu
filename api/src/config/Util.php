@@ -21,4 +21,8 @@ class Util {
         }
         return $d;
     }
+    
+    function isValidId($id) {
+         return (int)$id && $id > 0 && $id <= 1000;
+    }
 }

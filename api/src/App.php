@@ -24,10 +24,20 @@ class App
                     </a>
                 </li>
                 <li>
+                    <a href="location/1">
+                        GET location/:id (location by id)
+                    </a>
+                </li>
+                <li>
                     <a href="tourpackage">
                         GET list of tour packages
                     </a>
                 </li>
+                <li>
+                    <a href="tourpackage/1">
+                        GET tourpackage/:id (tourpackage by id)
+                    </a>
+                </li
             </ol>
             ';
             
@@ -45,21 +55,36 @@ class App
     public function tourPackageService($app) {
         //GET tourpackage/
         $app->group('/tourpackage', function () {
-            $isValidId = function ($id) {
-                return (int)$id && $id > 0 && $id <= 10;
-            };
-
+            
+            //GET tourpackage/
             $this->map(['GET'], '', function ($request, $response) {
                 $model = new TourPackageModel();
                 $util = new Util();
                 $data = $util->objectsToArray($model->getAllTourPackages());
                 return $response->withJson($data);
             });
+            
+            //GET tourpackage/:id
             $this->get('/{id}', function ($request, $response, $args) {
-                if(todoIdValid($args['id'])) {
-                    return $response->withJson(['message' => "Tour Package ".$args['id']]);
+                $util = new Util();
+                if($util->isValidId($args['id'])) {
+                    $model = new TourPackageModel();
+                    $data = $model->getTourPackageByTourId($args['id']);
+                    if(!is_null($data)) {
+                        $data = $data->toArray();
+                        $status = 200;
+                    } else {
+                        $data =  [
+                        'status' => 'Error',
+                        'message' => 'Tour Package with ID:'.$args['id'].' Not Found'];
+                        $status = 404;
+                    }
+                    return $response->withJson($data, $status);
                 }
-                return $response->withJson(['message' => 'Tour Package Not Found'], 404);    
+                return $response->withJson(
+                    [
+                        'status' => 'Error',
+                        'message' => 'Tour Package with ID:'.$args['id'].' Not Found'], 404);    
             });
         });
     }
@@ -69,7 +94,8 @@ class App
             $isValidId = function ($id) {
                 return (int)$id && $id > 0 && $id <= 10;
             };
-
+            
+            //GET location
             $this->map(['GET'], '', function ($request, $response) {
                 $model = new LocationModel();
                 $util = new Util();
@@ -77,11 +103,27 @@ class App
                 return $response->withJson($data);
             });
             
+            //GET location/:id
             $this->get('/{id}', function ($request, $response, $args) {
-                if(todoIdValid($args['id'])) {
-                    return $response->withJson(['message' => "Tour Package ".$args['id']]);
+                $util = new Util();
+                if($util->isValidId($args['id'])) {
+                    $model = new LocationModel();
+                    $data = $model->getLocationByLocId($args['id']);
+                    if(!is_null($data)) {
+                        $data = $data->toArray();
+                        $status = 200;
+                    } else {
+                        $data =  [
+                        'status' => 'Error',
+                        'message' => 'Location with ID:'.$args['id'].' Not Found'];
+                        $status = 404;
+                    }
+                    return $response->withJson($data, $status);
                 }
-                return $response->withJson(['message' => 'Tour Package Not Found'], 404);    
+                return $response->withJson(
+                    [
+                        'status' => 'Error',
+                        'message' => 'Location with ID:'.$args['id'].' Not Found'], 404);    
             });
         });
     }

@@ -26,8 +26,8 @@ class LocationModel {
 
     	$sql = "SELECT loc_id,loc_name 
     			from ws_location
-    			where loc_id=".$loc_id;
-    	$resSql = mysqlli_query(Connection::getCon(),$sql);
+    			where loc_id=".$locId;
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
     	
     	while($row = mysqli_fetch_assoc($resSql)){
     		$loc = new Location($row['loc_id'],$row['loc_name']);

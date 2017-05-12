@@ -64,6 +64,7 @@ class TourPackageModel {
                 where tour_loc_id = loc_id
                 and tour_user_admin_id = user_id
                 and tour_id = ".$tourId;
+        
         $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {
@@ -89,7 +90,7 @@ class TourPackageModel {
         	->setTourImageFilename($row['tour_image_filename'])
         	->setTourItinerary($this->tourItineraryModel->getAllTourItineraryByTourId($row['tour_id']));
         }
-
+        
         return $tourPackage;
     }
 }
