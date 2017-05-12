@@ -13,7 +13,7 @@ class TourPackageModel {
 		$this->tourItineraryModel = new TourItineraryModel();
 	}
 	
-	public function getAllTourPackages()
+	public function getAllTourPackages($args)
     {
         $allTourPackages = array();
 
@@ -23,6 +23,32 @@ class TourPackageModel {
                 from ws_tour,ws_user,ws_location
                 where tour_loc_id = loc_id
                 and tour_user_admin_id = user_id";
+        
+        if(!is_null($args)) {
+            foreach($args as $arg):
+            if($_GET['type']) {
+                switch(strtolower($_GET['type'])) {
+                    case "personal": $sql .= " and tour_type='p'"; break;
+                    case "group": $sql .= " and tour_type='g'"; break;
+                    default: break;
+                }
+            }
+            if($_GET['isActive']) {
+                echo $_GET['isActive'];
+            }
+            if($_GET['startDate']) {
+                echo $_GET['startDate'];
+            }
+            if($_GET['endDate']) {
+                echo $_GET['endDate'];
+            }
+            if($_GET['location']) {
+                echo $_GET['location'];
+            }
+            endforeach;
+        }
+        //echo $sql;
+        
         $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {

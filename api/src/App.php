@@ -56,16 +56,16 @@ class App
         $this->app = $app;
     }
     
-    
     public function tourPackageService($app) {
         //GET tourpackage/
         $app->group('/tourpackage', function () {
             
             //GET tourpackage/
             $this->map(['GET'], '', function ($request, $response) {
+                //print_r($_GET);
                 $model = new TourPackageModel();
                 $util = new Util();
-                $data = $util->objectsToArray($model->getAllTourPackages());
+                $data = $util->objectsToArray($model->getAllTourPackages($_GET));
                 return $response->withJson($data);
             });
             
