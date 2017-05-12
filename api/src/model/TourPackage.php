@@ -233,7 +233,7 @@ class TourPackage {
             "tourStartDate" => $this->tourStartDate,
             "tourEndDate" => $this->tourEndDate,
             "tourDuration" => $this->tourDuration,
-            "tourType" => $this->tourType,
+            "tourType" => ($this->tourType == "p" ? "Personal" : "Group"),
             "tourTc" => $this->tourTc,
             "tourPrice" => $this->tourPrice,
             "tourPoints" => $this->tourPoints,
