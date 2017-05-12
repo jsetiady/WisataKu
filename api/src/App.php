@@ -1,6 +1,7 @@
 <?php
 namespace WisataKu\WisataKuAPI;
-require_once "model/Model.php";
+require_once "model/TourPackageModel.php";
+require_once "model/LocationModel.php";
 
 class App
 {
@@ -10,7 +11,25 @@ class App
     public function __construct() {
         $app = new \Slim\App;
         $app->get('/', function ($request, $response) {
-            $response->getBody()->write("WisataKu API v1.0");
+            
+            $strMessage = '
+            WisataKu API v1.0<br/>
+            Available services:
+            <ol>
+                <li>
+                    <a href="location">
+                        GET list of locations
+                    </a>
+                </li>
+                <li>
+                    <a href="tourpackage">
+                        GET list of tour packages
+                    </a>
+                </li>
+            </ol>
+            ';
+            
+            $response->getBody()->write($strMessage);
             return $response;
         });
         
@@ -28,7 +47,7 @@ class App
             };
 
             $this->map(['GET'], '', function ($request, $response) {
-                $model = new Model();
+                $model = new TourPackageModel();
                 $data = $model->getTourPackages();
                 
                 return $response->withJson($data);
@@ -42,7 +61,7 @@ class App
         });
     }
     
-    public function locationService() {
+    public function locationService($app) {
         $app->group('/location', function () {
             $isValidId = function ($id) {
                 return (int)$id && $id > 0 && $id <= 10;

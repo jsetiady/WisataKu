@@ -1,8 +1,8 @@
 <?php
 namespace WisataKu\WisataKuAPI;
 
-class Model {
-    private $link;
+class DB {
+    var $link;
     
     function connect() {
         $this->link = mysqli_connect("localhost", "root", "root", "jazzleme_wisataku");
@@ -13,6 +13,7 @@ class Model {
 
     }
     
+    /*
     public function getTourPackages() {
         $this->connect();
         
@@ -61,6 +62,8 @@ class Model {
         $this->closeConnection();
         return $data;
     }
+    
+    */
     
     public function getLocations() {
         $this->connect();
