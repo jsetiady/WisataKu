@@ -1,61 +1,97 @@
 <?php
 namespace WisataKu\WisataKuAPI;
-require_once "DB.php";
+include_once("User.php");
+include_once("Location.php");
+include_once("TourItineraryModel.php");
+include_once("TourPackage.php");
 
 class TourPackageModel {
-    
-    private $db;
-    
-    public function __construct() {
-        $this->db = new DB();
-    }
-    
-    public function getTourPackages() {
-        $this->db->connect();
-        
-        $query = "SELECT
-                    tour_id,
-                    tour_name,
-                    tour_desc,
-                    tour_min_person,
-                    tour_max_person,
-                    tour_start_date,
-                    tour_end_date,
-                    tour_duration,
-                    tour_type,
-                    tour_points,
-                    tour_created_date,
-                    tour_loc_id,
-                    tour_image_filename
-                FROM ws_tour";
+	private $tourItineraryModel;
+	
+	public function __construct()
+	{
+		$this->tourItineraryModel = new TourItineraryModel();
+	}
+	
+	public function getAllTourPackages()
+    {
+        $allTourPackages = array();
 
-        if ($stmt = mysqli_prepare($this->db->link, $query)) {
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_bind_result($stmt, $tourId, $tourName, $tourDesc, $tourMinPerson, $tourMaxPerson, $tourStartDate, $tourEndDate, $tourDuration, $tourType, $tourPoints, $tourCreatedDate, $tourLocId, $tourImageFileName);
-            $data = array();
-            while (mysqli_stmt_fetch($stmt)) {
-                array_push($data,
-                    array(
-                        "tourId" => $tourId,
-                        "tourName" => $tourName,
-                        "tour_desc" => $tourDesc,
-                        "tour_min_person" => $tourMinPerson,
-                        "tour_max_person" => $tourMaxPerson,
-                        "tour_start_date" => $tourStartDate,
-                        "tour_end_date" => $tourEndDate,
-                        "tour_duration" => $tourDuration,
-                        "tour_type" => $tourType,
-                        "tour_points" => $tourPoints,
-                        "tour_created_date" => $tourCreatedDate,
-                        "tour_loc_id" => $tourLocId,
-                        "tour_image_filename" => $tourImageFilename
-                    )
-                );
-            }
-            mysqli_stmt_close($stmt);
+        $sql = "SELECT tour_id,tour_name,tour_desc,tour_min_person,tour_max_person,tour_start_date,tour_end_date,
+                    tour_duration,tour_type,tour_tc,tour_price,tour_points,tour_created_date,
+                    tour_loc_id,tour_user_admin_id,tour_image_filename,loc_name,user_username,user_name
+                from ws_tour,ws_user,ws_location
+                where tour_loc_id = loc_id
+                and tour_user_admin_id = user_id";
+        $resSql = mysqli_query(Connection::getCon(),$sql);
+
+        while($row = mysqli_fetch_assoc($resSql)) {
+            array_push($allTourPackages, 
+            		TourPackage::create()
+            		->setTourId($row['tour_id'])
+            		->setTourName($row['tour_name'])
+            		->setTourDesc($row['tour_desc'])
+            		->setTourMaxPerson($row['tour_max_person'])
+            		->setTourMinPerson($row['tour_min_person'])
+            		->setTourStartDate($row['tour_start_date'])
+            		->setTourEndDate($row['tour_end_date'])
+            		->setTourDuration($row['tour_duration'])
+            		->setTourType($row['tour_type'])
+            		->setTourTc($row['tour_tc'])
+            		->setTourPrice($row['tour_price'])
+            		->setTourPoints($row['tour_points'])
+            		->setTourCreatedDate($row['tour_created_date'])
+            		->setTourLoc(new Location($row['tour_loc_id'],$row['loc_name']))
+            		->setTourUserAdmin(User::create()
+            				->setUserId($row['tour_user_admin_id'])
+            				->setUsername($row['user_username'])
+            				->setName($row['user_name']))
+            		->setTourImageFilename($row['tour_image_filename'])
+            		->setTourItinerary($this->tourItineraryModel->getAllTourItineraryByTourId($row['tour_id']))
+            		);
         }
-        
-        $this->db->closeConnection();
-        return $data;
+        return $allTourPackages;
+    }
+
+    public function getTourPackageByTourId($tourId)
+    {
+        $tourPackage = null;
+
+        $sql = "SELECT tour_id,tour_name,tour_desc,tour_min_person,tour_max_person,tour_start_date,tour_end_date,
+                    tour_duration,tour_type,tour_tc,tour_price,tour_points,tour_created_date,
+                    tour_loc_id,tour_user_admin_id,tour_image_filename,loc_name,user_username,user_name
+                from ws_tour,ws_user,ws_location
+                where tour_loc_id = loc_id
+                and tour_user_admin_id = user_id
+                and tour_id = ".$tourId;
+        $resSql = mysqli_query(Connection::getCon(),$sql);
+
+        while($row = mysqli_fetch_assoc($resSql)) {
+        	$tourPackage = TourPackage::create()
+        	->setTourId($row['tour_id'])
+        	->setTourName($row['tour_name'])
+        	->setTourDesc($row['tour_desc'])
+        	->setTourMaxPerson($row['tour_max_person'])
+        	->setTourMinPerson($row['tour_min_person'])
+        	->setTourStartDate($row['tour_start_date'])
+        	->setTourEndDate($row['tour_end_date'])
+        	->setTourDuration($row['tour_duration'])
+        	->setTourType($row['tour_type'])
+        	->setTourTc($row['tour_tc'])
+        	->setTourPrice($row['tour_price'])
+        	->setTourPoints($row['tour_points'])
+        	->setTourCreatedDate($row['tour_created_date'])
+        	->setTourLoc(new Location($row['tour_loc_id'],$row['loc_name']))
+        	->setTourUserAdmin(User::create()
+        			->setUserId($row['tour_user_admin_id'])
+        			->setUsername($row['user_username'])
+        			->setName($row['user_name']))
+        	->setTourImageFilename($row['tour_image_filename'])
+        	->setTourItinerary($this->tourItineraryModel->getAllTourItineraryByTourId($row['tour_id']));
+        }
+
+        return $tourPackage;
     }
 }
+
+?>

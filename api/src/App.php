@@ -2,7 +2,7 @@
 namespace WisataKu\WisataKuAPI;
 require_once "config/Connection.php";
 require_once "config/Util.php";
-//require_once "model/TourPackageModel.php";
+require_once "model/TourPackageModel.php";
 require_once "model/LocationModel.php";
 
 class App
@@ -35,13 +35,13 @@ class App
             return $response;
         });
         
-        //$this->tourPackageService($app);
+        $this->tourPackageService($app);
         $this->locationService($app);
         
         $this->app = $app;
     }
     
-    /*
+    
     public function tourPackageService($app) {
         //GET tourpackage/
         $app->group('/tourpackage', function () {
@@ -51,8 +51,8 @@ class App
 
             $this->map(['GET'], '', function ($request, $response) {
                 $model = new TourPackageModel();
-                $data = $model->getTourPackages();
-                
+                $util = new Util();
+                $data = $util->objectsToArray($model->getAllTourPackages());
                 return $response->withJson($data);
             });
             $this->get('/{id}', function ($request, $response, $args) {
@@ -63,7 +63,7 @@ class App
             });
         });
     }
-    */
+    
     
     public function locationService($app) {
         $app->group('/location', function () {
