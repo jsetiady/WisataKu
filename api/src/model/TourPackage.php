@@ -1,6 +1,6 @@
 <?php
 namespace WisataKu\WisataKuAPI;
-include_once("config/Util.php");
+//include ("config/Util.php");
 /**
  * @author Michael
  *
@@ -221,11 +221,22 @@ class TourPackage {
     {
     	return $this->tourItinerary;
     }
-    
+
+    function utf8ize($d) {
+        if (is_array($d)) {
+            foreach ($d as $k => $v) {
+                $d[$k] = $this->utf8ize($v);
+            }
+        } else if (is_string ($d)) {
+            return utf8_encode($d);
+        }
+        return $d;
+    }
     
     public function toArray() {
         $util = new Util();
-        return array(
+        $itin = $util->objectsToArray($this->tourItinerary);
+        return $util->utf8ize(array(
             "tourId" => $this->tourId,
             "tourName" => $this->tourName,
             "tourMinPerson" => $this->tourMinPerson,
@@ -245,8 +256,7 @@ class TourPackage {
             //"tourUserAdmin" => $this->tourUserAdmin,
             "tourImageFilename" => $this->tourImageFilename,
             "tourItinerary" => $util->objectsToArray($this->tourItinerary)
-        );
-        
+        ));
     }
     
 }

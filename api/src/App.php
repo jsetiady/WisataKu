@@ -64,7 +64,6 @@ class App
         });
     }
     
-    
     public function locationService($app) {
         $app->group('/location', function () {
             $isValidId = function ($id) {

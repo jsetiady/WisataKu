@@ -1,6 +1,6 @@
 <?php
 namespace WisataKu\WisataKuAPI;
-include "db.php";
+include "DB.php";
     
 class Connection {
 	static $link;
