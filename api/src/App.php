@@ -37,7 +37,12 @@ class App
                     <a href="tourpackage/1">
                         GET tourpackage/:id (tourpackage by id)
                     </a>
-                </li
+                </li>
+                <li>GET transaction/list</li>
+                <li>POST oauth/token</li>
+                <li>POST transaction/new</li>
+                <li>POST transaction/confirm</li>
+
             </ol>
             ';
             
