@@ -64,6 +64,15 @@ class TourItinerary {
     {
     	return $this->itineraryDesc;
     }
+    
+    public function toArray() {
+        return array(
+            "itineraryTourId" => $this->itineraryTourId,
+            "itinerarySeq" => $this->itinerarySeq,
+            "itineraryTitle" => $this->itineraryTitle,
+            "itineraryDesc" => $this->itineraryDesc,
+        ); 
+    }
 }
 
 ?>
