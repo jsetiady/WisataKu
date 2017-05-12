@@ -68,7 +68,7 @@ class App
             };
 
             $this->map(['GET'], '', function ($request, $response) {
-                $model = new Model();
+                $model = new LocationModel();
                 $data = $model->getLocations();
                 
                 return $response->withJson($data);
