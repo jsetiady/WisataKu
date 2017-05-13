@@ -231,6 +231,155 @@ class App
                         'status' => 'Error',
                         'message' => 'Invalid credential'], 404);    
             });
+            
+            
+            //POST transaction/new
+            $this->post('/new', function ($request, $response, $args) {
+                
+                $headers = apache_request_headers();
+                $model = new AccessToken();
+                
+                //check token by username is valid
+                $isValid = $model->isValidToken($headers['username'], $headers['token']);
+                
+                $errorData =  [
+                        'status' => 'Error',
+                        'message' => 'Invalid credential or request format'];
+                
+                if($isValid) {
+                    //check mandatory parameter
+                    if(
+                        !isset($_POST['tourId']) || !isset($_POST['totalPerson']) || !isset($_POST['paymentType']) || !isset($_POST['contactName']) || !isset($_POST['contactPhoneNumber']) 
+                    ) {
+                        $data =  [
+                        'status' => 'Error',
+                        'message' => 'Missing mandatory parameter'];
+                        $status = 404;
+                    } else {
+                        
+                        
+                        /*
+                        //post
+                        tourId
+                        trans_pref_startdate //optional
+                        trans_pref_enddate //optional
+                        trans_total_person
+                        trans_payment_type
+                        //trans_payment_acc_name //if payment type == cc, ini jadi mandatory
+                        //trans_payment_acc_no
+                        //trans_payment_acc_bank
+                        trans_notes //optional
+
+                        trans_price_person // hasil query
+                        trans_date //generate
+                        trans_expired_date //generate
+
+                        trans_user_contact_name
+                        trans_user_contact_no
+
+                        //kembalian
+                        trans_id
+                        trans_invoice_no
+                        linktoinvoicefile
+                        trans_total_price
+                        trans_payment_type
+                        trans_status_desc
+                        trans_expired_date
+                        trans_payment_date
+
+                        */
+
+                        $data = array('test'=>'test');
+                        if(!is_null($data)) {
+                            $status = 200;
+                        } else {
+                            $data =  $errorData;
+                            $status = 404;
+                        }
+                    }
+                    return $response->withJson($data, $status);
+                } 
+                
+                return $response->withJson(
+                    $errorData, 404); 
+            });
+            
+            
+            $this->patch('/confirm/{id}', function ($request, $response, $args) {
+                $headers = apache_request_headers();
+                $model = new AccessToken();
+                
+                $errorData =  [
+                        'status' => 'Error',
+                        'message' => 'Invalid credential or request format'];
+                
+                if(isset($headers['username']) && isset($headers['token'])) {
+                    //check token by username is valid
+                    $isValid = $model->isValidToken($headers['username'], $headers['token']);
+                } else {
+                    return $response->withJson($errorData, $status);
+                }
+                
+                if($isValid) {
+                    //check mandatory parameter
+                    $input = array();
+                    parse_str(file_get_contents('php://input'), $input);
+                    
+                    if(
+                        !isset($input['accountName']) ||
+                        !isset($input['accountNumber']) ||
+                        !isset($input['accountBankName'])
+                    ) {
+                         $data =  [
+                            'status' => 'Error',
+                            'message' => 'Missing mandatory parameter'];
+                            $status = 404;
+                    }
+                    else {
+                        //asumsi: kalau confirm pasti non-cc
+                
+                        //get id transaksi
+                        $transaction = new TransactionTourModel();
+                        $util = new Util();
+                    
+                        //get transaction
+                        //if any, return transaction list
+                        $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
+                            
+                        
+                        if(sizeof($result)>0) {
+                            //kalau ketemu, cek sudah bayar atau blm
+                            if($result[0]['transactionStatus']['statusId']) {
+                                //sudah bayar
+                                $data =  [
+                                    'status' => 'Error',
+                                    'message' => 'This transaction has been paid'];
+                                    $status = 404;
+
+                            } else {
+                                //kalau belum update transaction jadi sudah bayar
+                                $data =  [
+                                    'status' => 'Error',
+                                    'message' => 'Belum bayar'];
+                                    $status = 200;
+                            }
+                        } else {
+                            //id tidak valid
+                            $data =  [
+                            'status' => 'Error',
+                            'message' => 'Transaction id not found'];
+                            $status = 404;
+                        }
+                       
+                    }
+                } else {
+                    $data =  $errorData;
+                    $status = 404;
+                }
+                return $response->withJson($data, $status);
+            });
+            
+                        
         });
     }
     
