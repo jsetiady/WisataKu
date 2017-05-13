@@ -26,30 +26,30 @@ class TourPackageModel {
         
         if(!is_null($args)) {
             foreach($args as $arg):
-            if($_GET['type']) {
-                switch(strtolower($_GET['type'])) {
-                    case "personal": $sql .= " and tour_type='p'"; break;
-                    case "group": $sql .= " and tour_type='g'"; break;
-                    default: break;
+                if($_GET['type']) {
+                    switch(strtolower($_GET['type'])) {
+                        case "personal": $sql .= " and tour_type='p'"; break;
+                        case "group": $sql .= " and tour_type='g'"; break;
+                        default: break;
+                    }
                 }
-            }
-            
-            /*
-            if($_GET['isActive']) {
-                echo $_GET['isActive'];
-            }
-            */
-            
-            if($_GET['startDate']) {
-                $sql .= " and tour_start_date='".$_GET['startDate']."'";
-            }
-            
-            if($_GET['endDate']) {
-                $sql .= " and tour_end_date='".$_GET['endDate']."'";
-            }
-            if($_GET['location']) {
-                $sql .= " and LCASE(loc_name)='".strtolower($_GET['location'])."'";
-            }
+
+                /*
+                if($_GET['isActive']) {
+                    echo $_GET['isActive'];
+                }
+                */
+
+                if($_GET['startDate']) {
+                    $sql .= " and tour_start_date>='".$_GET['startDate']."'";
+                }
+
+                if($_GET['endDate']) {
+                    $sql .= " and tour_end_date<='".$_GET['endDate']."'";
+                }
+                if($_GET['location']) {
+                    $sql .= " and LCASE(loc_name)='".strtolower($_GET['location'])."'";
+                }
             endforeach;
         }
         //echo $sql;
