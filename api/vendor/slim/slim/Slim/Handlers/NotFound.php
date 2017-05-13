@@ -111,10 +111,7 @@ class NotFound extends AbstractHandler
             }
         </style>
     </head>
-    <body>
-        <h3>Sorry, service not found</h3>
-        <a href='$homeUrl'>Back to service list</a>
-    </body>
+    <body>{"status" : "error","message": "Sorry, the requested format is invalid, or service not found"}</body>
 </html>
 END;
     }

@@ -3,4 +3,4 @@ require_once 'config/autoload.php';
 
 $swagger = \Swagger\scan('src');
 header('Content-Type: application/json');
-echo $swagger;
+file_put_contents ("docs.json", $swagger);

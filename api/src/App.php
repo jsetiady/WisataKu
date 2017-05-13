@@ -4,6 +4,7 @@ require_once "config/Connection.php";
 require_once "config/Util.php";
 require_once "model/TourPackageModel.php";
 require_once "model/LocationModel.php";
+require_once "model/AccessToken.php";
 
 
 /**
@@ -23,7 +24,6 @@ class App
         $app = new \Slim\App;
         $app->get('/', function ($request, $response) {
             
-            /*
             $strMessage = '
             WisataKu API v1.0<br/>
             Available services:
@@ -48,20 +48,22 @@ class App
                         GET tourpackage/:id (tourpackage by id)
                     </a>
                 </li>
-                <li>GET transaction/list</li>
                 <li>POST oauth/token</li>
+                <li>GET transaction/list</li>
                 <li>POST transaction/new</li>
                 <li>POST transaction/confirm</li>
 
             </ol>
             ';
-            */
+            
             $response->getBody()->write($strMessage);
             return $response;
         });
         
         $this->tourPackageService($app);
         $this->locationService($app);
+        $this->oauthService($app);
+        $this->transactionService($app);
         
         $this->app = $app;
     }
@@ -142,6 +144,49 @@ class App
             });
         });
     }
+    
+    
+    //access token
+    public function oauthService($app) {
+        $app->group('/oauth', function () {
+            
+            //generate access token
+            $this->post('/token', function ($request, $response, $args) {
+                $model = new AccessToken();
+                $data = $model->checkAccessToken($_POST['credential']);
+                if(!is_null($data[0])) {
+                    //$data = $data->toArray();
+                    $status = 200;
+                } else {
+                    $data =  [
+                    'status' => 'Error',
+                    'message' => 'Wrong request format'];
+                    $status = 404;
+                }
+                return $response->withJson($data, $status);    
+            });
+        });
+    }
+    
+    
+   // transaction
+    public function transactionService($app) {
+        $app->group('/transaction', function () {
+            
+            //GET transaction/list
+            $this->get('/list/{username}/{token}', function ($request, $response, $args) {
+                $util = new Util();
+                
+                //print_r($args);
+                
+                return $response->withJson(
+                    [
+                        'status' => 'Error',
+                        'message' => 'Location with ID:'.$args['id'].' Not Found'], 404);    
+            });
+        });
+    }
+    
     
     //Get instance of application
     public function get() {

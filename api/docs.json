@@ -1,0 +1,24 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "WisataKu API",
+        "description": "API E2E Pembelian Paket Wisata",
+        "version": "1.0"
+    },
+    "paths": {},
+    "definitions": {},
+    "tags": [
+        {
+            "name": "Tour Package",
+            "description": "Services for to managing Tour Package"
+        },
+        {
+            "name": "Tour Package Location",
+            "description": "Show Tour Package Location"
+        },
+        {
+            "name": "Transaction",
+            "description": "Access to Tour Package orders"
+        }
+    ]
+}
