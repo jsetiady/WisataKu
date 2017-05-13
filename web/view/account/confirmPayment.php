@@ -41,6 +41,16 @@
 	          			<td class="form-control-sm" style="width:30px;"><input type="text" name="accName" class="form-control-sm" value="" required="required" /></td>
 	          		</tr>
 	          		<tr>
+	          			<td style="width:150px;">Bank Name</td>
+	          			<td style="width:30px;">:</td>
+	          			<td class="form-control-sm" style="width:30px;"><input type="text" name="accBank" class="form-control-sm" value="" required="required" /></td>
+	          		</tr>
+	          		<tr>
+	          			<td style="width:150px;">Bank Account No</td>
+	          			<td style="width:30px;">:</td>
+	          			<td class="form-control-sm" style="width:30px;"><input type="text" name="accNo" class="form-control-sm" value="" required="required" /></td>
+	          		</tr>
+	          		<tr>
 	          			<td style="width:150px;">Date Payment</td>
 	          			<td style="width:30px;">:</td>
 	          			<td class="form-control-sm" style="width:30px;"><input type="text" id="paymentDate" name="paymentDate" class="form-control-sm" value="" required="required" /></td>

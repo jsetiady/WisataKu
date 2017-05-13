@@ -147,10 +147,14 @@ class TransactionTourModel {
     	$invNo = $_POST['invNo'];
     	$accName = $_POST['accName'];
     	$paymentDate = $_POST['paymentDate'];
+    	$accNo = $_POST['accNo'];
+    	$accBank = $_POST['accBank'];
     	
     	$sql = "UPDATE ws_transaction_tour
 					set trans_payment_date='".$paymentDate."',
 					trans_payment_acc_name='".str_replace("'","",$accName)."',
+					trans_payment_acc_no='".$accNo."',
+					trans_payment_acc_bank='".$accBank."',
 					trans_status_id = 1
 				where trans_invoice_no='".$invNo."'";
     	return mysqli_query(Connection::getCon(),$sql);

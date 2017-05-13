@@ -19,6 +19,8 @@ class TransactionTour {
 	private $transPaymentType;
 	private $transPaymentDate;
 	private $transPaymentAccName;
+	private $transPaymentAccNo;
+	private $transPaymentAccBank;
 	
 // 	public function __construct($transId, $transUser, $transUserTelp,$transTotalPerson,$transPrefStartDate,
 // 		$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTour,
@@ -162,6 +164,18 @@ class TransactionTour {
     	$this->transPaymentAccName= $transPaymentAccName;
     	return $this;
     }
+    
+    public function setTransPaymentAccNo($transPaymentAccNo)
+    {
+    	$this->transPaymentAccNo= $transPaymentAccNo;
+    	return $this;
+    }
+    
+    public function setTransPaymentAccBank($transPaymentAccBank)
+    {
+    	$this->transPaymentAccBank= $transPaymentAccBank;
+    	return $this;
+    }
 
     public function getTransId()
     {
@@ -251,6 +265,16 @@ class TransactionTour {
     public function getTransPaymentAccName()
     {
     	return $this->transPaymentAccName;
+    }
+    
+    public function getTransPaymentAccNo()
+    {
+    	return $this->transPaymentAccNo;
+    }
+    
+    public function getTransPaymentAccBank()
+    {
+    	return $this->transPaymentAccBank;
     }
 
 }
