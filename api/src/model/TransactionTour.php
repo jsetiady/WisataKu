@@ -285,7 +285,6 @@ class TransactionTour {
                 "paymentAccountBank" => $this->transPaymentAccBank
             )
         );
-        return array();
     }
     
 
