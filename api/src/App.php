@@ -5,8 +5,17 @@ require_once "config/Util.php";
 require_once "model/TourPackageModel.php";
 require_once "model/LocationModel.php";
 
+
+/**
+ * @SWG\Info(title="WisataKu API",
+ description="API E2E Pembelian Paket Wisata",
+ version="1.0")
+ 
+ */
+
 class App
 {
+    
     private $app;
     private $model;
     
@@ -14,6 +23,7 @@ class App
         $app = new \Slim\App;
         $app->get('/', function ($request, $response) {
             
+            /*
             $strMessage = '
             WisataKu API v1.0<br/>
             Available services:
@@ -45,7 +55,7 @@ class App
 
             </ol>
             ';
-            
+            */
             $response->getBody()->write($strMessage);
             return $response;
         });

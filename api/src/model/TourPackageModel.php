@@ -33,6 +33,7 @@ class TourPackageModel {
                     default: break;
                 }
             }
+            
             if($_GET['isActive']) {
                 echo $_GET['isActive'];
             }
