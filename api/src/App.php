@@ -44,11 +44,21 @@ class App
                     </a>
                 </li>
                 <li>
+                    <a href="tourpackage?location=komodo">
+                        GET list of tour packages (filtered)
+                    </a>
+                </li>
+                <li>
                     <a href="tourpackage/1">
                         GET tourpackage/:id (tourpackage by id)
                     </a>
                 </li>
-                <li>POST oauth/token</li>
+                <li>
+                    <a href="oauth/token">
+                        POST oauth/token
+                    </a><br/>
+                        Username and password for LeasingKu = leasingku:p4ssw0rD
+                </li>
                 <li>GET transaction/list</li>
                 <li>POST transaction/new</li>
                 <li>POST transaction/confirm</li>
@@ -74,7 +84,6 @@ class App
             
             //GET tourpackage/
             $this->map(['GET'], '', function ($request, $response) {
-                //print_r($_GET);
                 $model = new TourPackageModel();
                 $util = new Util();
                 $data = $util->objectsToArray($model->getAllTourPackages($_GET));

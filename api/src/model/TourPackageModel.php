@@ -34,17 +34,21 @@ class TourPackageModel {
                 }
             }
             
+            /*
             if($_GET['isActive']) {
                 echo $_GET['isActive'];
             }
+            */
+            
             if($_GET['startDate']) {
-                echo $_GET['startDate'];
+                $sql .= " and tour_start_date='".$_GET['startDate']."'";
             }
+            
             if($_GET['endDate']) {
-                echo $_GET['endDate'];
+                $sql .= " and tour_end_date='".$_GET['endDate']."'";
             }
             if($_GET['location']) {
-                echo $_GET['location'];
+                $sql .= " and LCASE(loc_name)='".strtolower($_GET['location'])."'";
             }
             endforeach;
         }
