@@ -21,25 +21,24 @@ class TransactionTourModel {
         }
         
         if(isset($args['id'])) {
-            $sql .= " and trans_id >= '".$args['id']."'";
+            $sql .= " and trans_id = '".$args['id']."'";
         }
         
-        if(isset($args['transactionStartDate'])) {
+        if(isset($args['transactionstartdate'])) {
             $sql .= " and trans_date >= '".$args['transactionStartDate']."'";
         }
         
-        if(isset($args['transactionEndDate'])) {
+        if(isset($args['transactionenddate'])) {
             $sql .= " and trans_date <= '".$args['transactionEndDate']."'";
         }
         
-        if(isset($args['invoiceNumber'])) {
-            $sql .= " and LCASE(trans_invoice_no) >= '".strtolower($args['invoiceNumber'])."'";
+        if(isset($args['invoicenumber'])) {
+            $sql .= " and LCASE(trans_invoice_no) = '".strtolower($args['invoiceNumber'])."'";
         }
         
-        if(isset($args['paymentStatus'])) {
-            $sql .= " and LCASE(status_desc) >= '".strtolower($args['paymentStatus'])."'";
-        }
-        
+        if(isset($args['paymentstatus'])) {
+            $sql .= " and LCASE(status_desc) = '".strtolower($args['paymentStatus'])."'";
+        }        
     	
         $sql .= " order by trans_id,trans_date asc";
     	$resSql = mysqli_query(Connection::getCon(),$sql);
