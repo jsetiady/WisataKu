@@ -2,9 +2,13 @@
 namespace WisataKu\WisataKuAPI;
 require_once "config/Connection.php";
 require_once "config/Util.php";
-require_once "model/TourPackageModel.php";
-require_once "model/LocationModel.php";
 require_once "model/AccessToken.php";
+require_once "model/LocationModel.php";
+require_once "model/StatusModel.php";
+require_once "model/TourPackageModel.php";
+require_once "model/TransactionTourModel.php";
+
+
 
 
 /**
@@ -50,7 +54,7 @@ class App
                 </li>
                 <li>
                     <a href="tourpackage/1">
-                        GET tourpackage/:id (tourpackage by id)
+                        GET tourpackage/{id} (tourpackage by id)
                     </a>
                 </li>
                 <li>
@@ -59,7 +63,12 @@ class App
                     </a><br/>
                         Username and password for LeasingKu = leasingku:p4ssw0rD
                 </li>
-                <li>GET transaction/list</li>
+                <li>
+                    <a href="transaction/list/leasingku/7198ef1c0ddddfcbeee593740f390a46bd562572a12fa9f199a1059e42200381e786e8dfa2922bc132aec2df660b0744b2fe9f8f2ee00dc2dcf8805112365e96">
+                        GET transaction/list
+                    </a><br/>
+                    Put all requested parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
+                </li>
                 <li>POST transaction/new</li>
                 <li>POST transaction/confirm</li>
 
@@ -87,7 +96,15 @@ class App
                 $model = new TourPackageModel();
                 $util = new Util();
                 $data = $util->objectsToArray($model->getAllTourPackages($_GET));
-                return $response->withJson($data);
+                if(!empty($data)) {
+                    $status = 200;
+                } else {
+                    $data =  [
+                    'status' => 'Error',
+                    'message' => 'There is no tour package that match with the requested criteria'];
+                    $status = 200;
+                }
+                return $response->withJson($data, $status);
             });
             
             //GET tourpackage/:id
@@ -182,15 +199,37 @@ class App
         $app->group('/transaction', function () {
             
             //GET transaction/list
-            $this->get('/list/{username}/{token}', function ($request, $response, $args) {
-                $util = new Util();
+            $this->get('/list', function ($request, $response, $args) {
+                $headers = apache_request_headers();
+                $model = new AccessToken();
                 
-                //print_r($args);
+                //check token by username is valid
+                $isValid = $model->isValidToken($headers['username'], $headers['token']);
+                
+                if($isValid) {
+                    $transaction = new TransactionTourModel();
+                    $util = new Util();
+                    
+                    //get transaction
+                    //if any, return transaction list
+                    $data = $util->objectsToArray($transaction->getAllTransactions($headers));
+                    
+                    if(!empty($data)) {
+                        $status = 200;
+                    } else {
+                        $data =  [
+                        'status' => 'Error',
+                        'message' => 'There is no transaction that match with the requested criteria'];
+                        $status = 200;
+                    }
+                    return $response->withJson($data, $status);
+                    
+                }
                 
                 return $response->withJson(
                     [
                         'status' => 'Error',
-                        'message' => 'Location with ID:'.$args['id'].' Not Found'], 404);    
+                        'message' => 'Invalid credential'], 404);    
             });
         });
     }

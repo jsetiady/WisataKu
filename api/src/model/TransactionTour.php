@@ -1,9 +1,11 @@
 <?php
 namespace WisataKu\WisataKuAPI;
+
 class TransactionTour {
 	private $transId;
 	private $transUser;
-	private $transUserTelp;
+	private $transUserContactName;
+	private $transUserContactNo;
 	private $transTotalPerson;
 	private $transPrefStartDate;
 	private $transPrefEndDate;
@@ -17,31 +19,9 @@ class TransactionTour {
 	private $transNotes;
 	private $transPaymentType;
 	private $transPaymentDate;
+	private $transPaymentAccName;
 	private $transPaymentAccNo;
-	
-// 	public function __construct($transId, $transUser, $transUserTelp,$transTotalPerson,$transPrefStartDate,
-// 		$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTour,
-// 		$transInvoiceNo,$transStatus,$transNotes,
-// 		$transPaymentType,$transPaymentDate,$transPaymentAccNo)  
-//     {  
-//         $this->transId = $transId;
-// 	    $this->transUser = $transUser;
-// 	    $this->transUserTelp = $transUserTelp;
-// 	    $this->transTotalPerson = $transTotalPerson;
-// 	    $this->transPrefStartDate = $transPrefStartDate;
-// 	    $this->transPrefEndDate = $transPrefEndDate;
-// 	    $this->transPricePerson = $transPricePerson;
-// 	    $this->transDate = $transDate;
-// 	    $this->transTotalPrice = $transTotalPrice;
-// 	    $this->transExpiredDate = $transExpiredDate;
-// 	    $this->transTour = $transTour;
-// 	    $this->transInvoiceNo = $transInvoiceNo;
-// 	    $this->transStatus = $transStatus;
-// 	    $this->transNotes = $transNotes;
-// 	    $this->transPaymentType = $transPaymentType;
-// 	    $this->transPaymentDate = $transPaymentDate;
-// 	    $this->transPaymentAccNo = $transPaymentAccNo;
-//     }
+	private $transPaymentAccBank;
     
     public function __construct()
     {
@@ -65,10 +45,16 @@ class TransactionTour {
     	$this->transUser = $transUser;
     	return $this;
     }
-
-    public function setTransUserTelp($transUserTelp)
+    
+    public function setTransUserContactName($transUserContactName)
     {
-    	$this->transUserTelp = $transUserTelp;
+    	$this->transUserContactName = $transUserContactName;
+    	return $this;
+    }
+
+    public function setTransUserContactNo($transUserContactNo)
+    {
+    	$this->transUserContactNo = $transUserContactNo;
     	return $this;
     }
 
@@ -150,9 +136,21 @@ class TransactionTour {
     	return $this;
     }
 
+    public function setTransPaymentAccName($transPaymentAccName)
+    {
+    	$this->transPaymentAccName= $transPaymentAccName;
+    	return $this;
+    }
+    
     public function setTransPaymentAccNo($transPaymentAccNo)
     {
-    	$this->transPaymentAccNo = $transPaymentAccNo;
+    	$this->transPaymentAccNo= $transPaymentAccNo;
+    	return $this;
+    }
+    
+    public function setTransPaymentAccBank($transPaymentAccBank)
+    {
+    	$this->transPaymentAccBank= $transPaymentAccBank;
     	return $this;
     }
 
@@ -165,10 +163,15 @@ class TransactionTour {
     {
     	return $this->transUser;
     }
-
-    public function getTransUserTelp()
+    
+    public function getTransUserContactName()
     {
-    	return $this->transUserTelp;
+    	return $this->transUserContactName;
+    }
+
+    public function getTransUserContactNo()
+    {
+    	return $this->transUserContactNo;
     }
 
     public function getTransTotalPerson()
@@ -236,9 +239,50 @@ class TransactionTour {
     	return $this->transPaymentDate;
     }
 
+    public function getTransPaymentAccName()
+    {
+    	return $this->transPaymentAccName;
+    }
+    
     public function getTransPaymentAccNo()
     {
     	return $this->transPaymentAccNo;
     }
+    
+    public function getTransPaymentAccBank()
+    {
+    	return $this->transPaymentAccBank;
+    }
+
+    public function toArray() {
+        $util = new Util();
+        return array(
+            "transId" => $this->transId,
+            "transUser" => $this->transUser->toArray(),
+            "transUserContactName" => $this->transUserContactName,
+            "transUserContactNo" => $this->transUserContactNo,
+            "transTotalPerson" => $this->transTotalPerson,
+            "transPrefStartDate" => $this->transPrefStartDate,
+            "transPrefEndDate" => $this->transPrefEndDate,
+            "transPricePerson" => $this->transPricePerson,
+            "transDate" => $this->transDate,
+            "transTotalPrice" => $this->transTotalPrice,
+            "transExpiredDate" => $this->transExpiredDate,
+            "transTour" => array(
+                "tourId" => $this->transTour->getTourId(),
+                "tourName" => $this->transTour->getTourName(),
+            ),
+            "transInvoiceNo" => $this->transInvoiceNo,
+            "transStatus" => $this->transStatus->toArray(),
+            "transNotes" => $this->transNotes,
+            "transPaymentType" => $this->transPaymentType,
+	        "transPaymentDate" => $this->transPaymentDate,
+            "transPaymentAccName" => $this->transPaymentAccName,
+            "transPaymentAccNo" => $this->transPaymentAccNo,
+            "transPaymentAccBank" => $this->transPaymentAccBank
+        );
+        return array();
+    }
+    
 
 }

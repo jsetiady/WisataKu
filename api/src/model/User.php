@@ -79,6 +79,14 @@ class User {
     {
     	return $this->name;
     }
+    
+    public function toArray() {
+        return array(
+            "userId" => $this->userId,
+            "username" => $this->username,
+            "name" => $this->name
+        );
+    }
 
 }
 
