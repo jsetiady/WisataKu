@@ -11,18 +11,35 @@ class TransactionTourModel {
     			trans_payment_acc_name,trans_payment_date,trans_expired_date,trans_tour_id,trans_invoice_no,
     			(select status_desc from ws_status where status_id = trans_status_id) status_desc,
 				(select tour_name from ws_tour where tour_id=trans_tour_id) tour_name,
-    			trans_notes,user_name,trans_status_id
+    			trans_notes,user_name,user_username, trans_status_id
                 from ws_transaction_tour,ws_user
                 where trans_user_id = user_id";
-    	
-    	/*if($transId != null)
-    	{
-    		$sql .= " and trans_id=".$transId;
-    	}
-    	if($userId != null)
-    	{
-    		$sql .= " and trans_user_id=".$userId;
-    	}*/
+        
+        
+        if(isset($args['username'])) {
+            $sql .= " and LCASE(user_username) = '".strtolower($args['username'])."'";
+        }
+        
+        if(isset($args['id'])) {
+            $sql .= " and trans_id >= '".$args['id']."'";
+        }
+        
+        if(isset($args['transactionStartDate'])) {
+            $sql .= " and trans_date >= '".$args['transactionStartDate']."'";
+        }
+        
+        if(isset($args['transactionEndDate'])) {
+            $sql .= " and trans_date <= '".$args['transactionEndDate']."'";
+        }
+        
+        if(isset($args['invoiceNumber'])) {
+            $sql .= " and LCASE(trans_invoice_no) >= '".strtolower($args['invoiceNumber'])."'";
+        }
+        
+        if(isset($args['paymentStatus'])) {
+            $sql .= " and LCASE(status_desc) >= '".strtolower($args['paymentStatus'])."'";
+        }
+        
     	
         $sql .= " order by trans_id,trans_date asc";
     	$resSql = mysqli_query(Connection::getCon(),$sql);
@@ -33,7 +50,8 @@ class TransactionTourModel {
                     ->setTransId($row['trans_id'])
                     ->setTransUser(User::create()
                     				->setUserId($row['trans_user_id'])
-                    				->setUserName($row['user_name']))
+                    				->setUserName($row['user_username'])
+                    				->setName($row['user_name']))
     				->setTransUserContactName($row['trans_user_contact_name'])
                     ->setTransUserContactNo($row['trans_user_contact_no'])
                     ->setTransTotalPerson($row['trans_total_person'])

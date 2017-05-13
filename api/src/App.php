@@ -39,7 +39,7 @@ class App
                 </li>
                 <li>
                     <a href="location/1">
-                        GET tour location/:id (location by id)
+                        GET tour location/{id} (location by id)
                     </a>
                 </li>
                 <li>
@@ -70,7 +70,7 @@ class App
                     Put all requested parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
                 </li>
                 <li>POST transaction/new</li>
-                <li>POST transaction/confirm</li>
+                <li>PUT transaction/confirm</li>
 
             </ol>
             ';

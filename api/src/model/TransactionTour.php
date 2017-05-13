@@ -257,29 +257,33 @@ class TransactionTour {
     public function toArray() {
         $util = new Util();
         return array(
-            "transId" => $this->transId,
-            "transUser" => $this->transUser->toArray(),
-            "transUserContactName" => $this->transUserContactName,
-            "transUserContactNo" => $this->transUserContactNo,
-            "transTotalPerson" => $this->transTotalPerson,
-            "transPrefStartDate" => $this->transPrefStartDate,
-            "transPrefEndDate" => $this->transPrefEndDate,
-            "transPricePerson" => $this->transPricePerson,
-            "transDate" => $this->transDate,
-            "transTotalPrice" => $this->transTotalPrice,
-            "transExpiredDate" => $this->transExpiredDate,
-            "transTour" => array(
+            "transactionId" => $this->transId,
+            "transactionUser" => $this->transUser->toArray(),
+            "transactionContactInfo" => array(
+                "contactName" => $this->transUserContactName,
+                "contactPhoneNumber" => $this->transUserContactNo
+            ),
+            "transactionTour" => array(
                 "tourId" => $this->transTour->getTourId(),
                 "tourName" => $this->transTour->getTourName(),
+                "pricePerPerson" => $this->transPricePerson,
+                "totalPerson" => $this->transTotalPerson,
+                "preferredStartDate" => $this->transPrefStartDate,
+                "preferredEndDate" => $this->transPrefEndDate
             ),
-            "transInvoiceNo" => $this->transInvoiceNo,
-            "transStatus" => $this->transStatus->toArray(),
-            "transNotes" => $this->transNotes,
-            "transPaymentType" => $this->transPaymentType,
-	        "transPaymentDate" => $this->transPaymentDate,
-            "transPaymentAccName" => $this->transPaymentAccName,
-            "transPaymentAccNo" => $this->transPaymentAccNo,
-            "transPaymentAccBank" => $this->transPaymentAccBank
+            "transactionDate" => $this->transDate,
+            "transactionTotalPrice" => $this->transTotalPrice,
+            "transactionExpiredDate" => $this->transExpiredDate,
+            "transactionInvoiceNumber" => $this->transInvoiceNo,
+            "transactionStatus" => $this->transStatus->toArray(),
+            "transactionNotes" => $this->transNotes,
+            "transactionPaymentInfo" => array(
+                "paymentType" => $this->transPaymentType,
+                "paymentDate" => $this->transPaymentDate,
+                "paymentAccountName" => $this->transPaymentAccName,
+                "paymentAccountNumber" => $this->transPaymentAccNo,
+                "paymentAccountBank" => $this->transPaymentAccBank
+            )
         );
         return array();
     }
