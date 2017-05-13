@@ -154,7 +154,8 @@
           	<input type="hidden" name="personContactNo" value="<?= $personContactNo ?>" />
           	<input type="hidden" name="rentVehicleStat" value="<?= $rentVehicleStat ?>" />
           	<input type="hidden" name="paymentType" id="paymentType" value="cc" />
-          	
+          	<input type="hidden" name="pricePerson" id="pricePerson" value="<?= $tourDet->getTourPrice() ?>" />
+          	<input type="hidden" name="totalPrice" id="totalPrice" value="<?php echo ($tourDet->getTourPrice() * $totalPax) ?>" />
           	</form>
           </div>
         </div>

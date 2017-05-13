@@ -7,6 +7,7 @@ class Controller {
 	public $tourPackageModel;
 	public $userModel;
 	public $baseurl = "http://localhost/wisataku/web";
+	public $transactionTourModel;
 	
 	public function __construct()  
     {  
@@ -14,7 +15,6 @@ class Controller {
          $this->locationModel = new LocationModel();
          $this->tourPackageModel = new TourPackageModel();
          $this->userModel = new UserModel();
-	
     } 
 	
 	public function invoke()
@@ -88,7 +88,7 @@ class Controller {
 	public function viewDetailTourPackage($tourId)
 	{
 		$title = "View Tour Detail - WisataKu";
-		$tourDet = $this->tourPackageModel->getTourPackageByTourId($tourId);
+		$tourDet = $this->tourPackageModel->getAllTourPackages($tourId)[0];
 		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
 		include 'view/tour/viewDetailTour.php';
 	}
@@ -106,7 +106,7 @@ class Controller {
 		}
 		else
 		{
-			$tourDet = $this->tourPackageModel->getTourPackageByTourId($tourId);
+			$tourDet = $this->tourPackageModel->getAllTourPackages($tourId)[0];
 			include 'view/tour/bookingForm.php';
 		}
 	}
@@ -115,7 +115,7 @@ class Controller {
 	{
 		$title = "Booking Confirmation - WisataKu";
 		
-		$tourDet = $this->tourPackageModel->getTourPackageByTourId($_POST['tourId']);
+		$tourDet = $this->tourPackageModel->getAllTourPackages($_POST['tourId'])[0];
 		$fromDate = $_POST['fromDate'];
 		$toDate = $_POST['toDate'];
 		$totalPax = $_POST['totalPax'];
@@ -126,6 +126,17 @@ class Controller {
 		$rentVehicleStat = $_POST['rentVehicleStatus'];
 		
 		include 'view/tour/bookingConfirmationForm.php';
+	}
+	
+	public function doTransaction()
+	{
+		$this->transactionTourModel = new TransactionTourModel();
+		$transactionId = $this->transactionTourModel->createTransaction();
+		
+		if($transactionId != "fail")
+		{
+			header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
+		}
 	}
 	
 	public function confirmPayment()
