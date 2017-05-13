@@ -15,6 +15,7 @@ class Controller {
          $this->locationModel = new LocationModel();
          $this->tourPackageModel = new TourPackageModel();
          $this->userModel = new UserModel();
+         $this->transactionTourModel = new TransactionTourModel();
     } 
 	
 	public function invoke()
@@ -130,13 +131,27 @@ class Controller {
 	
 	public function doTransaction()
 	{
-		$this->transactionTourModel = new TransactionTourModel();
+		
 		$transactionId = $this->transactionTourModel->createTransaction();
 		
 		if($transactionId != "fail")
 		{
-			header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
+			if($_POST['paymentType'] == "trf")
+			{
+				header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
+			}
+			else 
+			{
+				header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&id=".$transactionId);
+			}
 		}
+	}
+	
+	public function transactionCreatedView($transId)
+	{
+		$title = "Transaction Created - WisataKu";
+		$transaction = $this->transactionTourModel->getAllTransactions($transId,null)[0];
+		include 'view/tour/transactionCreatedViewer.php';
 	}
 	
 	public function confirmPayment()
@@ -147,12 +162,20 @@ class Controller {
 	
 	public function doConfirmPayment()
 	{
-		
+		$title= "Confirm Payment - WisataKu";
+		$confirm = $this->transactionTourModel->paymentConfirmation();
+		include 'view/account/confirmPayment.php';
+		if($confirm)
+		{
+			echo "<script>alert('Payment has been confirmed, thank you.');</script>";
+		}
 	}
 	
 	public function viewOrderHistory()
 	{
 		$title= "View Order History - WisataKu";
+		$user = $_SESSION['user'];
+		$transactions = $this->transactionTourModel->getAllTransactions(null,$user->getUserId());
 		include 'view/account/orderHistory.php';
 	}
 	

@@ -9,8 +9,9 @@ class TransactionTourModel {
 
     	$sql = "SELECT trans_id,trans_user_id,trans_user_contact_name,trans_user_contact_no,trans_total_person,trans_pref_startdate,
     			trans_pref_enddate,trans_price_person,trans_date,trans_total_price,trans_payment_type,
-    			trans_payment_acc_no,trans_payment_date,trans_expired_date,trans_tour_id,trans_invoice_no,
+    			trans_payment_acc_name,trans_payment_date,trans_expired_date,trans_tour_id,trans_invoice_no,
     			(select status_desc from ws_status where status_id = trans_status_id) status_desc,
+				(select tour_name from ws_tour where tour_id=trans_tour_id) tour_name,
     			trans_notes,user_name,trans_status_id
                 from ws_transaction_tour,ws_user
                 where trans_user_id = user_id";
@@ -24,9 +25,9 @@ class TransactionTourModel {
     		$sql .= " and trans_user_id=".$userId;
     	}
     	
-        $sql .= " order by trans_id";
+        $sql .= " order by trans_id,trans_date asc";
     	$resSql = mysqli_query(Connection::getCon(),$sql);
-
+		
     	while($row = mysqli_fetch_assoc($resSql)) {
     		array_push($transactions, 
                 TransactionTour::create()
@@ -43,7 +44,7 @@ class TransactionTourModel {
                     ->setTransDate($row['trans_date'])
                     ->setTransTotalPrice($row['trans_total_price'])
                     ->setTransPaymentType($row['trans_payment_type'])
-                    ->setTransPaymentAccNo($row['trans_payment_acc_no'])
+                    ->setTransPaymentAccName($row['trans_payment_acc_name'])
                     ->setTransPaymentDate($row['trans_payment_date'])
                     ->setTransExpiredDate($row['trans_expired_date'])
                     ->setTransInvoiceNo($row['trans_invoice_no'])
@@ -51,8 +52,8 @@ class TransactionTourModel {
                     				->setStatusId($row['trans_status_id'])
                     				->setStatusDesc($row['status_desc']))
                     ->setTransNotes($row['trans_notes'])
-                    ->setTransTour(TransactionTour::create()
-                    				->setTourId($row['transaction_tour_id'])
+                    ->setTransTour(TourPackage::create()
+                    				->setTourId($row['trans_tour_id'])
                     				->setTourName($row['tour_name']))
             );
     	}
@@ -68,20 +69,20 @@ class TransactionTourModel {
     	$fromDate = $_POST['fromDate'];
     	$toDate = $_POST['toDate'];
     	$totalPax = $_POST['totalPax'];
-    	$addNotes = $_POST['additionalNotes'];
+    	$addNotes = $_POST['addNotes'];
     	$prefix = $_POST['prefix'];
     	$personName = $_POST['personName'];
     	$personContactNo = $_POST['personContactNo'];
-    	$rentVehicleStat = $_POST['rentVehicleStatus'];
+    	$rentVehicleStat = $_POST['rentVehicleStat'];
     	$paymentType = $_POST['paymentType'];
     	$tourId = $_POST['tourId'];
     	$pricePerson= $_POST['pricePerson'];
     	$totalPrice = $_POST['totalPrice'];
-    	$statusId = 1; //for transfer payment method
+    	$statusId = 0; //for transfer payment method
     	
     	if($paymentType == "cc")
     	{
-    		$statusId = 2; //for credit card payment method
+    		$statusId = 1; //for credit card payment method
     	}
     	
 		$sql = "INSERT into ws_transaction_tour(trans_user_id,trans_user_contact_name,trans_user_contact_no,trans_total_person
@@ -92,8 +93,9 @@ class TransactionTourModel {
 					'".$userId."',
 					'".str_replace("'","",$personName)."',
 					'".$personContactNo."',
+					".$totalPax.",
 					'".$fromDate."',
-					'".$endDate."',
+					'".$toDate."',
 					".$pricePerson.",
 					'".date('Y-m-d')."',
 					".$totalPrice.",
@@ -149,11 +151,10 @@ class TransactionTourModel {
     	$sql = "UPDATE ws_transaction_tour
 					set trans_payment_date='".$paymentDate."',
 					trans_payment_acc_name='".str_replace("'","",$accName)."',
-					trans_status_id = 2
+					trans_status_id = 1
 				where trans_invoice_no='".$invNo."'";
     	return mysqli_query(Connection::getCon(),$sql);
     }
-
 }
 
 ?>

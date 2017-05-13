@@ -11,7 +11,7 @@
       <div class="container">
         <div class="row" style="margin:auto">
           <div class="col-md-12" style="margin:auto;text-align:center;">
-          	<h5 style="margin:auto;"><b>Order History</b></h5>
+          	<h5 style="margin:auto;"><b>Transaction History</b></h5>
           	<hr/>
           </div>
            <br/><br/>
@@ -22,13 +22,31 @@
 	          		<head>
 	          			<tr>
 	          				<th style="width:40px;">No</th>
-	          				<th style="width:250px;">Invoice No</th>
-	          				<th>Order Type</th>
-	          				<th>Date</th>
+	          				<th style="width:150px;">Invoice No</th>
+	          				<th style="width:250px;">Tour Name</th>
+	          				<th>Type</th>
+	          				<th>Transaction Date</th>
 	          				<th>Status</th>
-	          				<th style="width:40px">View</th>
+	          				<th style="width:40px">Options</th>
 	          			</tr>
 	          		</head>
+	          		<tbody>
+	          			<?php 
+	          			$no = 1;
+	          			foreach($transactions as $trans) {
+	          			?>
+	          			<tr>
+	          				<td style="text-align:right; padding-right:50px;"><?= $no ?></td>
+	          				<td style="padding-left:20px"><?= $trans->getTransInvoiceNo() ?></td>
+	          				<td style="padding-left:20px"><?= $trans->getTransTour()->getTourName() ?></td>
+	          				<td style="padding-left:20px">Tour</td>
+	          				<td style="padding-left:20px"><?= $trans->getTransDate() ?></td>
+	          				<td style="padding-left:20px"><?= strtoupper($trans->getTransStatus()->getStatusDesc()) ?></td>
+	          				<td style="padding-left:20px"><a href="?cont=tour&action=viewTransaction&id=<?= $trans->getTransId() ?>" class="btn btn-primary btn-sm" style="width:30px; height:15px; font-size:12px; padding-top:0px;">View</a></td>
+	          			</tr>
+	          			<?php	
+	          			}?>
+	          		</tbody>
           		</thead>
           	</table>
           </div>

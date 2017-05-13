@@ -146,6 +146,7 @@
           		</div>
           	</div>
           	<input type="hidden" name="tourId" value="<?= $tourDet->getTourId() ?>" />
+          	<input type="hidden" name="fromDate" value="<?= $fromDate ?>" />
           	<input type="hidden" name="toDate" value="<?= $toDate ?>" />
           	<input type="hidden" name="totalPax" value="<?= $totalPax ?>" />
           	<input type="hidden" name="addNotes" value="<?= $addNotes ?>" />

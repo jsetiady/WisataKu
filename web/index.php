@@ -25,6 +25,9 @@
 				case "doTransaction" :
 					$controller->doTransaction();
 					break;
+				case "transactionConfirm" :
+					$controller->transactionCreatedView($_GET['id']);
+					break;
 			}
 		}
 		else
@@ -46,7 +49,7 @@
 			}
 			else
 			{
-				if($cont == "transaction")
+				if($cont == "account")
 				{
 					switch($action)
 					{
