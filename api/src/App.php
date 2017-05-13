@@ -154,13 +154,12 @@ class App
             $this->post('/token', function ($request, $response, $args) {
                 $model = new AccessToken();
                 $data = $model->checkAccessToken($_POST['credential']);
-                if(!is_null($data[0])) {
-                    //$data = $data->toArray();
+                if(!is_null($data)) {
                     $status = 200;
                 } else {
                     $data =  [
                     'status' => 'Error',
-                    'message' => 'Wrong request format'];
+                    'message' => 'Invalid credential or request format'];
                     $status = 404;
                 }
                 return $response->withJson($data, $status);    
