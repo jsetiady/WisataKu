@@ -224,7 +224,6 @@ class TourPackage {
     
     public function toArray() {
         $util = new Util();
-        $itin = $util->objectsToArray($this->tourItinerary);
         return $util->utf8ize(array(
             "tourId" => $this->tourId,
             "tourName" => $this->tourName,
