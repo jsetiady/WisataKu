@@ -20,7 +20,10 @@
 					$controller->doBooking($_GET['id']);
 					break;
 				case "confirmBooking" :
-					$controller->confirmBooking($_GET['id']);
+					$controller->confirmBooking();
+					break;
+				case "doTransaction" :
+					$controller->doTransaction();
 					break;
 			}
 		}

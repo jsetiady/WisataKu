@@ -115,7 +115,7 @@ class Controller {
 	{
 		$title = "Booking Confirmation - WisataKu";
 		
-		$tourDet = $this->tourPackageModel->getTourPackageByTourId($_POST['tour_id']);
+		$tourDet = $this->tourPackageModel->getTourPackageByTourId($_POST['tourId']);
 		$fromDate = $_POST['fromDate'];
 		$toDate = $_POST['toDate'];
 		$totalPax = $_POST['totalPax'];
@@ -125,7 +125,7 @@ class Controller {
 		$personContactNo = $_POST['personContactNo'];
 		$rentVehicleStat = $_POST['rentVehicleStatus'];
 		
-		include 'view/tour/bookingConfirmation.php';
+		include 'view/tour/bookingConfirmationForm.php';
 	}
 	
 	public function confirmPayment()

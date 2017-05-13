@@ -2,6 +2,28 @@
  include(ABS_PATH."templates/_header.php");
 ?>
 	<script type="text/javascript">
+		function checkTotalPax()
+		{
+			var minPerson = parseInt($("#minPerson").val());
+			var maxPerson = parseInt($("#maxPerson").val());
+			var totalPax = parseInt($("#totalPax").val());
+
+			if(totalPax < minPerson)
+			{
+				alert("Min Person : "+minPerson);
+				$("#totalPax").val(minPerson);
+			}
+			else
+			{
+				if(totalPax > maxPerson)
+				{
+					alert("Max Person : "+maxPerson);
+					$("#totalPax").val(maxPerson);
+				}
+			}
+			
+		}
+	
 	</script>
     <div class="py-5">
       <div class="container">
@@ -87,20 +109,21 @@
           				<td style="width:150px;">Total Pax</td>
           				<td style="width:40px">:</td>
           				<td style="width:70px">
-          					<input type="text" class="form-control form-control-sm" value="<?= $tourDet->getTourMinPerson() ?>" style="width:70px;" name="totalPax" />
+          					<input type="text" class="form-control form-control-sm" id="totalPax" onchange="checkTotalPax()" value="<?= $tourDet->getTourMinPerson() ?>" style="width:70px;" name="totalPax" />
           				</td>
           			</tr>
           			<tr>
-          				<td colspan="2"></td>
+          				<td colspan="2">
+          					<input type="hidden" name="minPerson" id="minPerson" value="<?= $tourDet->getTourMinPerson() ?>" />
+          					<input type="hidden" name="maxPerson" id="maxPerson" value="<?= $tourDet->getTourMaxPerson() ?>" />
+          				</td>
           				<td style="font-size:11;">Min : <?= $tourDet->getTourMinPerson() ?> person, Max : <?= $tourDet->getTourMaxPerson() ?> person</td>
           			</tr>
           			<tr >
           				<td style="width:150px;">Additional Notes</td>
           				<td style="width:40px">:</td>
           				<td style="width:70px">
-          					<textarea name="additionalNotes" class="form-control form-control-sm" rows="5">
-          					
-          					</textarea>
+          					<textarea name="additionalNotes" class="form-control form-control-sm" rows="5"></textarea>
           				</td>
           			</tr>
           			<tr>
@@ -123,14 +146,14 @@
           				<td style="width:150px;">Name</td>
           				<td style="width:40px">:</td>
           				<td style="width:70px">
-          					<input type="text" class="form-control form-control-sm" value="" style="width:250px;" name="personName" />
+          					<input type="text" class="form-control form-control-sm" required="required" value="" style="width:250px;" name="personName" />
           				</td>
           			</tr>
           			<tr >
           				<td style="width:150px;">Contact No</td>
           				<td style="width:40px">:</td>
           				<td style="width:70px">
-          					<input type="text" class="form-control form-control-sm" style="width:250px;" name="personContactNo" />
+          					<input type="text" class="form-control form-control-sm" required="required" style="width:250px;" name="personContactNo" />
           				</td>
           			</tr>
           			<tr>
