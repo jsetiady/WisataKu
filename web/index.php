@@ -63,6 +63,18 @@
 							break;
 					}
 				}
+				else
+				{
+					if($cont == "souvenir")
+					{
+						switch($action)
+						{
+							case "browseSouvenir" :
+								$controller->browseSouvenir();
+								break;
+						}
+					}
+				}
 			}
 		}
 	}
