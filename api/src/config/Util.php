@@ -25,4 +25,10 @@ class Util {
     function isValidId($id) {
          return (int)$id && $id > 0 && $id <= 1000;
     }
+    
+    function validateDate($date){
+        $d = DateTime::createFromFormat('Y-m-d', $date);
+        return $d && $d->format('Y-m-d') === $date;
+    }
+    
 }
