@@ -193,7 +193,7 @@ class Error extends AbstractError
      */
     protected function renderXmlErrorMessage(\Exception $exception)
     {
-        $xml = "<error>\n  <message>Slim Application Error</message>\n";
+        $xml = "<error>\n  <message><!--Application Error</message> -->\n";
         if ($this->displayErrorDetails) {
             do {
                 $xml .= "  <exception>\n";
