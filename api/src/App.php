@@ -69,8 +69,16 @@ class App
                     </a><br/>
                     Put all requested parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
                 </li>
-                <li>POST transaction/new</li>
-                <li>PUT transaction/confirm</li>
+                <li>
+                    <a href="transaction/new">
+                        POST transaction/new
+                    </a>
+                </li>
+                <li>
+                    <a href="transaction/confirm/2">
+                        PATCH transaction/confirm/{id}
+                    </a>
+                </li>
 
             </ol>
             ';
@@ -346,7 +354,6 @@ class App
                         //if any, return transaction list
                         $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
                             
-                        
                         if(sizeof($result)>0) {
                             //kalau ketemu, cek sudah bayar atau blm
                             if($result[0]['transactionStatus']['statusId']) {
@@ -358,10 +365,43 @@ class App
 
                             } else {
                                 //kalau belum update transaction jadi sudah bayar
+                                
+                                $transaction->updateTransactionStatus($result[0]['transactionId'], 1);
+                                
+                                //update transaction payment info
+                                $transaction->paymentConfirmation(array(
+                                    "invNo" => $result[0]['transactionInvoiceNumber'],
+                                    "accName" => $input['accountName'],
+                                    "paymentDate" => date("Y-m-d"),
+                                    "accNo" => $input['accountNumber'],
+                                    "accBank" => $input['accountBankName']
+                                ));
+                                
+                                $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
+                                $result = $result[0];
+                                
                                 $data =  [
-                                    'status' => 'Error',
-                                    'message' => 'Belum bayar'];
-                                    $status = 200;
+                                    'status' => 'Success',
+                                    'message' => 'Payment success',
+                                    'transactionInfo' =>
+                                        array(
+                                            'transactionId' => $result['transactionId'],
+                                            'transactionInvoiceNumber' => $result['transactionInvoiceNumber'],
+                                            'invoiceFile' => INVOICE_FILE_PATH."invoice_".$result['transactionInvoiceNumber'].".pdf",
+                                            'transactionTotalPrice' => $result['transactionTotalPrice'],
+                                            'transactionExpiryDate' => $result['transactionExpiryDate']
+                                        ),
+                                    'transactionStatus' => $result[transactionStatus],
+                                    'paymentInfo' => array(
+                                        'paymentType' => $result['transactionPaymentInfo']['paymentType'],
+                                        'paymentDate' => $result['transactionPaymentInfo']['paymentDate'],
+                                        'paymentAccountName' => $result['transactionPaymentInfo']['paymentAccountName'],
+                                        'paymentAccountNumber' => $result['transactionPaymentInfo']['paymentAccountNumber'],
+                                        'paymentAccountBank' => $result['transactionPaymentInfo']['paymentAccountBank'],
+                                    )
+                                ];
+                                
+                                $status = 200;
                             }
                         } else {
                             //id tidak valid

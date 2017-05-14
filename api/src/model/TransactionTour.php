@@ -273,7 +273,7 @@ class TransactionTour {
             ),
             "transactionDate" => $this->transDate,
             "transactionTotalPrice" => $this->transTotalPrice,
-            "transactionExpiredDate" => $this->transExpiredDate,
+            "transactionExpiryDate" => $this->transExpiredDate,
             "transactionInvoiceNumber" => $this->transInvoiceNo,
             "transactionStatus" => $this->transStatus->toArray(),
             "transactionNotes" => $this->transNotes,

@@ -8,7 +8,7 @@ class TransactionTourModel {
     	$transactions = array();
     	$sql = "SELECT trans_id,trans_user_id,trans_user_contact_name,trans_user_contact_no,trans_total_person,trans_pref_startdate,
     			trans_pref_enddate,trans_price_person,trans_date,trans_total_price,trans_payment_type,
-    			trans_payment_acc_name,trans_payment_date,trans_expired_date,trans_tour_id,trans_invoice_no,
+    			trans_payment_acc_name, trans_payment_acc_no, trans_payment_acc_bank,trans_payment_date,trans_expired_date,trans_tour_id,trans_invoice_no,
     			(select status_desc from ws_status where status_id = trans_status_id) status_desc,
 				(select tour_name from ws_tour where tour_id=trans_tour_id) tour_name,
     			trans_notes,user_name,user_username, trans_status_id
@@ -61,6 +61,8 @@ class TransactionTourModel {
                     ->setTransTotalPrice($row['trans_total_price'])
                     ->setTransPaymentType($row['trans_payment_type'])
                     ->setTransPaymentAccName($row['trans_payment_acc_name'])
+                    ->setTransPaymentAccNo($row['trans_payment_acc_no'])
+                    ->setTransPaymentAccBank($row['trans_payment_acc_bank'])
                     ->setTransPaymentDate($row['trans_payment_date'])
                     ->setTransExpiredDate($row['trans_expired_date'])
                     ->setTransInvoiceNo($row['trans_invoice_no'])
@@ -156,13 +158,13 @@ class TransactionTourModel {
     	return mysqli_query(Connection::getCon(), $sql);
     }
 	
-    public function paymentConfirmation()
+    public function paymentConfirmation($args)
     {
-    	$invNo = $_POST['invNo'];
-    	$accName = $_POST['accName'];
-    	$paymentDate = $_POST['paymentDate'];
-    	$accNo = $_POST['accNo'];
-    	$accBank = $_POST['accBank'];
+    	$invNo = $args['invNo'];
+    	$accName = $args['accName'];
+    	$paymentDate = $args['paymentDate'];
+    	$accNo = $args['accNo'];
+    	$accBank = $args['accBank'];
     	
     	$sql = "UPDATE ws_transaction_tour
 					set trans_payment_date='".$paymentDate."',
@@ -171,6 +173,7 @@ class TransactionTourModel {
 					trans_payment_acc_bank='".$accBank."',
 					trans_status_id = 1
 				where trans_invoice_no='".$invNo."'";
+        
     	return mysqli_query(Connection::getCon(),$sql);
     }
 }
