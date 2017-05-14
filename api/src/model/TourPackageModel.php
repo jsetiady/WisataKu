@@ -42,6 +42,8 @@ class TourPackageModel {
 
                 if($_GET['startDate']) {
                     $sql .= " and tour_start_date>='".$_GET['startDate']."'";
+                } else {
+                    $sql .= " and tour_start_date>='".date("Y-m-d")."'";
                 }
 
                 if($_GET['endDate']) {
