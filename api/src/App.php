@@ -273,22 +273,23 @@ class App
                         //check is valid tourId
                         $tourPackageModel = new TourPackageModel();
                         $tourPackage = $tourPackageModel-> getTourPackageByTourId($_POST['tourId'])->toArray();
+                        $util = new Util();
                         if(sizeOf($tourPackage)==0) {
-                            return $this->getErrorDataValue('tourId');
+                            return $response->withJson($util->getErrorDataValue('tourId'),404);
                         }
                         
                         //check is valid totalPerson
                         if(is_numeric($_POST['totalPerson'])) {
                             if($_POST['totalPerson']<$tourPackage['tourMinPerson'] || $_POST['totalPerson']>$tourPackage['tourMaxPerson']) {
-                                return $this->getErrorDataValue('totalPerson. Valid range between '.$tourPackage['tourMaxPerson']." to ". $tourPackage['tourMinPerson']);
+                                return $response->withJson($util->getErrorDataValue('totalPerson. Valid range between '.$tourPackage['tourMinPerson']." to ". $tourPackage['tourMaxPerson']),404);
                             }
                         } else {
-                            return $this->getErrorDataValue('totalPerson');
+                            return $response->withJson($util->getErrorDataValue('totalPerson'),404);
                         }
                         
                         //is valid contactName
                         if($_POST['contactName']=="") {
-                             return $this->getErrorDataValue('contactName');
+                             return $response->withJson($util->getErrorDataValue('contactName'),404);
                         }
                         
                         //is valid contactPhoneNumber
@@ -298,7 +299,7 @@ class App
                         
                         //check is valid paymentType
                         if(!($_POST['paymentType']=="transfer" || $_POST['paymentType']=="creditcard")) {
-                            return $this->getErrorDataValue('paymentType'); 
+                            return $response->withJson($util->getErrorDataValue('paymentType'),404); 
                         }
                         
                         //check mandatory parameter when payment type = cc
@@ -322,7 +323,7 @@ class App
                         } else {
                             //if exist, check is format valid
                             if(!$util->validateDate($_POST['startDate'])) {
-                                return $this->getErrorDataValue('startDate');
+                                return $util->getErrorDataValue('startDate');
                             }
                         }
                            
@@ -332,7 +333,7 @@ class App
                         } else {
                             //if exist, check is format valid
                             if(!$util->validateDate($_POST['endDate'])) {
-                                return $this->getErrorDataValue('endDate');
+                                return $response->withJson($util->getErrorDataValue('endDate'),404);
                             }
                         }
                         
@@ -354,10 +355,19 @@ class App
                            
                         //insert to db
                         $transactionTourModel = new TransactionTourModel();
-                        $resSql = $transactionTourModel->createTransaction($insertVal);
-                           
-                        $data = array('test'=>'test');
-                           
+                        $generatedTransactionId = $transactionTourModel->createTransaction($insertVal);
+                        
+                        //get recently added transaction
+                        $newTransaction = $transactionTourModel->getAllTransactions(array("id" => $generatedTransactionId));
+                        $newTransaction = $newTransaction[0]->toArray();
+                        
+                        $data = array();
+                        $data['status'] = 'Success';
+                        $data['message'] = 'Transaction created';
+                        $data['transaction'] = $newTransaction;
+                        $data['invoiceFile'] = INVOICE_FILE_PATH."invoice_".$newTransaction['transactionInvoiceNumber'].".pdf";
+                        
+                        
                         if(!is_null($data)) {
                             $status = 200;
                         } else {
@@ -494,13 +504,6 @@ class App
         });
     }
     
-    
-    public function getErrorDataValue($strErrorVal) {
-        $errorDataValue =  [
-            'status' => 'Error',
-            'message' => 'Invalid value of: '.$strErrorVal
-        ];
-    }
     
     //Get instance of application
     public function get() {
