@@ -35,6 +35,7 @@ class TourPackageModel {
                 }
 
                 /*
+                * not implemented
                 if($_GET['isActive']) {
                     echo $_GET['isActive'];
                 }
@@ -43,7 +44,7 @@ class TourPackageModel {
                 if($_GET['startDate']) {
                     $sql .= " and tour_start_date>='".$_GET['startDate']."'";
                 } else {
-                    $sql .= " and tour_start_date>='".date("Y-m-d")."'";
+                    $sql .= " and tour_start_date>=CURDATE()";
                 }
 
                 if($_GET['endDate']) {
