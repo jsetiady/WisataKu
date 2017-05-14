@@ -364,44 +364,55 @@ class App
                                     $status = 404;
 
                             } else {
-                                //kalau belum update transaction jadi sudah bayar
+                                //kalau belum bayar, cek sudah expired atau belum
                                 
-                                $transaction->updateTransactionStatus($result[0]['transactionId'], 1);
-                                
-                                //update transaction payment info
-                                $transaction->paymentConfirmation(array(
-                                    "invNo" => $result[0]['transactionInvoiceNumber'],
-                                    "accName" => $input['accountName'],
-                                    "paymentDate" => date("Y-m-d"),
-                                    "accNo" => $input['accountNumber'],
-                                    "accBank" => $input['accountBankName']
-                                ));
-                                
-                                $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
-                                $result = $result[0];
-                                
-                                $data =  [
-                                    'status' => 'Success',
-                                    'message' => 'Payment success',
-                                    'transactionInfo' =>
-                                        array(
-                                            'transactionId' => $result['transactionId'],
-                                            'transactionInvoiceNumber' => $result['transactionInvoiceNumber'],
-                                            'invoiceFile' => INVOICE_FILE_PATH."invoice_".$result['transactionInvoiceNumber'].".pdf",
-                                            'transactionTotalPrice' => $result['transactionTotalPrice'],
-                                            'transactionExpiryDate' => $result['transactionExpiryDate']
-                                        ),
-                                    'transactionStatus' => $result[transactionStatus],
-                                    'paymentInfo' => array(
-                                        'paymentType' => $result['transactionPaymentInfo']['paymentType'],
-                                        'paymentDate' => $result['transactionPaymentInfo']['paymentDate'],
-                                        'paymentAccountName' => $result['transactionPaymentInfo']['paymentAccountName'],
-                                        'paymentAccountNumber' => $result['transactionPaymentInfo']['paymentAccountNumber'],
-                                        'paymentAccountBank' => $result['transactionPaymentInfo']['paymentAccountBank'],
-                                    )
-                                ];
-                                
-                                $status = 200;
+                                if(strtotime($result[0]['transactionExpiryDate'])>=strtotime(date("Y-m-d"))) {
+                                    
+                                    //kalau belum expired, update transaction jadi sudah bayar
+
+                                    $transaction->updateTransactionStatus($result[0]['transactionId'], 1);
+
+                                    //update transaction payment info
+                                    $transaction->paymentConfirmation(array(
+                                        "invNo" => $result[0]['transactionInvoiceNumber'],
+                                        "accName" => $input['accountName'],
+                                        "paymentDate" => date("Y-m-d"),
+                                        "accNo" => $input['accountNumber'],
+                                        "accBank" => $input['accountBankName']
+                                    ));
+
+                                    $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
+                                    $result = $result[0];
+
+                                    $data =  [
+                                        'status' => 'Success',
+                                        'message' => 'Payment success',
+                                        'transactionInfo' =>
+                                            array(
+                                                'transactionId' => $result['transactionId'],
+                                                'transactionInvoiceNumber' => $result['transactionInvoiceNumber'],
+                                                'invoiceFile' => INVOICE_FILE_PATH."invoice_".$result['transactionInvoiceNumber'].".pdf",
+                                                'transactionTotalPrice' => $result['transactionTotalPrice'],
+                                                'transactionExpiryDate' => $result['transactionExpiryDate']
+                                            ),
+                                        'transactionStatus' => $result[transactionStatus],
+                                        'paymentInfo' => array(
+                                            'paymentType' => $result['transactionPaymentInfo']['paymentType'],
+                                            'paymentDate' => $result['transactionPaymentInfo']['paymentDate'],
+                                            'paymentAccountName' => $result['transactionPaymentInfo']['paymentAccountName'],
+                                            'paymentAccountNumber' => $result['transactionPaymentInfo']['paymentAccountNumber'],
+                                            'paymentAccountBank' => $result['transactionPaymentInfo']['paymentAccountBank'],
+                                        )
+                                    ];
+
+                                    $status = 200;
+                                } else {
+                                    //sudah expired
+                                    $data =  [
+                                        'status' => 'Error',
+                                        'message' => 'Transaction has been expired'];
+                                    $status = 404;
+                                }
                             }
                         } else {
                             //id tidak valid
