@@ -54,7 +54,7 @@ class AccessToken {
                     "user" => $user[0],
                     "token" => $this->generateAccessToken($user[0], $base64Value),
                     "createdDate" => date("Y-m-d"),
-                    "validUntil" => date("Y-m-d", strtotime("+1 week"))
+                    "validUntil" => date("Y-m-d", strtotime("+1 day"))
                 );
             }
             
