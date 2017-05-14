@@ -92,8 +92,32 @@ class App
         $this->locationService($app);
         $this->oauthService($app);
         $this->transactionService($app);
+        $this->paymentStubs($app);
         
         $this->app = $app;
+    }
+    
+    public function paymentStubs($app) {
+        $app->group('/payment', function () {
+            $this->map(['GET'], '', function ($request, $response) {
+                $data =  [
+                'message' => 'WisataKu Payment Gateway'];
+                return $response->withJson($data, $status);
+            });
+            
+            $this->map(['POST'], '', function ($request, $response) {
+                $randomVal = rand(0,1);
+                if($randomVal<0.5) {
+                    $data =  [
+                        'message' => 'Payment success'];
+                    return $response->withJson($data, 200);
+                } else {
+                    $data =  [
+                        'message' => 'Payment failed'];
+                    return $response->withJson($data, 500);
+                }
+            });
+        });
     }
     
     public function tourPackageService($app) {
@@ -367,7 +391,6 @@ class App
                         $data['transaction'] = $newTransaction;
                         $data['invoiceFile'] = INVOICE_FILE_PATH."invoice_".$newTransaction['transactionInvoiceNumber'].".pdf";
                         
-                        
                         if(!is_null($data)) {
                             $status = 200;
                         } else {
@@ -422,7 +445,7 @@ class App
                     
                         //get transaction
                         //if any, return transaction list
-                        $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
+                        $result = $util->objectsToArray($transaction->getAllTransactions(array('id' => $args['id'])));
                             
                         if(sizeof($result)>0) {
                             //kalau ketemu, cek sudah bayar atau blm
