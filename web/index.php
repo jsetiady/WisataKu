@@ -72,6 +72,9 @@
 							case "browseSouvenir" :
 								$controller->browseSouvenir();
 								break;
+							case "detailSouvenir" :
+								$controller->viewDetailSouvenir($_GET['id']);
+								break;
 						}
 					}
 				}

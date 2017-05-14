@@ -184,6 +184,7 @@ class Controller {
 	//souvenir
 	public function browseSouvenir()
 	{
+		$title = "Browse Souvenir Tokoku - WisataKu";
 		$url = "http://tokoku.kilatiron.com/api/v1/barang/kategori/souvenir";
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -192,10 +193,21 @@ class Controller {
 		curl_close($ch);
 		
 		$listSouvenir = json_decode($result,true);
-		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
-		
-// 		var_dump(json_decode($result, true));
 		include 'view/souvenir/browseSouvenir.php';
+	}
+	
+	public function viewDetailSouvenir($souvenirId)
+	{
+		$title = "View Detail Souvenir - WisataKu";
+		$url = "http://tokoku.kilatiron.com/api/v1/barang/".$souvenirId;
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL,$url);
+		$result=curl_exec($ch);
+		curl_close($ch);
+		
+		$souvenir = json_decode($result,true);
+		include 'view/souvenir/viewDetailSouvenir.php';
 	}
 	
 }
