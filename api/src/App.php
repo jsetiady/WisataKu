@@ -254,6 +254,10 @@ class App
                         'status' => 'Error',
                         'message' => 'Invalid credential or request format'];
                 
+                $errorDataValue =  [
+                        'status' => 'Error',
+                        'message' => 'Invalid value of: '];
+                
                 if($isValid) {
                     //check mandatory parameter
                     if(
@@ -265,38 +269,91 @@ class App
                         $status = 404;
                     } else {
                         
+                        //check is valid tourId
+                        $tourPackageModel = new TourPackageModel();
+                        $tourPackage = $tourPackageModel-> getTourPackageByTourId($_POST['tourId']);
+                        if(sizeOf($tourPackage)==0) {
+                            return $this->getErrorDataValue('tourId');
+                        }
                         
-                        /*
-                        //post
-                        tourId
-                        trans_pref_startdate //optional
-                        trans_pref_enddate //optional
-                        trans_total_person
-                        trans_payment_type
-                        //trans_payment_acc_name //if payment type == cc, ini jadi mandatory
-                        //trans_payment_acc_no
-                        //trans_payment_acc_bank
-                        trans_notes //optional
-
-                        trans_price_person // hasil query
-                        trans_date //generate
-                        trans_expired_date //generate
-
-                        trans_user_contact_name
-                        trans_user_contact_no
-
-                        //kembalian
-                        trans_id
-                        trans_invoice_no
-                        linktoinvoicefile
-                        trans_total_price
-                        trans_payment_type
-                        trans_status_desc
-                        trans_expired_date
-                        trans_payment_date
-
-                        */
-
+                        //check is valid totalPerson
+                        if(is_numeric($_POST['totalPerson'])) {
+                            if($_POST['totalPerson']<$tourPackage['tourMinPerson'] || $_POST['totalPerson']>$tourPackage['tourMaxPerson']) {
+                                return $this->getErrorDataValue('totalPerson. Valid range between '.$tourPackage['tourMaxPerson']." to ". $tourPackage['tourMinPerson']);
+                            }
+                        } else {
+                            return $this->getErrorDataValue('totalPerson');
+                        }
+                        
+                        //is valid contactName
+                        if($_POST['contactName']=="") {
+                             return $this->getErrorDataValue('contactName');
+                        }
+                        
+                        //is valid contactPhoneNumber
+                        if(!is_numeric($_POST['contactPhoneNumber'])) {
+                        }
+                        
+                        
+                        //check is valid paymentType
+                        if(!($_POST['paymentType']=="transfer" || $_POST['paymentType']=="creditcard")) {
+                            return $this->getErrorDataValue('paymentType'); 
+                        }
+                        
+                        //check mandatory parameter when payment type = cc
+                        if($_POST['paymentType']=="creditcard") {
+                            if(
+                                !isset($_POST['accountName']) || !isset($_POST['accountNumber']) || !isset($_POST['accountBankName'])
+                            ) {
+                                $data =  [
+                                'status' => 'Error',
+                                'message' => 'Missing mandatory parameter'];
+                                $status = 404;
+                                return $response->withJson($data, $status);
+                            }
+                        }
+                        
+                        //check from and to date
+                        $util = new Util();
+                        //1) check if startDate is missing
+                        if(!isset($_POST['startDate']) {
+                            $_POST['startDate'] = $tourPackage['tourStartDate'];
+                        } else {
+                            //if exist, check is format valid
+                            if(!$util->validateDate($_POST['startDate'])) {
+                                return $this->getErrorDataValue('startDate');
+                            }
+                        }
+                           
+                        //1) check if endDate is missing
+                        if(!isset($_POST['endDate']) {
+                            $_POST['endDate'] = $tourPackage['tourEndDate'];
+                        } else {
+                            //if exist, check is format valid
+                            if(!$util->validateDate($_POST['endDate'])) {
+                                return $this->getErrorDataValue('endDate');
+                            }
+                        }
+                        
+                        array(
+                            'user' => $headers['username'],
+                            'fromDate' => (isset($_POST['startDate']) ? $_POST['startDate'] : $result['startDate']),
+                            'toDate' => (isset($_POST['endDate']) ? $_POST['endDate'] : $result['endDate']),
+                            'totalPax' => $_POST['totalPerson'],
+                            'addNotes' => $_POST['notes'],
+                            'prefix' => $_POST['prefixName'],
+                            'personName' => $_POST['contactName'],
+                            'personContactNo' => $_POST['contactPhoneNumber']
+                            'rentVehicleStat' => '',
+                            'paymentType' => $_POST['paymentType']
+                            'tourId' => $_POST['tourId']
+                            'pricePerson' => $tourPackage['tourPrice'],
+                            'totalPrice' => ($tourPackage['tourPrice'] * $_POST['totalPerson'])
+                        );
+                           
+                        
+                           
+                           
                         $data = array('test'=>'test');
                         if(!is_null($data)) {
                             $status = 200;
@@ -434,6 +491,13 @@ class App
         });
     }
     
+    
+    public function getErrorDataValue($strErrorVal) {
+        $errorDataValue =  [
+            'status' => 'Error',
+            'message' => 'Invalid value of: '.$strErrorVal
+        ];
+    }
     
     //Get instance of application
     public function get() {
