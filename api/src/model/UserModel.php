@@ -63,6 +63,25 @@ class UserModel {
 
         return $user;
     }
+    
+    public function getUserByUserName($userName)
+    {
+    	$user = null;
+
+        $sql = "SELECT user_id,user_username,user_name,user_isAdmin
+                from ws_user
+                where user_username = '".$userName."'";
+        $resSql = mysqli_query(Connection::getCon(),$sql);
+
+        while($row = mysqli_fetch_assoc($resSql)) {
+        	$user = User::create()
+	        	->setUserId($row['user_id'])
+	        	->setUsername($row['user_username'])
+	        	->setName($row['user_name']);
+        }
+
+        return $user;
+    }
 	
 }
 

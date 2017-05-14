@@ -4,6 +4,7 @@ require_once "config/Connection.php";
 require_once "config/Util.php";
 require_once "model/AccessToken.php";
 require_once "model/LocationModel.php";
+require_once "model/UserModel.php";
 require_once "model/StatusModel.php";
 require_once "model/TourPackageModel.php";
 require_once "model/TransactionTourModel.php";
@@ -271,7 +272,7 @@ class App
                         
                         //check is valid tourId
                         $tourPackageModel = new TourPackageModel();
-                        $tourPackage = $tourPackageModel-> getTourPackageByTourId($_POST['tourId']);
+                        $tourPackage = $tourPackageModel-> getTourPackageByTourId($_POST['tourId'])->toArray();
                         if(sizeOf($tourPackage)==0) {
                             return $this->getErrorDataValue('tourId');
                         }
@@ -316,7 +317,7 @@ class App
                         //check from and to date
                         $util = new Util();
                         //1) check if startDate is missing
-                        if(!isset($_POST['startDate']) {
+                        if(!isset($_POST['startDate'])) {
                             $_POST['startDate'] = $tourPackage['tourStartDate'];
                         } else {
                             //if exist, check is format valid
@@ -326,7 +327,7 @@ class App
                         }
                            
                         //1) check if endDate is missing
-                        if(!isset($_POST['endDate']) {
+                        if(!isset($_POST['endDate'])) {
                             $_POST['endDate'] = $tourPackage['tourEndDate'];
                         } else {
                             //if exist, check is format valid
@@ -335,26 +336,28 @@ class App
                             }
                         }
                         
-                        array(
+                        $insertVal = array(
                             'user' => $headers['username'],
                             'fromDate' => (isset($_POST['startDate']) ? $_POST['startDate'] : $result['startDate']),
                             'toDate' => (isset($_POST['endDate']) ? $_POST['endDate'] : $result['endDate']),
                             'totalPax' => $_POST['totalPerson'],
-                            'addNotes' => $_POST['notes'],
-                            'prefix' => $_POST['prefixName'],
+                            'notes' => (isset($_POST['notes']) ? $_POST['notes'] : "-"),
+                            'prefixName' => (isset($_POST['prefixName']) ? $_POST['prefixName'] : "-"),
                             'personName' => $_POST['contactName'],
-                            'personContactNo' => $_POST['contactPhoneNumber']
+                            'personContactNo' => $_POST['contactPhoneNumber'],
                             'rentVehicleStat' => '',
-                            'paymentType' => $_POST['paymentType']
-                            'tourId' => $_POST['tourId']
+                            'paymentType' => ($_POST['paymentType']=="transfer"? "trf" : "cc"),
+                            'tourId' => $_POST['tourId'],
                             'pricePerson' => $tourPackage['tourPrice'],
                             'totalPrice' => ($tourPackage['tourPrice'] * $_POST['totalPerson'])
                         );
                            
-                        
-                           
+                        //insert to db
+                        $transactionTourModel = new TransactionTourModel();
+                        $resSql = $transactionTourModel->createTransaction($insertVal);
                            
                         $data = array('test'=>'test');
+                           
                         if(!is_null($data)) {
                             $status = 200;
                         } else {

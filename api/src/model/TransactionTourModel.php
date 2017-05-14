@@ -77,23 +77,24 @@ class TransactionTourModel {
     	}
     	return $transactions;
     }
-    public function createTransaction()
+    public function createTransaction($args)
     {
-    	$user = $_SESSION['user'];
-    	$userId = $user->getUserId();
+    	$user = $args['user'];
+        $userModel = new UserModel();
+    	$userId = $userModel->getUserByUserName($user)->getUserId();
     	
-    	$fromDate = $_POST['fromDate'];
-    	$toDate = $_POST['toDate'];
-    	$totalPax = $_POST['totalPax'];
-    	$addNotes = $_POST['addNotes'];
-    	$prefix = $_POST['prefix'];
-    	$personName = $_POST['personName'];
-    	$personContactNo = $_POST['personContactNo'];
-    	$rentVehicleStat = $_POST['rentVehicleStat'];
-    	$paymentType = $_POST['paymentType'];
-    	$tourId = $_POST['tourId'];
-    	$pricePerson= $_POST['pricePerson'];
-    	$totalPrice = $_POST['totalPrice'];
+    	$fromDate = $args['fromDate'];
+    	$toDate = $args['toDate'];
+    	$totalPax = $args['totalPax'];
+    	$addNotes = $args['notes'];
+    	$prefix = $args['prefixName'];
+    	$personName = $args['personName'];
+    	$personContactNo = $args['personContactNo'];
+    	$rentVehicleStat = $args['rentVehicleStat'];
+    	$paymentType = $args['paymentType'];
+    	$tourId = $args['tourId'];
+    	$pricePerson= $args['pricePerson'];
+    	$totalPrice = $args['totalPrice'];
     	$statusId = 0; //for transfer payment method
     	
     	if($paymentType == "cc")
@@ -132,9 +133,9 @@ class TransactionTourModel {
 			$transIdStr = $transId."";
 			$lenTransId = strlen($transIdStr);
 			
-			//generate invoice no, format : TRX0000001.. dst
-			$invNo = "TRX";
-			for($i = 0;$i < (7 - $lenTransId);$i++)
+			//generate invoice no, format : TRXYYYYMM0001.. dst
+			$invNo = "TRX".date('Ym');
+			for($i = 0;$i < (4 - $lenTransId);$i++)
 			{
 				$invNo .= "0";
 			}
