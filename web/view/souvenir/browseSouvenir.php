@@ -8,7 +8,15 @@ include(ABS_PATH."templates/_header.php");
           	<h5 style="margin:auto;"><b>Browse Souvenir from Tokoku</b></h5>
           </div>
           <div class="col-md-12" style="margin:auto;text-align:right;">
-          	<button type="button" id="view-cart-btn" class="btn btn-sm btn-primary">View Cart</button>
+          	<?php 
+	       		$total = 0;
+	       		if(isset($_SESSION['itemId']))
+	       		{
+	       			$total = count($_SESSION['itemId']);
+	       		}
+	       
+	       	?>
+          	<a href="?cont=souvenir&action=doCheckout" id="view-cart-btn" class="btn btn-sm btn-primary">View Cart (<?= $total ?>) and Checkout</a>
           	<hr/>
           </div>
           <div class="row" style="width:100%;">
@@ -17,7 +25,7 @@ include(ABS_PATH."templates/_header.php");
 		  ?>
 		  <div class="col-md-3" style="border:1px solid black; margin-bottom:4px; margin-left:0px;">
 		    <div class="thumbnail" style="text-align: center;padding-top:15px;">
-		      <a href="?cont=tour&action=detail&id=<?= $souvenir['idBarang'] ?>">
+		      <a href="?cont=souvenir&action=detailSouvenir&id=<?= $souvenir['idBarang'] ?>">
 		        <img src="http://tokoku-itb.pe.hu/img/barang/<?= $souvenir['idBarang'] ?>.jpg" alt="Tour Package" style="width:80%"> </a>
 		        <hr/>
 		        

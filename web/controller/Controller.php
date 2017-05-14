@@ -1,6 +1,7 @@
 <?php
 include_once("ModelLoadController.php");
 define("ABS_PATH", $_SERVER['DOCUMENT_ROOT']."/wisataku/web/view/");
+define("ABS_PATH_ROOT", $_SERVER['DOCUMENT_ROOT']."/wisataku/web/");
 
 class Controller {
 	public $locationModel;
@@ -196,7 +197,7 @@ class Controller {
 		include 'view/souvenir/browseSouvenir.php';
 	}
 	
-	public function viewDetailSouvenir($souvenirId)
+	public function viewDetailSouvenir($souvenirId,$cartAdd = null)
 	{
 		$title = "View Detail Souvenir - WisataKu";
 		$url = "http://tokoku.kilatiron.com/api/v1/barang/".$souvenirId;
@@ -206,9 +207,28 @@ class Controller {
 		$result=curl_exec($ch);
 		curl_close($ch);
 		
+		$cartStatus = $cartAdd;
 		$souvenir = json_decode($result,true);
 		include 'view/souvenir/viewDetailSouvenir.php';
 	}
 	
+	public function storeCartSouvenir()
+	{
+		$_SESSION['itemId'][] = $_POST['itemId'];
+		$_SESSION['itemName'][]=$_POST['itemName'];
+		$_SESSION['itemPrice'][]=$_POST['itemPrice'];
+		$_SESSION['itemQty'][]=$_POST['qtySouvenir'];
+			
+		$this->viewDetailSouvenir($_POST['itemId'],"true");
+	}
+	
+	public function checkoutSouvenir()
+	{
+		$title = "View cart and checkout - WisataKu";
+		
+		
+		
+		include 'view/souvenir/checkoutCart.php';
+	}
 }
 ?>

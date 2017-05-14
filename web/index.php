@@ -75,6 +75,12 @@
 							case "detailSouvenir" :
 								$controller->viewDetailSouvenir($_GET['id']);
 								break;
+							case "addToCart" :
+								$controller->storeCartSouvenir();
+								break;
+							case "doCheckout" :
+								$controller->checkoutSouvenir();
+								break;
 						}
 					}
 				}
