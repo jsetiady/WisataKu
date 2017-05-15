@@ -86,6 +86,20 @@
 								break;
 						}
 					}
+                    else {
+                        if($cont == "report")
+                        {
+                            switch($action)
+                            {
+                                case "tourPackageSales" :
+                                    $controller->reportTourPackageSales();
+                                    break;
+                                case "souvenirSales" :
+                                    $controller->reportSouvenirSales($_GET['id']);
+                                    break;
+                            }
+                        }
+                    }
 				}
 			}
 		}

@@ -159,6 +159,37 @@ class TransactionTourModel {
 				where trans_invoice_no='".$invNo."'";
     	return mysqli_query(Connection::getCon(),$sql);
     }
+    
+    
+    
+    public function getMonthlyTransaction()
+    {
+    	$data = array();
+
+    	$sql = "SELECT * from ( select
+                    MONTHNAME(trans_date) month,
+                    YEAR(trans_date) year,
+                    count(trans_id) numTransaction,
+               		sum(trans_total_price) totalPrice
+                FROM ws_transaction_tour
+                group by MONTHNAME(trans_date)) a1
+                
+                JOIN
+                
+               ( Select MONTHNAME(`trans_date`), count(`trans_id`) numConfirmTransaction, sum(trans_total_price) totalConfirmedPrice  from ws_transaction_tour  where trans_status_id = 1 group by MONTHNAME(trans_date)) a2
+               
+                ";
+    	
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
+		
+    	while($row = mysqli_fetch_assoc($resSql)) {
+    		array_push($data, $row);
+    	}
+
+    	return $data;
+    }
+    
+    
 }
 
 ?>

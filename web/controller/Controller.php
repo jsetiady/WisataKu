@@ -7,7 +7,7 @@ class Controller {
 	public $locationModel;
 	public $tourPackageModel;
 	public $userModel;
-	public $baseurl = "http://localhost/wisataku/web";
+	public $baseurl = "http://localhost:8888/wisataku/web";
 	public $transactionTourModel;
 	
 	public function __construct()  
@@ -265,5 +265,23 @@ class Controller {
 		
 		include 'view/souvenir/checkoutCart.php';
 	}
+    
+    
+    public function reportTourPackageSales() {
+        $title = "Report - Monthly Tour Package Sales - WisataKu";
+        $transactions = $this->transactionTourModel->getMonthlyTransaction();
+        
+        include 'view/report/monthlyTourPackageSales.php';
+        
+    }
+    
+    public function reportSouvenirSales() {
+        
+        
+        $title = "Report - Monthly Souvenir Sales - WisataKu";
+        
+        
+    }
+    
 }
 ?>
