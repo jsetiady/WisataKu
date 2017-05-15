@@ -144,7 +144,8 @@ class App
                     "transactionDate" => $_POST['transactionDate'],
                     "productName" => $_POST['productName'],
                     "issuer" => $_POST['issuer'],
-                    "point" => $_POST['point']
+                    "point" => $_POST['point'],
+                    "contactPhoneNumber" => $_POST['contactPhoneNumber']
                 );
                 
                 $model = new SimpleCRMModel();
@@ -153,25 +154,22 @@ class App
                 $data = $model->getPointById($crmId);
                 $status = 200;
                 
+                $post = [
+                    'number' => $_POST['contactPhoneNumber'],
+                    'message' => $data['message']
+                ];
                 
-                $ch = curl_init();
-                $url = "http://api.wisataku.jazzle.me/notification/sms"
+                $url = 'http://api.wisataku.jazzle.me/notification/sms';
+                $ch = curl_init($url);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_URL, $url);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, 
-                    http_build_query(
-                        array(
-                            'number' => $_POST['contactPhoneNumber'],
-                            'message' => $data['message']
-                        )
-                    )
-                );
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 
-                $result=curl_exec($ch);
+                $response = curl_exec($ch);
                 curl_close($ch);
                 
-                return $response->withJson($data, $status);
+                echo json_encode($data);
+                
+                //return $response->withJson($data, $status);
             });
         });
     }
