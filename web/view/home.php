@@ -45,7 +45,7 @@
         	<p style="margin-bottom: 4px;"><b>Starts from IDR <?= number_format($tour->getTourPrice(),0,".",",") ?>/ person</b></p>
         </div>
         <br/>
-        <div class="caption" >
+        <div class="caption" style="padding-bottom:10px" >
         	<a href="?cont=tour&action=doBooking&id=<?= $tour->getTourId() ?>" class="btn btn-primary form-control-sm">Book Now</a>
         </div>
     </div>

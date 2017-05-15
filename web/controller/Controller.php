@@ -146,6 +146,19 @@ class Controller {
 			include 'view/tour/bookingForm.php';
 		}
 	}
+    
+    public function addRental($tourId) {        
+        $title = "Add Rental - WisataKu";
+		$url = "http://rentalku.byethost32.com/api/rent/list?city=Bandung&inside=1";
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL,$url);
+		$result=curl_exec($ch);
+		curl_close($ch);
+		
+		$listRental = json_decode($result,true);
+        echo $listRental;
+    }
 	
 	public function confirmBooking()
 	{

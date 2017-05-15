@@ -21,6 +21,9 @@
 				case "doBooking" :
 					$controller->doBooking($_GET['id']);
 					break;
+                case "addRental" :
+					$controller->addRental($_GET['id']);
+					break;
 				case "confirmBooking" :
 					$controller->confirmBooking();
 					break;
