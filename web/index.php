@@ -21,9 +21,6 @@
 				case "doBooking" :
 					$controller->doBooking($_GET['id']);
 					break;
-                case "addRental" :
-					$controller->addRental($_GET['id']);
-					break;
 				case "confirmBooking" :
 					$controller->confirmBooking();
 					break;
@@ -85,7 +82,7 @@
 								$controller->viewDetailSouvenir($_GET['id']);
 								break;
 							case "addToCart" :
-								$controller->storeCartSouvenir();
+								$controller->storeCartSouvenir($_GET['ret']);
 								break;
 							case "doCheckout" :
 								$controller->checkoutSouvenir();

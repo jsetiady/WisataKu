@@ -1,6 +1,17 @@
 <?php
 include(ABS_PATH."templates/_header.php");
 ?>
+	<script type="text/javascript">
+		$("document").ready(function(){
+			<?php 
+			if($cartAddStatus == "true")
+			{ ?>
+				alert("Item added to cart");
+			<?php
+			}
+			?>
+		});
+	</script>
     <div class="py-5">
       <div class="container">
         <div class="row" style="margin:auto">
@@ -28,7 +39,6 @@ include(ABS_PATH."templates/_header.php");
 		      <a href="?cont=souvenir&action=detailSouvenir&id=<?= $souvenir['idBarang'] ?>">
 		        <img src="http://tokoku-itb.pe.hu/img/barang/<?= $souvenir['idBarang'] ?>.jpg" alt="Tour Package" style="width:80%"> </a>
 		        <hr/>
-		        
 		        <div class="caption" style="min-height:50px">
 		          <p><a href="?cont=souvenir&action=detailSouvenir&id=<?= $souvenir['idBarang'] ?>"><b><?= $souvenir['namaBarang'] ?></b></a></p>
 		        </div>
@@ -37,7 +47,7 @@ include(ABS_PATH."templates/_header.php");
 		        </div>
 		        <div class="caption" style="min-height:80px">
 		          <p style="font-size:12px;">Order : 
-		          		<select>
+		          		<select id="itemQtySov<?= $souvenir['idBarang'] ?>">
 		          			<?php
 		          				for($i=0;$i <= $souvenir['stok'];$i++)
 		          				{
@@ -48,16 +58,39 @@ include(ABS_PATH."templates/_header.php");
 		          			?>
 		          		</select> qty(s)</p>
 		          		<p>
-		          		<button type="button" id="view-cart-btn" class="btn btn-sm btn-primary">Add to Cart</button>
+		          		<button type="button" id="add-cart-btn-<?= $souvenir['idBarang'] ?>" class="btn btn-sm btn-primary">Add to Cart</button>
+	          			<script type="text/javascript">
+	          				$("#add-cart-btn-<?= $souvenir['idBarang'] ?>").click(function(){
+								var id = $(this).attr("id").split("-")[3];
+								if($("#itemQtySov"+id).val()==0)
+								{
+									alert("Qty must > 0");
+								}
+								else
+								{
+									$("#itemQty"+id).val($("#itemQtySov"+id).val());
+									$("#addToCartForm"+id).submit();			
+								}
+		          			});
+	          			</script>
 	          			</p>
 		        </div>
 		    </div>
 		  </div>
+		  <form id="addToCartForm<?=$souvenir['idBarang']?>" method="post" action="?cont=souvenir&action=addToCart&ret=1">
+	 	   <input type="hidden" name="itemPrice" id="priceSouvenir" value="<?= $souvenir['harga'] ?>" />
+	       <input type="hidden" name="itemId" id="itemId" value="<?= $souvenir['idBarang'] ?>" />
+	       <input type="hidden" name="itemName" id="itemName" value="<?= $souvenir['namaBarang'] ?>" />
+           <input type="hidden" name="itemWeight" id="itemWeight" value="<?= $souvenir['bobot'] ?>"/>
+           <input type="hidden" name="qtySouvenir" id="itemQty<?= $souvenir['idBarang']?>" value="0"/>
+           <input type="hidden" name="sessionCount" id="sessionCount" value="<?= $total ?>" />
+	 	</form>
 		  <?php
 		  }?>
 		 
 		</div>
 	 	<hr/>
+	 	 
         </div>
       </div>
     </div>

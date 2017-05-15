@@ -1,7 +1,4 @@
 <?php
-if(!isset($_SESSION['user'])) {
-	} else {
-    
 ?>
 <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
     <ul class="nav navbar-nav ">
@@ -12,7 +9,7 @@ if(!isset($_SESSION['user'])) {
 <?php
     //check is admin
     //$this->userModel = new UserModel();
-    if($_SESSION['user']->getIsAdmin()) {
+	if(isset($_SESSION['user']) &&$_SESSION['user']->getIsAdmin()) {
     
 ?>
         <li class="nav-item dropdown">
@@ -32,4 +29,3 @@ if(!isset($_SESSION['user'])) {
     </ul>
 </div>
 <?php       
-}

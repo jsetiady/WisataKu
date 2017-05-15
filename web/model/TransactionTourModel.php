@@ -150,14 +150,80 @@ class TransactionTourModel {
     	$accNo = $_POST['accNo'];
     	$accBank = $_POST['accBank'];
     	
-    	$sql = "UPDATE ws_transaction_tour
-					set trans_payment_date='".$paymentDate."',
-					trans_payment_acc_name='".str_replace("'","",$accName)."',
-					trans_payment_acc_no='".$accNo."',
-					trans_payment_acc_bank='".$accBank."',
-					trans_status_id = 1
+    	$sql = "SELECT trans_status_id,trans_user_contact_no,trans_total_price
+				from ws_transaction_tour
 				where trans_invoice_no='".$invNo."'";
-    	return mysqli_query(Connection::getCon(),$sql);
+    	$resSql = mysqli_query(Connection::getCon(), $sql);
+    	
+    	$retMessage = "";
+    	
+    	if(mysqli_num_rows($resSql) > 0)
+    	{
+    		$stat = "";
+    		$phoneNo = "";
+    		$totalPrice = 0;
+    		while($row = mysqli_fetch_assoc($resSql))
+    		{
+    			$stat = $row['trans_status_id'];
+    			$phoneNo = $row['trans_user_contact_no'];
+    			$totalPrice = $row['trans_total_price'];
+    		}
+    		
+    		if($stat == "0")
+    		{
+    			$url = $this->apiurl."payment";
+    			$ch = curl_init();
+    			curl_setopt($ch, CURLOPT_POST, 1);
+    			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    			curl_setopt($ch, CURLOPT_POSTFIELDS,
+    					"invoice=".$invNo."&origin=".$accBank."&destination=Mandiri&nominal=".$totalPrice);
+    			
+    			curl_setopt($ch, CURLOPT_URL,$url);
+    			$result=curl_exec($ch);
+    			
+    			$data = json_decode($result);
+    			curl_close($ch);
+    			
+    			if($data->status == "OK")
+    			{
+    				$sql = "UPDATE ws_transaction_tour
+								set trans_payment_date='".$paymentDate."',
+								trans_payment_acc_name='".str_replace("'","",$accName)."',
+								trans_payment_acc_no='".$accNo."',
+								trans_payment_acc_bank='".$accBank."',
+								trans_status_id = 1
+							where trans_invoice_no='".$invNo."'";
+    				
+    				$resSqlUpd = mysqli_query(Connection::getCon(),$sql);
+    				$retMessage="ok";
+    				
+    				//send sms to customer
+    				$url = $this->apiurl."notification/sms";
+    				$message = "[WisataKu] Payment for inv no : ".$invNo." has been confirmed, thank you.";
+    				
+    				$ch = curl_init();
+    				curl_setopt($ch, CURLOPT_POST, 1);
+    				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    				curl_setopt($ch, CURLOPT_POSTFIELDS,
+    						"number=".$phoneNo."&message=".$message);
+    				
+    				curl_setopt($ch, CURLOPT_URL,$url);
+    				$result=curl_exec($ch);
+    				curl_close($ch);
+    			}
+    		}
+    		else
+    		{
+    			$retMessage = "paid";
+    		}
+    	}
+    	else
+    	{
+    		$retMessage = "notfound";
+    	}
+    	
+    	
+    	return $retMessage;
     }
     
     
