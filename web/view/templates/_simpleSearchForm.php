@@ -2,14 +2,19 @@
 <h6>Find Tour Packages</h6>
 <hr/>
 <form class="search-form" style="line-height: 2px;" method="post" action="?cont=tour&action=browse">
+	<input type="hidden" name="keyword" value=""/>
+	<input type="hidden" name="durationGroup" value="0"/>
+	<input type="hidden" name="participantGroup" value="0"/>
+	<input type="hidden" name="priceGroup" value="0"/>
+	<input type="hidden" name="pointGroup" value="0"/>
 	<div class="row row-bottom-margin">
 		<div class="col-sm-3">
 			<div class="form-group form-control-sm"><label>Tour Type</label></div>
 		</div>
 		<div class="col-sm-8">
-			<label class="radio-inline form-control-sm"><input type="radio" checked="checked" name="tour_type">&nbsp;All</label>
-			<label class="radio-inline form-control-sm"><input type="radio" name="tour_type">&nbsp;Personal</label>
-			<label class="radio-inline form-control-sm"><input type="radio" name="tour_type">&nbsp;Group</label>
+			<label class="radio-inline form-control-sm"><input type="radio" value="all" checked="checked" name="tour_type">All</label>
+			<label class="radio-inline form-control-sm"><input type="radio" value="p" name="tour_type">&nbsp;Personal</label>
+			<label class="radio-inline form-control-sm"><input type="radio" value="g" name="tour_type">&nbsp;Group</label>
 		</div>
 	</div>
 	<div class="row row-bottom-margin">
@@ -19,7 +24,7 @@
 		<div class="col-sm-8">
 			<div class="form-inline form-control-sm">
 			<select class="form-control form-control-sm" name="location" style="width:235px;">
-				<option>All</option>
+				<option value="">All</option>
 				<?php 
 				foreach($listLoc as $loc) 
 				{
@@ -39,7 +44,7 @@
 		<div class="col-sm-8">
 			<div class="form-inline form-control-sm">
 				<select class="form-control form-control-sm" name="month">
-					<option value="0">All</option>
+					<option value="">All</option>
 					<option value="1">January</option>
 					<option value="2">February</option>
 					<option value="3">March</option>

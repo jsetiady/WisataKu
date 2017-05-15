@@ -150,7 +150,6 @@ class TourPackageModel {
             
         }
         
-        
         $resSql = mysqli_query(Connection::getCon(),$sql);
 
         while($row = mysqli_fetch_assoc($resSql)) {

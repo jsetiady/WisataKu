@@ -8,10 +8,11 @@ class Controller {
 	public $tourPackageModel;
 	public $userModel;
 	//public $baseurl = "http://localhost:8888/wisataku/web";
-	public $baseurl = "http://localhost:8888/wisataku/web";
+	public $baseurl = "http://localhost/wisataku/web";
 	//public $imageurl = "http://images.wisataku.jazzle.me/";
-	public $imageurl = "http://localhost:8888/wisataku/assets/images/";
+	public $imageurl = "http://localhost/wisataku/assets/images/";
 	public $transactionTourModel;
+	public $transactionSouvenirModel;
 	
 	public function __construct()  
     {  
@@ -20,6 +21,7 @@ class Controller {
          $this->tourPackageModel = new TourPackageModel();
          $this->userModel = new UserModel();
          $this->transactionTourModel = new TransactionTourModel();
+         $this->transactionSouvenirModel = new TransactionSouvenirModel();
     } 
 	
 	public function invoke()
@@ -77,6 +79,7 @@ class Controller {
 		unset($_SESSION['itemName']);
 		unset($_SESSION['itemPrice']);
 		unset($_SESSION['itemQty']);
+		unset($_SESSION['itemWeight']);
 		
 		header("Location:".$this->baseurl);
 		echo "<script>alert('Logout sucessfully')</script>";
@@ -110,6 +113,20 @@ class Controller {
                 "price" => $_POST['priceGroup'],
                 "point" => $_POST['pointGroup']
             );
+        }
+        else
+        {
+        	$filter = array(
+        			"keyword" => "",
+        			"tourType" => "all",
+        			"location" => "",
+        			"month" => "",
+        			"year" => "",
+        			"duration" => 0,
+        			"participant" => 0,
+        			"price" => 0,
+        			"point" => 0
+        	);
         }
             
 		$title = "Browse Package - WisataKu";
@@ -179,7 +196,6 @@ class Controller {
 	
 	public function doTransaction()
 	{
-		
 		$transactionId = $this->transactionTourModel->createTransaction();
 		
 		if($transactionId != "fail")
@@ -211,7 +227,19 @@ class Controller {
 	public function doConfirmPayment()
 	{
 		$title= "Confirm Payment - WisataKu";
-		$confirm = $this->transactionTourModel->paymentConfirmation();
+		$confirm = "";
+		if(substr($_POST['invNo'],0,3)== 'TRX')
+		{
+			$confirm = $this->transactionTourModel->paymentConfirmation();
+		}
+		else
+		{
+			$confirm = $this->transactionSouvenirModel->paymentConfirmation();
+			if($confirm)
+			{
+			}
+		}
+		
 		include 'view/account/confirmPayment.php';
 		if($confirm)
 		{
@@ -224,6 +252,7 @@ class Controller {
 		$title= "View Order History - WisataKu";
 		$user = $_SESSION['user'];
 		$transactions = $this->transactionTourModel->getAllTransactions(null,$user->getUserId());
+		$transactionSouvenir = $this->transactionSouvenirModel->getAllTransaction(null,$user->getUserId());
 		include 'view/account/orderHistory.php';
 	}
 	
@@ -273,16 +302,17 @@ class Controller {
 			}
 		}
 		
-		
 		if($key == "-1")
 		{
 			$_SESSION['itemId'][]= $_POST['itemId'];
 			$_SESSION['itemName'][]=$_POST['itemName'];
 			$_SESSION['itemPrice'][]=$_POST['itemPrice'];
 			$_SESSION['itemQty'][]=$_POST['qtySouvenir'];
+			$_SESSION['itemWeight'][]=$_POST['itemWeight'];
 		}
 		else {
 			$_SESSION['itemQty'][$key] += $_POST['qtySouvenir'];
+			$_SESSION['itemWeight'][$key] += $_POST['itemWeight'];
 		}
 		
 		$this->viewDetailSouvenir($_POST['itemId'],"true");
@@ -298,14 +328,29 @@ class Controller {
 		unset($_SESSION['itemQty'][$_POST['row']]);
 		
 		include 'view/souvenir/checkoutCart.php';
-
 	}
 	
 	public function checkoutSouvenir()
 	{
 		$title = "View cart and checkout - WisataKu";
-		
 		include 'view/souvenir/checkoutCart.php';
+	}
+	
+	public function doOrder()
+	{
+		$transactionId = $this->transactionSouvenirModel->createTransaction();
+		
+		if($transactionId != "fail")
+		{
+// 			if($_POST['paymentType'] == "trf")
+// 			{
+// 			//	header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
+// 			}
+// 			else
+// 			{
+// 			//	header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&id=".$transactionId);
+// 			}
+		}
 	}
     
     
@@ -318,8 +363,6 @@ class Controller {
     }
     
     public function reportSouvenirSales() {
-        
-        
         $title = "Report - Monthly Souvenir Sales - WisataKu";
         
         
