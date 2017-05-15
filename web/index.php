@@ -12,11 +12,17 @@
 				case "find" :
 					$controller->findTour();
 					break;
+                case "browse" :
+					$controller->browsePackage();
+					break;
 				case "detail" :
 					$controller->viewDetailTourPackage($_GET['id']);
 					break;
 				case "doBooking" :
 					$controller->doBooking($_GET['id']);
+					break;
+                case "addRental" :
+					$controller->addRental($_GET['id']);
 					break;
 				case "confirmBooking" :
 					$controller->confirmBooking();
@@ -86,6 +92,20 @@
 								break;
 						}
 					}
+                    else {
+                        if($cont == "report")
+                        {
+                            switch($action)
+                            {
+                                case "tourPackageSales" :
+                                    $controller->reportTourPackageSales();
+                                    break;
+                                case "souvenirSales" :
+                                    $controller->reportSouvenirSales($_GET['id']);
+                                    break;
+                            }
+                        }
+                    }
 				}
 			}
 		}

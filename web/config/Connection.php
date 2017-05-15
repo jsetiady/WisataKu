@@ -4,7 +4,7 @@ class Connection {
 	static $link;
 	
 	static function connect(){
-		if(self::$link = mysqli_connect("localhost","root","","jazzleme_wisataku")){
+		if(self::$link = mysqli_connect("localhost","root","root","jazzleme_wisataku")){
 			return self::$link;
 		} else {
 			die('could not connect to db');

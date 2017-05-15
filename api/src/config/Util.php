@@ -31,4 +31,12 @@ class Util {
         return $d && $d->format('Y-m-d') === $date;
     }
     
+    
+    public function getErrorDataValue($strErrorVal) {
+        $errorDataValue =  [
+            'status' => 'Error',
+            'message' => 'Invalid value of: '.$strErrorVal
+        ];
+        return $errorDataValue;
+    }
 }

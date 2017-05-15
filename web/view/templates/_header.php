@@ -41,7 +41,7 @@
                             <tspan x="32" y="20">WisataKu</tspan>
                         </text>
                         <text id="l" font-family="BodoniOrnamentsITCTT, Bodoni Ornaments" font-size="18" font-weight="normal">
-                            <tspan x="0" y="17">|</tspan>
+                            <tspan x="0" y="17">f</tspan>
                         </text>
                     </g>
                 </g>

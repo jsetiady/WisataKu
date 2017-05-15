@@ -20,7 +20,7 @@ class AccessToken {
     {
         $user = base64_decode($base64Value);
         $user = explode(":", $user);
-        
+                
         $token = null;
 
     	$sql = "SELECT token_user, token_value, token_created_date, token_valid_until, valid from ws_token where token_user = '". $user[0]."' and token_valid_until >= CURDATE() and valid=1";
@@ -54,7 +54,7 @@ class AccessToken {
                     "user" => $user[0],
                     "token" => $this->generateAccessToken($user[0], $base64Value),
                     "createdDate" => date("Y-m-d"),
-                    "validUntil" => date("Y-m-d", strtotime("+1 week"))
+                    "validUntil" => date("Y-m-d", strtotime("+1 day"))
                 );
             }
             

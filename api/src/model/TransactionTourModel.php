@@ -158,7 +158,8 @@ class TransactionTourModel {
     	
     	return mysqli_query(Connection::getCon(), $sql);
     }
-	
+    
+    	
     public function paymentConfirmation($args)
     {
     	$invNo = $args['invNo'];

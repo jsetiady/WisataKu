@@ -8,6 +8,7 @@ require_once "model/UserModel.php";
 require_once "model/StatusModel.php";
 require_once "model/TourPackageModel.php";
 require_once "model/TransactionTourModel.php";
+require_once "model/SimpleCRMModel.php";
 
 
 
@@ -80,6 +81,18 @@ class App
                         PATCH transaction/confirm/{id}
                     </a>
                 </li>
+                <li>
+                    <a href="payment">
+                        POST payment.wisataku.jazzle.me
+                    </a><br/>
+                    Payment stubs
+                </li>
+                <li>
+                    <a href="crm">
+                        POST crm.wisataku.jazzle.me
+                    </a><br/>
+                    CRM stubs
+                </li>
 
             </ol>
             ';
@@ -92,8 +105,74 @@ class App
         $this->locationService($app);
         $this->oauthService($app);
         $this->transactionService($app);
+        $this->paymentStubs($app);
+        $this->crmStubs($app);
         
         $this->app = $app;
+    }
+    
+    
+    public function crmStubs($app) {
+        $app->group('/crm', function () {
+            
+            $this->map(['GET'], '', function ($request, $response) {
+                $model = new SimpleCRMModel();
+                $data = $model->getTotalPoints();
+                $status = 200;
+                return $response->withJson($data, $status);
+            });
+            
+            $this->map(['GET'], '/{username}', function ($request, $response, $args) {
+                $model = new SimpleCRMModel();
+                $data = $model->getTotalPointsByUsername($args['username']);
+                $status = 200;
+                return $response->withJson($data, $status);
+            });
+            
+            $this->map(['POST'], '', function ($request, $response) {
+                $args = array(
+                    "username" => $_POST['username'],
+                    "transactionInvoice" => $_POST['transactionInvoice'],
+                    "transactionDate" => $_POST['transactionDate'],
+                    "productName" => $_POST['productName'],
+                    "issuer" => $_POST['issuer'],
+                    "point" => $_POST['point']
+                );
+                
+                $model = new SimpleCRMModel();
+                $crmId = $model->createTransaction($args);
+                
+                $data = $model->getPointById($crmId);
+                $status = 200;
+                
+                return $response->withJson($data, $status);
+            });
+        });
+    }
+    
+    
+    public function paymentStubs($app) {
+        $app->group('/payment', function () {
+            $this->map(['GET'], '', function ($request, $response) {
+                $data =  [
+                'message' => 'WisataKu Payment Gateway'];
+                return $response->withJson($data, $status);
+            });
+            
+            $this->map(['POST'], '', function ($request, $response) {
+                
+                $randomVal = rand(0,1);
+                if($randomVal<0.5) {
+                    $data =  [
+                        'message' => 'Payment success'];
+                    return $response->withJson($data, 200);
+                } else {
+                    $data =  [
+                        'message' => 'Payment failed'];
+                    return $response->withJson($data, 406);
+                }
+            });
+        });
     }
     
     public function tourPackageService($app) {
@@ -245,11 +324,10 @@ class App
             //POST transaction/new
             $this->post('/new', function ($request, $response, $args) {
                 
-                $headers = apache_request_headers();
                 $model = new AccessToken();
                 
                 //check token by username is valid
-                $isValid = $model->isValidToken($headers['username'], $headers['token']);
+                $isValid = $model->isValidToken($_POST['username'], $_POST['token']);
                 
                 $errorData =  [
                         'status' => 'Error',
@@ -273,32 +351,34 @@ class App
                         //check is valid tourId
                         $tourPackageModel = new TourPackageModel();
                         $tourPackage = $tourPackageModel-> getTourPackageByTourId($_POST['tourId'])->toArray();
+                        $util = new Util();
                         if(sizeOf($tourPackage)==0) {
-                            return $this->getErrorDataValue('tourId');
+                            return $response->withJson($util->getErrorDataValue('tourId'),404);
                         }
                         
                         //check is valid totalPerson
                         if(is_numeric($_POST['totalPerson'])) {
                             if($_POST['totalPerson']<$tourPackage['tourMinPerson'] || $_POST['totalPerson']>$tourPackage['tourMaxPerson']) {
-                                return $this->getErrorDataValue('totalPerson. Valid range between '.$tourPackage['tourMaxPerson']." to ". $tourPackage['tourMinPerson']);
+                                return $response->withJson($util->getErrorDataValue('totalPerson. Valid range between '.$tourPackage['tourMinPerson']." to ". $tourPackage['tourMaxPerson']),404);
                             }
                         } else {
-                            return $this->getErrorDataValue('totalPerson');
+                            return $response->withJson($util->getErrorDataValue('totalPerson'),404);
                         }
                         
                         //is valid contactName
                         if($_POST['contactName']=="") {
-                             return $this->getErrorDataValue('contactName');
+                             return $response->withJson($util->getErrorDataValue('contactName'),404);
                         }
                         
                         //is valid contactPhoneNumber
                         if(!is_numeric($_POST['contactPhoneNumber'])) {
+                            return $response->withJson($util->getErrorDataValue('contactPhoneNumber'),404);
                         }
                         
                         
                         //check is valid paymentType
                         if(!($_POST['paymentType']=="transfer" || $_POST['paymentType']=="creditcard")) {
-                            return $this->getErrorDataValue('paymentType'); 
+                            return $response->withJson($util->getErrorDataValue('paymentType'),404); 
                         }
                         
                         //check mandatory parameter when payment type = cc
@@ -322,9 +402,11 @@ class App
                         } else {
                             //if exist, check is format valid
                             if(!$util->validateDate($_POST['startDate'])) {
-                                return $this->getErrorDataValue('startDate');
+                                return $util->getErrorDataValue('startDate');
                             }
                         }
+                        
+                        
                            
                         //1) check if endDate is missing
                         if(!isset($_POST['endDate'])) {
@@ -332,12 +414,14 @@ class App
                         } else {
                             //if exist, check is format valid
                             if(!$util->validateDate($_POST['endDate'])) {
-                                return $this->getErrorDataValue('endDate');
+                                return $response->withJson($util->getErrorDataValue('endDate'),404);
                             }
                         }
                         
+                        
+                        
                         $insertVal = array(
-                            'user' => $headers['username'],
+                            'user' => $_POST['username'],
                             'fromDate' => (isset($_POST['startDate']) ? $_POST['startDate'] : $result['startDate']),
                             'toDate' => (isset($_POST['endDate']) ? $_POST['endDate'] : $result['endDate']),
                             'totalPax' => $_POST['totalPerson'],
@@ -354,10 +438,18 @@ class App
                            
                         //insert to db
                         $transactionTourModel = new TransactionTourModel();
-                        $resSql = $transactionTourModel->createTransaction($insertVal);
-                           
-                        $data = array('test'=>'test');
-                           
+                        $generatedTransactionId = $transactionTourModel->createTransaction($insertVal);
+                        
+                        //get recently added transaction
+                        $newTransaction = $transactionTourModel->getAllTransactions(array("id" => $generatedTransactionId));
+                        $newTransaction = $newTransaction[0]->toArray();
+                        
+                        $data = array();
+                        $data['status'] = 'Success';
+                        $data['message'] = 'Transaction created';
+                        $data['transaction'] = $newTransaction;
+                        $data['invoiceFile'] = INVOICE_FILE_PATH."invoice_".$newTransaction['transactionInvoiceNumber'].".pdf";
+                        
                         if(!is_null($data)) {
                             $status = 200;
                         } else {
@@ -412,7 +504,7 @@ class App
                     
                         //get transaction
                         //if any, return transaction list
-                        $result = $util->objectsToArray($transaction->getAllTransactions(array('transId' => $args['id'])));
+                        $result = $util->objectsToArray($transaction->getAllTransactions(array('id' => $args['id'])));
                             
                         if(sizeof($result)>0) {
                             //kalau ketemu, cek sudah bayar atau blm
@@ -494,13 +586,6 @@ class App
         });
     }
     
-    
-    public function getErrorDataValue($strErrorVal) {
-        $errorDataValue =  [
-            'status' => 'Error',
-            'message' => 'Invalid value of: '.$strErrorVal
-        ];
-    }
     
     //Get instance of application
     public function get() {

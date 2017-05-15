@@ -17,6 +17,7 @@ class UserModel {
     		$user = User::create()
     				->setUserId($row['user_id'])
     				->setUsername($row['user_username'])
+    				->setIsAdmin($row['user_isAdmin'])
     				->setName($row['user_name']);
     	}
 
@@ -38,6 +39,7 @@ class UserModel {
         	$user = User::create()
 	        	->setUserId($row['user_id'])
 	        	->setUsername($row['user_username'])
+                ->setIsAdmin($row['user_isAdmin'])
 	        	->setName($row['user_name']);
         }
 
@@ -57,6 +59,7 @@ class UserModel {
         	$user = User::create()
 	        	->setUserId($row['user_id'])
 	        	->setUsername($row['user_username'])
+                ->setIsAdmin($row['user_isAdmin'])
 	        	->setName($row['user_name']);
         }
 

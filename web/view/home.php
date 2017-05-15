@@ -25,7 +25,8 @@
   <div class="col-md-4">
     <div class="thumbnail">
       <a href="?cont=tour&action=detail&id=<?= $tour->getTourId() ?>">
-        <img src="../assets/images/1.jpg" alt="Tour Package" style="width:100%"> </a>
+        <img src="<?=$this->imageurl.$tour->getTourImageFilename()?>" alt="Tour Package" style="width:100%">
+      </a>
         <hr/>
         <?php
         	$tourType = "Personal";
@@ -44,7 +45,7 @@
         	<p style="margin-bottom: 4px;"><b>Starts from IDR <?= number_format($tour->getTourPrice(),0,".",",") ?>/ person</b></p>
         </div>
         <br/>
-        <div class="caption" >
+        <div class="caption" style="padding-bottom:10px" >
         	<a href="?cont=tour&action=doBooking&id=<?= $tour->getTourId() ?>" class="btn btn-primary form-control-sm">Book Now</a>
         </div>
     </div>

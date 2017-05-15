@@ -7,7 +7,10 @@ class Controller {
 	public $locationModel;
 	public $tourPackageModel;
 	public $userModel;
-	public $baseurl = "http://localhost/wisataku/web";
+	//public $baseurl = "http://localhost:8888/wisataku/web";
+	public $baseurl = "http://localhost:8888/wisataku/web";
+	//public $imageurl = "http://images.wisataku.jazzle.me/";
+	public $imageurl = "http://localhost:8888/wisataku/assets/images/";
 	public $transactionTourModel;
 	
 	public function __construct()  
@@ -90,6 +93,32 @@ class Controller {
 		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
 		include 'view/tour/findTour.php';
 	}
+    
+    
+    public function browsePackage()
+	{    
+        $filter = array();
+        if(!empty($_POST)) {
+            $filter = array(
+                "keyword" => $_POST['keyword'],
+                "tourType" => $_POST['tour_type'],
+                "location" => $_POST['location'],
+                "month" => $_POST['month'],
+                "year" => $_POST['year'],
+                "duration" => $_POST['durationGroup'],
+                "participant" => $_POST['participantGroup'],
+                "price" => $_POST['priceGroup'],
+                "point" => $_POST['pointGroup']
+            );
+        }
+            
+		$title = "Browse Package - WisataKu";
+		$listLoc = $this->locationModel->getAllLocation();
+        
+        $allTourPackage = $this->tourPackageModel->getAllTourPackages(null, $filter);
+                
+		include 'view/tour/browsePackage.php';
+	}
 	
 	
 	public function viewDetailTourPackage($tourId)
@@ -117,6 +146,19 @@ class Controller {
 			include 'view/tour/bookingForm.php';
 		}
 	}
+    
+    public function addRental($tourId) {        
+        $title = "Add Rental - WisataKu";
+		$url = "http://rentalku.byethost32.com/api/rent/list?city=Bandung&inside=1";
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_URL,$url);
+		$result=curl_exec($ch);
+		curl_close($ch);
+		
+		$listRental = json_decode($result,true);
+        echo $listRental;
+    }
 	
 	public function confirmBooking()
 	{
@@ -265,5 +307,23 @@ class Controller {
 		
 		include 'view/souvenir/checkoutCart.php';
 	}
+    
+    
+    public function reportTourPackageSales() {
+        $title = "Report - Monthly Tour Package Sales - WisataKu";
+        $transactions = $this->transactionTourModel->getMonthlyTransaction();
+        
+        include 'view/report/monthlyTourPackageSales.php';
+        
+    }
+    
+    public function reportSouvenirSales() {
+        
+        
+        $title = "Report - Monthly Souvenir Sales - WisataKu";
+        
+        
+    }
+    
 }
 ?>
