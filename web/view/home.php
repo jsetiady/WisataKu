@@ -25,7 +25,7 @@
   <div class="col-md-4">
     <div class="thumbnail">
       <a href="?cont=tour&action=detail&id=<?= $tour->getTourId() ?>">
-        <img src="<?=$this->imageurl.$tour->getTourImageFilename()?>" alt="Tour Package" style="width:100%">
+        <img src="<?=$this->imageurl.$tour->getTourImageFilename() ?>" alt="Tour Package" style="width:100%">
       </a>
         <hr/>
         <?php

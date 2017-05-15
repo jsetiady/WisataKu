@@ -8,9 +8,9 @@ class Controller {
 	public $tourPackageModel;
 	public $userModel;
 	//public $baseurl = "http://localhost:8888/wisataku/web";
-	public $baseurl = "http://localhost:8888/wisataku/web";
+	public $baseurl = "http://localhost/wisataku/web";
 	//public $imageurl = "http://images.wisataku.jazzle.me/";
-	public $imageurl = "http://localhost:8888/wisataku/assets/images/";
+	public $imageurl = "http://localhost/wisataku/assets/images/";
 	public $transactionTourModel;
 	public $transactionSouvenirModel;
 	
@@ -113,6 +113,20 @@ class Controller {
                 "price" => $_POST['priceGroup'],
                 "point" => $_POST['pointGroup']
             );
+        }
+        else
+        {
+        	$filter = array(
+        			"keyword" => "",
+        			"tourType" => "all",
+        			"location" => "",
+        			"month" => "",
+        			"year" => "",
+        			"duration" => 0,
+        			"participant" => 0,
+        			"price" => 0,
+        			"point" => 0
+        	);
         }
             
 		$title = "Browse Package - WisataKu";

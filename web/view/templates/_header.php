@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../assets/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../assets/css/jquery.dataTables.css">
   <link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css">
+  <link href="https://www.fontify.me/wf/2df8aac9cd89028867acc4f7f75bfa5b" rel="stylesheet" type="text/css">
   
   
 </head>
