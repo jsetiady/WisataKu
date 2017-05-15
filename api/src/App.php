@@ -153,6 +153,24 @@ class App
                 $data = $model->getPointById($crmId);
                 $status = 200;
                 
+                
+                $ch = curl_init();
+                $url = "http://api.wisataku.jazzle.me/notification/sms"
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt($ch, CURLOPT_URL, $url);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, 
+                    http_build_query(
+                        array(
+                            'number' => $_POST['contactPhoneNumber'],
+                            'message' => $data['message']
+                        )
+                    )
+                );
+
+                $result=curl_exec($ch);
+                curl_close($ch);
+                
                 return $response->withJson($data, $status);
             });
         });
@@ -188,7 +206,7 @@ class App
             $this->post('/sms', function ($request, $response, $args) {
                 $smsGateway = new SmsGateway('setiady.jessie@gmail.com', 'jeje2017');
 
-                $deviceID = 48721;
+                $deviceID = 48725;
                 $number = $_POST['number'];
                 $message = $_POST['message'];
 
@@ -202,7 +220,6 @@ class App
             });
             
         });
-
     }
     
     public function tourPackageService($app) {
@@ -435,8 +452,6 @@ class App
                                 return $util->getErrorDataValue('startDate');
                             }
                         }
-                        
-                        
                            
                         //1) check if endDate is missing
                         if(!isset($_POST['endDate'])) {
@@ -482,6 +497,7 @@ class App
                         
                         if(!is_null($data)) {
                             $status = 200;
+                            
                         } else {
                             $data =  $errorData;
                             $status = 404;
