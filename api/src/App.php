@@ -8,6 +8,7 @@ require_once "model/UserModel.php";
 require_once "model/StatusModel.php";
 require_once "model/TourPackageModel.php";
 require_once "model/TransactionTourModel.php";
+require_once "model/SimpleCRMModel.php";
 
 
 
@@ -101,9 +102,22 @@ class App
     
     public function crmStubs($app) {
         $app->group('/crm', function () {
-            $this->map(['GET'], '', function ($request, $response) {
-                $data =  [
-                'message' => 'WisataKu CRM'];
+            $this->map(['POST'], '', function ($request, $response) {
+                                
+                $args = array(
+                    "username" => $_POST['username'],
+                    "transactionInvoice" => $_POST['transactionInvoice'],
+                    "transactionDate" => $_POST['transactionDate'],
+                    "productName" => $_POST['productName'],
+                    "issuer" => $_POST['issuer'],
+                    "point" => $_POST['point']
+                );
+                
+                $model = new SimpleCRMModel();
+                $crmId = $model->createTransaction($args);
+                
+                $data = $model->getTourPackageByTourId($crmId);
+                
                 return $response->withJson($data, $status);
             });
         });
@@ -119,6 +133,7 @@ class App
             });
             
             $this->map(['POST'], '', function ($request, $response) {
+                
                 $randomVal = rand(0,1);
                 if($randomVal<0.5) {
                     $data =  [
@@ -127,7 +142,7 @@ class App
                 } else {
                     $data =  [
                         'message' => 'Payment failed'];
-                    return $response->withJson($data, 500);
+                    return $response->withJson($data, 406);
                 }
             });
         });

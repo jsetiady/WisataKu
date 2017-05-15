@@ -20,7 +20,7 @@ class AccessToken {
     {
         $user = base64_decode($base64Value);
         $user = explode(":", $user);
-        
+                
         $token = null;
 
     	$sql = "SELECT token_user, token_value, token_created_date, token_valid_until, valid from ws_token where token_user = '". $user[0]."' and token_valid_until >= CURDATE() and valid=1";
