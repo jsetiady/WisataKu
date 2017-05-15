@@ -4,16 +4,14 @@ class Status {
 	private $statusId;
 	private $statusDesc;
 	
-	public function __construct($statusId, $statusDesc)  
+	public function __construct()  
     {  
-        $this->statusId = $statusId;
-	    $this->statusDesc = $statusDesc;
     }
 
     public static function create() 
     {
     	$instance = new self();
-    	return $this;
+    	return $instance;
     }
 
     public function setStatusId($statusId)

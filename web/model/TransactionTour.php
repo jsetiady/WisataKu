@@ -3,7 +3,8 @@
 class TransactionTour {
 	private $transId;
 	private $transUser;
-	private $transUserTelp;
+	private $transUserContactName;
+	private $transUserContactNo;
 	private $transTotalPerson;
 	private $transPrefStartDate;
 	private $transPrefEndDate;
@@ -17,7 +18,9 @@ class TransactionTour {
 	private $transNotes;
 	private $transPaymentType;
 	private $transPaymentDate;
+	private $transPaymentAccName;
 	private $transPaymentAccNo;
+	private $transPaymentAccBank;
 	
 // 	public function __construct($transId, $transUser, $transUserTelp,$transTotalPerson,$transPrefStartDate,
 // 		$transPrefEndDate,$transPricePerson,$transDate,$transTotalPrice,$transExpiredDate,$transTour,
@@ -65,10 +68,16 @@ class TransactionTour {
     	$this->transUser = $transUser;
     	return $this;
     }
-
-    public function setTransUserTelp($transUserTelp)
+    
+    public function setTransUserContactName($transUserContactName)
     {
-    	$this->transUserTelp = $transUserTelp;
+    	$this->transUserContactName = $transUserContactName;
+    	return $this;
+    }
+
+    public function setTransUserContactNo($transUserContactNo)
+    {
+    	$this->transUserContactNo = $transUserContactNo;
     	return $this;
     }
 
@@ -150,9 +159,21 @@ class TransactionTour {
     	return $this;
     }
 
+    public function setTransPaymentAccName($transPaymentAccName)
+    {
+    	$this->transPaymentAccName= $transPaymentAccName;
+    	return $this;
+    }
+    
     public function setTransPaymentAccNo($transPaymentAccNo)
     {
-    	$this->transPaymentAccNo = $transPaymentAccNo;
+    	$this->transPaymentAccNo= $transPaymentAccNo;
+    	return $this;
+    }
+    
+    public function setTransPaymentAccBank($transPaymentAccBank)
+    {
+    	$this->transPaymentAccBank= $transPaymentAccBank;
     	return $this;
     }
 
@@ -165,10 +186,15 @@ class TransactionTour {
     {
     	return $this->transUser;
     }
-
-    public function getTransUserTelp()
+    
+    public function getTransUserContactName()
     {
-    	return $this->transUserTelp;
+    	return $this->transUserContactName;
+    }
+
+    public function getTransUserContactNo()
+    {
+    	return $this->transUserContactNo;
     }
 
     public function getTransTotalPerson()
@@ -236,9 +262,19 @@ class TransactionTour {
     	return $this->transPaymentDate;
     }
 
+    public function getTransPaymentAccName()
+    {
+    	return $this->transPaymentAccName;
+    }
+    
     public function getTransPaymentAccNo()
     {
     	return $this->transPaymentAccNo;
+    }
+    
+    public function getTransPaymentAccBank()
+    {
+    	return $this->transPaymentAccBank;
     }
 
 }
