@@ -30,7 +30,11 @@
           	</div>
           </div>
            <br/><br/>
-          <div id="tour-history-tab" class="col-md-12 form-control-sm" style="margin:auto;border:1px solid black;">
+          <div id="tour-history-tab" <?php 
+          	$display = "";
+          	if(isset($_GET['type']) && $_GET['type'] == "souvenir")
+          		$display = "display:none;";
+          ?> class="col-md-12 form-control-sm" style="<?= $display ?>margin:auto;border:1px solid black;">
           	<p><b>Tour Transaction History</b></p>
           	<hr style="margin-top:5px;"/>
           	
@@ -46,7 +50,6 @@
 	          				<th>Status</th>
 	          				<th style="display:none"></th>
 	          				<th style="width:40px">Options</th>
-	          				
 	          			</tr>
 	          		</head>
 	          		<tbody>
@@ -78,7 +81,11 @@
           		</thead>
           	</table>
           </div>
-          <div id="souvenir-history-tab"  class="col-md-12 form-control-sm" style="display:none;margin:auto;border:1px solid black;">
+          <div id="souvenir-history-tab" <?php 
+          	$display = "display:none;";
+          	if(isset($_GET['type']) && $_GET['type'] == "souvenir")
+          		$display = "";
+          ?>  class="col-md-12 form-control-sm" style="<?= $display ?>margin:auto;border:1px solid black;">
           	<p><b>Souvenir Transaction History</b></p>
           	<hr style="margin-top:5px;"/>
           	

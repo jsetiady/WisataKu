@@ -7,7 +7,6 @@ include(ABS_PATH."templates/_header.php");
 			if($cartAddStatus == "true")
 			{ ?>
 				alert("Item added to cart");
-			
 			<?php
 			}
 			?>

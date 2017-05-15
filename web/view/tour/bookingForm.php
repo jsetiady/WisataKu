@@ -35,8 +35,7 @@
            <br/><br/>
           <div class="col-md-12 form-control-sm" style="margin:auto;">
           	<div class="row">
-          	<form method="post" action="?cont=tour&action=addRental">
-            <!--<form method="post" action="?cont=tour&action=confirmBooking">-->
+          	<form method="post" action="?cont=tour&action=confirmBooking">
                 
           		<input type="hidden" name="tourId" value="<?= $tourDet->getTourId() ?>" />
           		<table>
@@ -158,21 +157,21 @@
           					<input type="text" class="form-control form-control-sm" required="required" style="width:250px;" name="personContactNo" />
           				</td>
           			</tr>
-          			<tr>
+          			<tr style="display: none;">
           				<td colspan="6"><hr/></td>
           			</tr>
-          			<tr style="">
+          			<tr style="display:none;">
           				<td colspan="6" style=""><b>Additional Booking</b></td>
           			<tr>
-          			<tr>
+          			<tr style="display:none">
           				<td colspan="6"><hr/></td>
           			</tr>
-          			<tr >
+          			<tr style="display:none;">
           				<td style="width:150px;">Rent Vehicle</td>
           				<td style="width:40px">:</td>
           				<td style="width:150px">
-          					<input type="radio" name="rentVehicleStatus" value="yes" /> Yes
-          					<input type="radio" name="rentVehicleStatus" value="no" checked="checked" /> No
+          					<input type="radio" name="rentVehicleStatus" id="rentYes" value="yes" /> Yes
+          					<input type="radio" name="rentVehicleStatus" id="rentNo" value="no" checked="checked" /> No
           				</td>
           			</tr>
           			<tr>
@@ -180,7 +179,7 @@
           			</tr>
           			<tr>
           				<td colspan="6"><input type="submit" class="btn btn-primary" value="Next" />
-          								<button type="button" class="btn">Cancel</button>
+          								<button type="button" onclick="history.go('-1')" class="btn">Cancel</button>
           				</td>
           			</tr>
           		</table>
