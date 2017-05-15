@@ -81,6 +81,18 @@ class App
                         PATCH transaction/confirm/{id}
                     </a>
                 </li>
+                <li>
+                    <a href="payment">
+                        POST payment.wisataku.jazzle.me
+                    </a><br/>
+                    Payment stubs
+                </li>
+                <li>
+                    <a href="crm">
+                        POST crm.wisataku.jazzle.me
+                    </a><br/>
+                    CRM stubs
+                </li>
 
             </ol>
             ';
@@ -102,6 +114,7 @@ class App
     
     public function crmStubs($app) {
         $app->group('/crm', function () {
+            
             $this->map(['GET'], '', function ($request, $response) {
                 $model = new SimpleCRMModel();
                 $data = $model->getTotalPoints();
@@ -117,7 +130,6 @@ class App
             });
             
             $this->map(['POST'], '', function ($request, $response) {
-                                
                 $args = array(
                     "username" => $_POST['username'],
                     "transactionInvoice" => $_POST['transactionInvoice'],
@@ -312,11 +324,10 @@ class App
             //POST transaction/new
             $this->post('/new', function ($request, $response, $args) {
                 
-                $headers = apache_request_headers();
                 $model = new AccessToken();
                 
                 //check token by username is valid
-                $isValid = $model->isValidToken($headers['username'], $headers['token']);
+                $isValid = $model->isValidToken($_POST['username'], $_POST['token']);
                 
                 $errorData =  [
                         'status' => 'Error',
@@ -361,6 +372,7 @@ class App
                         
                         //is valid contactPhoneNumber
                         if(!is_numeric($_POST['contactPhoneNumber'])) {
+                            return $response->withJson($util->getErrorDataValue('contactPhoneNumber'),404);
                         }
                         
                         
@@ -393,6 +405,8 @@ class App
                                 return $util->getErrorDataValue('startDate');
                             }
                         }
+                        
+                        
                            
                         //1) check if endDate is missing
                         if(!isset($_POST['endDate'])) {
@@ -404,8 +418,10 @@ class App
                             }
                         }
                         
+                        
+                        
                         $insertVal = array(
-                            'user' => $headers['username'],
+                            'user' => $_POST['username'],
                             'fromDate' => (isset($_POST['startDate']) ? $_POST['startDate'] : $result['startDate']),
                             'toDate' => (isset($_POST['endDate']) ? $_POST['endDate'] : $result['endDate']),
                             'totalPax' => $_POST['totalPerson'],
