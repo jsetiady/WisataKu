@@ -56,7 +56,7 @@
 	          			?>
 	          			<tr>
 	          				<td style="text-align:right; padding-right:50px;"><?= $no ?></td>
-	          				<td style="padding-left:20px"><?= $trans->getTransInvoiceNo() ?></td>
+	          				<td style="padding-left:20px"><a href="?cont=tour&action=viewTransaction&id=<?=$trans->getTransId()?>"><?= $trans->getTransInvoiceNo() ?></a></td>
 	          				<td style="padding-left:20px"><?= $trans->getTransTour()->getTourName() ?></td>
 	          				<td style="padding-left:20px"><?= $trans->getTransDate() ?></td>
 	          				<td style="text-align:left;">IDR <?= number_format($trans->getTransTotalPrice(),0,".",",") ?>,-</td>

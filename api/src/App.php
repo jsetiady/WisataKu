@@ -1,16 +1,15 @@
 <?php
 namespace WisataKu\WisataKuAPI;
 require_once "config/Connection.php";
-require_once "config/Util.php";
-require_once "model/AccessToken.php";
+require_once "util/Util.php";
+require_once "util/AccessToken.php";
+require_once "util/smsGateway.php";
 require_once "model/LocationModel.php";
 require_once "model/UserModel.php";
 require_once "model/StatusModel.php";
 require_once "model/TourPackageModel.php";
 require_once "model/TransactionTourModel.php";
 require_once "model/SimpleCRMModel.php";
-
-
 
 
 /**
@@ -69,7 +68,11 @@ class App
                     <a href="transaction/list/leasingku/7198ef1c0ddddfcbeee593740f390a46bd562572a12fa9f199a1059e42200381e786e8dfa2922bc132aec2df660b0744b2fe9f8f2ee00dc2dcf8805112365e96">
                         GET transaction/list
                     </a><br/>
-                    Put all requested parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
+                    Parameter:
+                    <ul>
+                        <li>test</li>
+                    </ul>
+                    Put all required parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
                 </li>
                 <li>
                     <a href="transaction/new">
@@ -83,15 +86,38 @@ class App
                 </li>
                 <li>
                     <a href="payment">
-                        POST payment.wisataku.jazzle.me
+                        POST payment
                     </a><br/>
                     Payment stubs
                 </li>
                 <li>
                     <a href="crm">
-                        POST crm.wisataku.jazzle.me
+                        GET crm
+                    </a><br/>
+                    CRM stubs (Get list of user and their points)
+                </li>
+                <li>
+                    <a href="crm/jejeisha">
+                        GET crm/{username}
+                    </a><br/>
+                    CRM stubs (Get list points history of user:username)
+                </li>
+                <li>
+                    <a href="crm">
+                        POST crm
                     </a><br/>
                     CRM stubs
+                </li>
+                <li>
+                    <a href="notification/sms">
+                        POST notification/sms
+                    </a><br/>
+                    SMS Gateway Wisataku</br>
+                    Request Parameter:
+                    <ul>
+                        <li>number</li>
+                        <li>message</li>
+                    </ul>
                 </li>
 
             </ol>
@@ -107,6 +133,7 @@ class App
         $this->transactionService($app);
         $this->paymentStubs($app);
         $this->crmStubs($app);
+        $this->smsNotification($app);
         
         $this->app = $app;
     }
@@ -136,7 +163,8 @@ class App
                     "transactionDate" => $_POST['transactionDate'],
                     "productName" => $_POST['productName'],
                     "issuer" => $_POST['issuer'],
-                    "point" => $_POST['point']
+                    "point" => $_POST['point'],
+                    "contactPhoneNumber" => $_POST['contactPhoneNumber']
                 );
                 
                 $model = new SimpleCRMModel();
@@ -145,7 +173,22 @@ class App
                 $data = $model->getPointById($crmId);
                 $status = 200;
                 
-                return $response->withJson($data, $status);
+                $post = [
+                    'number' => $_POST['contactPhoneNumber'],
+                    'message' => $data['message']
+                ];
+                
+                $url = 'http://api.wisataku.jazzle.me/notification/sms';
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+
+                $response = curl_exec($ch);
+                curl_close($ch);
+                
+                echo json_encode($data);
+                
+                //return $response->withJson($data, $status);
             });
         });
     }
@@ -164,14 +207,37 @@ class App
                 $randomVal = rand(0,1);
                 if($randomVal<0.5) {
                     $data =  [
+                        'status' => 'OK',
                         'message' => 'Payment success'];
                     return $response->withJson($data, 200);
                 } else {
                     $data =  [
+                        'status' => 'NOK',
                         'message' => 'Payment failed'];
                     return $response->withJson($data, 406);
                 }
             });
+        });
+    }
+    
+    public function smsNotification($app) {
+        $app->group('/notification', function () {
+            $this->post('/sms', function ($request, $response, $args) {
+                $smsGateway = new SmsGateway('setiady.jessie@gmail.com', 'jeje2017');
+
+                $deviceID = 48725;
+                $number = $_POST['number'];
+                $message = $_POST['message'];
+
+                $options = [
+                //'send_at' => strtotime('+10 minutes'), // Send the message in 10 minutes
+                //'expires_at' => strtotime('+1 hour') // Cancel the message in 1 hour if the message is not yet sent
+                ];
+
+                $result = $smsGateway->sendMessageToNumber($number, $message, $deviceID, $options);
+                return $response->withJson($result, $status);
+            });
+            
         });
     }
     
@@ -405,8 +471,6 @@ class App
                                 return $util->getErrorDataValue('startDate');
                             }
                         }
-                        
-                        
                            
                         //1) check if endDate is missing
                         if(!isset($_POST['endDate'])) {
@@ -452,6 +516,7 @@ class App
                         
                         if(!is_null($data)) {
                             $status = 200;
+                            
                         } else {
                             $data =  $errorData;
                             $status = 404;
