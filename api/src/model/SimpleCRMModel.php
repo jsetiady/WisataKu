@@ -53,9 +53,9 @@ class SimpleCRMModel {
 		return $retTransId;
     }
     
-    public function getTourPackageByTourId($id)
+    public function getPointById($id)
     {
-        $tourPackage = null;
+        $data = null;
 
         $sql = "SELECT username,
                 transaction_invoice,
@@ -76,22 +76,71 @@ class SimpleCRMModel {
         return $data;
     }
     
-	public function getAllLocation() 
+	public function getPoints() 
     {
-    	$allLocation = array();
+    	$data = array();
 
-    	$sql = "SELECT loc_id,loc_name from ws_location";
+    	$sql = "SELECT username,
+                transaction_invoice,
+                transaction_date,
+                product_name,
+                message,
+                issuer,
+                issue_date,
+                point from crm";
     	
     	$resSql = mysqli_query(Connection::getCon(),$sql);
 
     	while($row = mysqli_fetch_assoc($resSql))
     	{
-    		array_push($allLocation, new Location($row['loc_id'],$row['loc_name']));
+    		array_push($data);
     	}
         
-    	return $allLocation;
+    	return $data;
     }
     
+    public function getTotalPoints() {
+        $data = array();
+
+    	$sql = "SELECT username,
+                sum(point) totalPoint
+                from crm
+                group by username";
+    	
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
+
+    	while($row = mysqli_fetch_assoc($resSql))
+    	{
+    		array_push($data, $row);
+    	}
+        
+    	return $data;
+    }
+    
+    public function getTotalPointsByUsername($username) {
+        $data = array();
+
+    	$sql = "SELECT 
+                transaction_invoice 'invoice',
+                transaction_date 'transaction date',
+                product_name 'product name',
+                message,
+                issuer,
+                issue_date 'issued date',
+                point
+                from crm
+                where username = '$username' order by id asc";
+    	
+    	$resSql = mysqli_query(Connection::getCon(),$sql);
+
+    	while($row = mysqli_fetch_assoc($resSql))
+    	{
+    		array_push($data, $row);
+    	}
+        
+        
+    	return $data;
+    }
 	
 }
 

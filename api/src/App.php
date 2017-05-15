@@ -102,6 +102,20 @@ class App
     
     public function crmStubs($app) {
         $app->group('/crm', function () {
+            $this->map(['GET'], '', function ($request, $response) {
+                $model = new SimpleCRMModel();
+                $data = $model->getTotalPoints();
+                $status = 200;
+                return $response->withJson($data, $status);
+            });
+            
+            $this->map(['GET'], '/{username}', function ($request, $response, $args) {
+                $model = new SimpleCRMModel();
+                $data = $model->getTotalPointsByUsername($args['username']);
+                $status = 200;
+                return $response->withJson($data, $status);
+            });
+            
             $this->map(['POST'], '', function ($request, $response) {
                                 
                 $args = array(
@@ -116,7 +130,8 @@ class App
                 $model = new SimpleCRMModel();
                 $crmId = $model->createTransaction($args);
                 
-                $data = $model->getTourPackageByTourId($crmId);
+                $data = $model->getPointById($crmId);
+                $status = 200;
                 
                 return $response->withJson($data, $status);
             });
