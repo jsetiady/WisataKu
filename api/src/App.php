@@ -93,9 +93,22 @@ class App
         $this->oauthService($app);
         $this->transactionService($app);
         $this->paymentStubs($app);
+        $this->crmStubs($app);
         
         $this->app = $app;
     }
+    
+    
+    public function crmStubs($app) {
+        $app->group('/crm', function () {
+            $this->map(['GET'], '', function ($request, $response) {
+                $data =  [
+                'message' => 'WisataKu CRM'];
+                return $response->withJson($data, $status);
+            });
+        });
+    }
+    
     
     public function paymentStubs($app) {
         $app->group('/payment', function () {
