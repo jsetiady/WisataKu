@@ -235,9 +235,6 @@ class Controller {
 		else
 		{
 			$confirm = $this->transactionSouvenirModel->paymentConfirmation();
-			if($confirm)
-			{
-			}
 		}
 		
 		include 'view/account/confirmPayment.php';
@@ -259,7 +256,7 @@ class Controller {
 	//end of transaction
 	
 	//souvenir
-	public function browseSouvenir()
+	public function browseSouvenir($cartAdd = false)
 	{
 		$title = "Browse Souvenir Tokoku - WisataKu";
 		$url = "http://tokoku.kilatiron.com/api/v1/barang/kategori/souvenir";
@@ -269,6 +266,7 @@ class Controller {
 		$result=curl_exec($ch);
 		curl_close($ch);
 		
+		$cartAddStatus = $cartAdd;
 		$listSouvenir = json_decode($result,true);
 		include 'view/souvenir/browseSouvenir.php';
 	}
@@ -288,7 +286,7 @@ class Controller {
 		include 'view/souvenir/viewDetailSouvenir.php';
 	}
 	
-	public function storeCartSouvenir()
+	public function storeCartSouvenir($ret = 0)
 	{
 		$key = -1;
 		if(isset($_SESSION['itemId']))
@@ -315,7 +313,16 @@ class Controller {
 			$_SESSION['itemWeight'][$key] += $_POST['itemWeight'];
 		}
 		
-		$this->viewDetailSouvenir($_POST['itemId'],"true");
+		if($ret == 0)
+		{
+			$this->viewDetailSouvenir($_POST['itemId'],"true");
+		}
+		else
+		{
+			$this->browseSouvenir("true");
+			
+		}
+		
 	}
 	
 	public function deleteItemCart()
@@ -342,14 +349,19 @@ class Controller {
 		
 		if($transactionId != "fail")
 		{
-// 			if($_POST['paymentType'] == "trf")
-// 			{
-// 			//	header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
-// 			}
-// 			else
-// 			{
-// 			//	header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&id=".$transactionId);
-// 			}
+			unset($_SESSION['itemId']);
+			unset($_SESSION['itemName']);
+			unset($_SESSION['itemPrice']);
+			unset($_SESSION['itemQty']);
+			
+			if($_POST['paymentType'] == "trf")
+			{
+			//	header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
+			}
+			else
+			{
+			//	header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&id=".$transactionId);
+			}
 		}
 	}
     

@@ -82,7 +82,7 @@
 								$controller->viewDetailSouvenir($_GET['id']);
 								break;
 							case "addToCart" :
-								$controller->storeCartSouvenir();
+								$controller->storeCartSouvenir($_GET['ret']);
 								break;
 							case "doCheckout" :
 								$controller->checkoutSouvenir();
