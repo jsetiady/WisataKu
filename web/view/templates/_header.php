@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../assets/css/wisataku-custom.css">
   <link rel="stylesheet" href="../assets/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../assets/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="../assets/css/bootstrap-datepicker.css">
   
   
 </head>
@@ -21,6 +22,8 @@
   <script src="../assets/js/bootstrap-4.0.0-alpha.6.min.js"></script>
   <script src="../assets/js/dataTables.bootstrap4.min.js"></script>
   <script src="../assets/js/jquery.dataTables.js"></script>
+  <script src="../assets/js/bootstrap-datepicker.js"></script>
+  
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-faded">

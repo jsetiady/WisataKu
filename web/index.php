@@ -19,7 +19,13 @@
 					$controller->doBooking($_GET['id']);
 					break;
 				case "confirmBooking" :
-					$controller->confirmBooking($_GET['id']);
+					$controller->confirmBooking();
+					break;
+				case "doTransaction" :
+					$controller->doTransaction();
+					break;
+				case "transactionConfirm" :
+					$controller->transactionCreatedView($_GET['id']);
 					break;
 			}
 		}
@@ -42,7 +48,7 @@
 			}
 			else
 			{
-				if($cont == "transaction")
+				if($cont == "account")
 				{
 					switch($action)
 					{
@@ -55,6 +61,30 @@
 						case "showHistory" :
 							$controller->viewOrderHistory();
 							break;
+					}
+				}
+				else
+				{
+					if($cont == "souvenir")
+					{
+						switch($action)
+						{
+							case "browseSouvenir" :
+								$controller->browseSouvenir();
+								break;
+							case "detailSouvenir" :
+								$controller->viewDetailSouvenir($_GET['id']);
+								break;
+							case "addToCart" :
+								$controller->storeCartSouvenir();
+								break;
+							case "doCheckout" :
+								$controller->checkoutSouvenir();
+								break;
+							case "deleteItemCart" :
+								$controller->deleteItemCart();
+								break;
+						}
 					}
 				}
 			}
