@@ -7,11 +7,12 @@ class Controller {
 	public $locationModel;
 	public $tourPackageModel;
 	public $userModel;
-	public $baseurl = "http://localhost:8888/wisataku/web";
-	//public $baseurl = "http://localhost/wisataku/web";
-	//public $imageurl = "http://images.wisataku.jazzle.me/";
+// 	public $baseurl = "http://localhost:8888/wisataku/web";
+	public $baseurl = "http://localhost/wisataku/web";
+// 	public $baseurl = "http://web.wisataku.jazzle.me";
+	public $imageurl = "http://images.wisataku.jazzle.me/";
 	public $apiurl = "http://api.wisataku.jazzle.me/";
-	public $imageurl = "http://localhost/wisataku/assets/images/";
+	//public $imageurl = "http://localhost/wisataku/assets/images/";
 	public $transactionTourModel;
 	public $transactionSouvenirModel;
 	
@@ -370,7 +371,7 @@ class Controller {
 			unset($_SESSION['itemPrice']);
 			unset($_SESSION['itemQty']);
 			
-			header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&type=souvenir&id=".$transactionId);
+			header("Location:".$this->baseurl."?cont=account&action=showHistory&status=paid&type=souvenir&id=".$transactionId);
 		}
 	}
     

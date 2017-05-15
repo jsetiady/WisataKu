@@ -99,7 +99,7 @@ class TransactionSouvenirModel {
 					'".$_POST['paymentMethod']."',
 					'".date('Y-m-d', strtotime("+30 days"))."',
 					'".str_replace("'","",$_POST['addNotes'])."',
-					0)";
+					1)";
 		$resSql = mysqli_query(Connection::getCon(), $sql);
 		$resSql = true;
 		$retTransId = "fail";

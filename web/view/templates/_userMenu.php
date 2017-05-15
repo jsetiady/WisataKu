@@ -18,13 +18,11 @@
             </a>
             <ul class="dropdown-menu">
               <li class="nav-item"><a class="nav-link" style="font-size:0.9rem" href="?cont=report&action=tourPackageSales">Tour Package Sales</a></li>
-              <li class="nav-item"><a class="nav-link" style="font-size:0.9rem" href="?cont=souvenir&action=tourPackageSales">Souvenir Sales</a></li>
             </ul>
       </li>
 <?php
     }
 ?>
-      <li class="nav-item"> <a class="nav-link" href="#">About us</a> </li>
       <li class="nav-item"> <a class="nav-link" href="#">&nbsp;</a> </li>
     </ul>
 </div>
