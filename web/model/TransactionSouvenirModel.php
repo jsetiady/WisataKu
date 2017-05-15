@@ -168,21 +168,18 @@ class TransactionSouvenirModel {
 			//send transaction to tokoku
 			$url = "http://tokoku.kilatiron.com/api/v1/pembelian";
 			$username = "wisataku.if5122@gmail.com";
-			$password = "wisataku";
+			$pwd = "wisataku";
 			
-			$field_string = http_build_query($data);
 			//update payment confirmation to Tokoku
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_USERPWD, "$username:$password");
+			curl_setopt($ch, CURLOPT_USERPWD, "$username:$pwd");
 			curl_setopt($ch, CURLOPT_POSTFIELDS,
-					$field_string);
+					json_encode($data));
 			
 			curl_setopt($ch, CURLOPT_URL,$url);
 			$result=curl_exec($ch);
-			print_r($data);
-			echo $result;
 			curl_close($ch);
 			
 		}

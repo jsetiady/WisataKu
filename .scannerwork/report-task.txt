@@ -1,5 +1,5 @@
-projectKey=WisataKu
+projectKey=WisataKuWebApp
 serverUrl=http://localhost:9000
-dashboardUrl=http://localhost:9000/dashboard/index/WisataKu
-ceTaskId=AVwMMzOUW-YKguUS3i0C
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVwMMzOUW-YKguUS3i0C
+dashboardUrl=http://localhost:9000/dashboard/index/WisataKuWebApp
+ceTaskId=AVwNR-SxW-YKguUS3i0N
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVwNR-SxW-YKguUS3i0N

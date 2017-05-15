@@ -10,8 +10,8 @@ class Controller {
 	public $baseurl = "http://localhost:8888/wisataku/web";
 	//public $baseurl = "http://localhost/wisataku/web";
 	//public $imageurl = "http://images.wisataku.jazzle.me/";
-	//public $imageurl = "http://localhost/wisataku/assets/images/";
-	public $imageurl = "http://localhost:8888/wisataku/assets/images/";
+	public $apiurl = "http://api.wisataku.jazzle.me/";
+	public $imageurl = "http://localhost/wisataku/assets/images/";
 	public $transactionTourModel;
 	public $transactionSouvenirModel;
 	
@@ -164,19 +164,6 @@ class Controller {
 			include 'view/tour/bookingForm.php';
 		}
 	}
-    
-    public function addRental($tourId) {        
-        $title = "Add Rental - WisataKu";
-		$url = "http://rentalku.byethost32.com/api/rent/list?city=Bandung&inside=1";
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_URL,$url);
-		$result=curl_exec($ch);
-		curl_close($ch);
-		
-		$listRental = json_decode($result,true);
-        echo $listRental;
-    }
 	
 	public function confirmBooking()
 	{
@@ -236,15 +223,23 @@ class Controller {
 		else
 		{
 			$confirm = $this->transactionSouvenirModel->paymentConfirmation();
-			if($confirm)
-			{
-			}
 		}
 		
 		include 'view/account/confirmPayment.php';
-		if($confirm)
+		if($confirm == "ok")
 		{
 			echo "<script>alert('Payment has been confirmed, thank you.');</script>";
+		}
+		else
+		{
+			if($confirm == "notfound")
+			{
+				echo "<script>alert('Data not found');</script>";
+			}
+			else
+			{
+				echo "<script>alert('Payment already confirmed');</script>";
+			}
 		}
 	}
 	
@@ -269,7 +264,7 @@ class Controller {
 	//end of transaction
 	
 	//souvenir
-	public function browseSouvenir()
+	public function browseSouvenir($cartAdd = false)
 	{
 		$title = "Browse Souvenir Tokoku - WisataKu";
 		$url = "http://tokoku.kilatiron.com/api/v1/barang/kategori/souvenir";
@@ -279,6 +274,7 @@ class Controller {
 		$result=curl_exec($ch);
 		curl_close($ch);
 		
+		$cartAddStatus = $cartAdd;
 		$listSouvenir = json_decode($result,true);
 		include 'view/souvenir/browseSouvenir.php';
 	}
@@ -298,7 +294,7 @@ class Controller {
 		include 'view/souvenir/viewDetailSouvenir.php';
 	}
 	
-	public function storeCartSouvenir()
+	public function storeCartSouvenir($ret = 0)
 	{
 		$key = -1;
 		if(isset($_SESSION['itemId']))
@@ -325,7 +321,16 @@ class Controller {
 			$_SESSION['itemWeight'][$key] += $_POST['itemWeight'];
 		}
 		
-		$this->viewDetailSouvenir($_POST['itemId'],"true");
+		if($ret == 0)
+		{
+			$this->viewDetailSouvenir($_POST['itemId'],"true");
+		}
+		else
+		{
+			$this->browseSouvenir("true");
+			
+		}
+		
 	}
 	
 	public function deleteItemCart()
@@ -343,7 +348,15 @@ class Controller {
 	public function checkoutSouvenir()
 	{
 		$title = "View cart and checkout - WisataKu";
-		include 'view/souvenir/checkoutCart.php';
+		if(!isset($_SESSION['user']))
+		{
+			$this->showLogin($tourId);
+		}
+		else
+		{
+			include 'view/souvenir/checkoutCart.php';
+		}
+		
 	}
 	
 	public function doOrder()
@@ -352,14 +365,12 @@ class Controller {
 		
 		if($transactionId != "fail")
 		{
-// 			if($_POST['paymentType'] == "trf")
-// 			{
-// 			//	header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
-// 			}
-// 			else
-// 			{
-// 			//	header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&id=".$transactionId);
-// 			}
+			unset($_SESSION['itemId']);
+			unset($_SESSION['itemName']);
+			unset($_SESSION['itemPrice']);
+			unset($_SESSION['itemQty']);
+			
+			header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&type=souvenir&id=".$transactionId);
 		}
 	}
     
