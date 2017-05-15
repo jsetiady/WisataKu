@@ -1,16 +1,15 @@
 <?php
 namespace WisataKu\WisataKuAPI;
 require_once "config/Connection.php";
-require_once "config/Util.php";
-require_once "model/AccessToken.php";
+require_once "util/Util.php";
+require_once "util/AccessToken.php";
+require_once "util/smsGateway.php";
 require_once "model/LocationModel.php";
 require_once "model/UserModel.php";
 require_once "model/StatusModel.php";
 require_once "model/TourPackageModel.php";
 require_once "model/TransactionTourModel.php";
 require_once "model/SimpleCRMModel.php";
-
-
 
 
 /**
@@ -83,14 +82,22 @@ class App
                 </li>
                 <li>
                     <a href="payment">
-                        POST payment.wisataku.jazzle.me
+                        POST payment
                     </a><br/>
                     Payment stubs
                 </li>
                 <li>
                     <a href="crm">
-                        POST crm.wisataku.jazzle.me
+                        POST crm
                     </a><br/>
+                    CRM stubs
+                </li>
+                <li>
+                    <a href="notification/sms">
+                        POST notification/sms
+                    </a>
+                    SMS Gateway Wisataku
+                    <br/>
                     CRM stubs
                 </li>
 
@@ -107,6 +114,7 @@ class App
         $this->transactionService($app);
         $this->paymentStubs($app);
         $this->crmStubs($app);
+        $this->smsNotification($app);
         
         $this->app = $app;
     }
@@ -173,6 +181,28 @@ class App
                 }
             });
         });
+    }
+    
+    public function smsNotification($app) {
+        $app->group('/notification', function () {
+            $this->post('/sms', function ($request, $response, $args) {
+                $smsGateway = new SmsGateway('setiady.jessie@gmail.com', 'jeje2017');
+
+                $deviceID = 48721;
+                $number = $_POST['number'];
+                $message = $_POST['message'];
+
+                $options = [
+                //'send_at' => strtotime('+10 minutes'), // Send the message in 10 minutes
+                //'expires_at' => strtotime('+1 hour') // Cancel the message in 1 hour if the message is not yet sent
+                ];
+
+                $result = $smsGateway->sendMessageToNumber($number, $message, $deviceID, $options);
+                return $response->withJson($result, $status);
+            });
+            
+        });
+
     }
     
     public function tourPackageService($app) {
