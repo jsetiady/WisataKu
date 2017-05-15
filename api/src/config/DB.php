@@ -7,6 +7,7 @@ define("DB_PASSWORD", "root");
 define("DB_NAME", "jazzleme_wisataku");
 
 define("INVOICE_FILE_PATH", "http://file.wisataku.jazzle.me/");
+define("ASSETS_URL", "http://assets.wisataku.jazzle.me/");
 
 
 ?>

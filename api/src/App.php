@@ -29,101 +29,164 @@ class App
         $app = new \Slim\App;
         $app->get('/', function ($request, $response) {
             
-            $strMessage = '
-            WisataKu API v1.0<br/>
-            Available services:
-            <ol>
-                <li>
-                    <a href="location">
-                        GET list of tour locations
-                    </a>
-                </li>
-                <li>
-                    <a href="location/1">
-                        GET tour location/{id} (location by id)
-                    </a>
-                </li>
-                <li>
-                    <a href="tourpackage">
-                        GET list of tour packages
-                    </a>
-                </li>
-                <li>
-                    <a href="tourpackage?location=komodo">
-                        GET list of tour packages (filtered)
-                    </a>
-                </li>
-                <li>
-                    <a href="tourpackage/1">
-                        GET tourpackage/{id} (tourpackage by id)
-                    </a>
-                </li>
-                <li>
-                    <a href="oauth/token">
-                        POST oauth/token
-                    </a><br/>
-                        Username and password for LeasingKu = leasingku:p4ssw0rD
-                </li>
-                <li>
-                    <a href="transaction/list/leasingku/7198ef1c0ddddfcbeee593740f390a46bd562572a12fa9f199a1059e42200381e786e8dfa2922bc132aec2df660b0744b2fe9f8f2ee00dc2dcf8805112365e96">
-                        GET transaction/list
-                    </a><br/>
-                    Parameter:
-                    <ul>
-                        <li>test</li>
-                    </ul>
-                    Put all required parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
-                </li>
-                <li>
-                    <a href="transaction/new">
-                        POST transaction/new
-                    </a>
-                </li>
-                <li>
-                    <a href="transaction/confirm/2">
-                        PATCH transaction/confirm/{id}
-                    </a>
-                </li>
-                <li>
-                    <a href="payment">
-                        POST payment
-                    </a><br/>
-                    Payment stubs
-                </li>
-                <li>
-                    <a href="crm">
-                        GET crm
-                    </a><br/>
-                    CRM stubs (Get list of user and their points)
-                </li>
-                <li>
-                    <a href="crm/jejeisha">
-                        GET crm/{username}
-                    </a><br/>
-                    CRM stubs (Get list points history of user:username)
-                </li>
-                <li>
-                    <a href="crm">
-                        POST crm
-                    </a><br/>
-                    CRM stubs
-                </li>
-                <li>
-                    <a href="notification/sms">
-                        POST notification/sms
-                    </a><br/>
-                    SMS Gateway Wisataku</br>
-                    Request Parameter:
-                    <ul>
-                        <li>number</li>
-                        <li>message</li>
-                    </ul>
-                </li>
+            include "util/_header.php";
+            ?>
+            <div class="py-5">
+              <div class="container">
+                <div class="row" style="margin:auto">
+                  <div class="col-md-12" style="margin:auto;">
+                    <h5>WisataKu API v1.0</h5>
+                    Available services:
+                    <ol>
+                        <li>
+                            <a href="location">
+                                GET /location
+                            </a><br/>
+                            GET list of tour locations
+                        </li>
+                        <li>
+                            <a href="location/1">
+                                GET /location/{id}
+                            </a><br/>
+                            Get tour location by id location
+                        </li>
+                        <li>
+                            <a href="tourpackage">
+                                GET /tourpackage
+                            </a><br/>
+                            GET list of tour packages<br/>
+                            Parameter<br/>
+                            <ul>
+                                <li>type: optional</li>
+                                <li>startDate: optional</li>
+                                <li>endDate: optional</li>
+                                <li>location: optional</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="tourpackage/1">
+                                GET /tourpackage/{id}
+                            </a><br/>
+                            GET tourpackage by id
+                        </li>
+                        <li>
+                            <a href="oauth/token">
+                                POST oauth/token
+                            </a><br/>
+                                Generate new token <br/>
+                                Parameter<br/>
+                                <ul>
+                                <li>credential: optional</li>
+                                </ul>
+                                Credential = base64 of username:password<br/>
+                                Username and password for LeasingKu = leasingku:p4ssw0rD<br/>
+                        </li>
+                        <li>
+                            <a href="transaction/list/leasingku/7198ef1c0ddddfcbeee593740f390a46bd562572a12fa9f199a1059e42200381e786e8dfa2922bc132aec2df660b0744b2fe9f8f2ee00dc2dcf8805112365e96">
+                                GET transaction/list
+                            </a><br/>
+                            Parameter:
+                            <ul>
+                                <li>username: mandatory</li>
+                                <li>token: mandatory</li>
+                                <li>transactionStartDate: optional</li>
+                                <li>transactionEndDate: optional</li>
+                                <li>id: optional</li>
+                                <li>invoiceNumber: optional</li>
+                                <li>paymentStatus: optional</li>
+                            </ul>
+                            Put all required parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
+                        </li>
+                        <li>
+                            <a href="transaction/new">
+                                POST transaction/new
+                            </a><br/>
+                            Parameter:
+                            <ul>
+                                <li>username: mandatory</li>
+                                <li>token: mandatory</li>
+                                <li>tourId: mandatory</li>
+                                <li>totalPerson: mandatory</li>
+                                <li>contactName: mandatory</li>
+                                <li>contactPhoneNumber: mandatory</li>
+                                <li>paymentType: mandatory</li>
+                                <li>startDate: optional</li>
+                                <li>endDate: optional</li>
+                                <li>notes: optional</li>
+                                <li>accountName: optional</li>
+                                <li>accountNumber: optional</li>
+                                <li>accountBankName: optional</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="transaction/confirm/2">
+                                PATCH transaction/confirm/{id}
+                            </a><br/>
+                            Parameter:
+                            <ul>
+                                <li>username: mandatory</li>
+                                <li>token: mandatory</li>
+                                <li>accountName: mandatory</li>
+                                <li>accountNumber: mandatory</li>
+                                <li>accountBankName: mandatory</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="payment">
+                                POST payment
+                            </a><br/>
+                            Payment stubs
+                        </li>
+                        <li>
+                            <a href="crm">
+                                GET crm
+                            </a><br/>
+                            CRM stubs (Get list of user and their points)
+                        </li>
+                        <li>
+                            <a href="crm/jejeisha">
+                                GET crm/{username}
+                            </a><br/>
+                            CRM stubs (Get list points history of user:username)
+                        </li>
+                        <li>
+                            <a href="crm">
+                                POST crm
+                            </a><br/>
+                            Add point to user's CRM account<br/>
+                            Parameter:
+                            <ul>
+                                <li>username: mandatory</li>
+                                <li>transactionInvoice: mandatory</li>
+                                <li>transactionDate: mandatory</li>
+                                <li>productName: mandatory</li>
+                                <li>issuer: mandatory</li>
+                                <li>point: mandatory</li>
+                                <li>contactPhoneNumber: mandatory</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="notification/sms">
+                                POST notification/sms
+                            </a><br/>
+                            SMS Gateway Wisataku<br/>
+                            Request Parameter:
+                            <ul>
+                                <li>number: mandatory</li>
+                                <li>message: mandatory</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    </div>
+                  </div>
+                </div>
+        </div>
 
-            </ol>
-            ';
             
-            $response->getBody()->write($strMessage);
+                  <?php
+            include "util/_footer.php";
+            
+            $response->getBody()->setStatus(200);
             return $response;
         });
         
