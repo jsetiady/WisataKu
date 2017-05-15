@@ -35,7 +35,9 @@
            <br/><br/>
           <div class="col-md-12 form-control-sm" style="margin:auto;">
           	<div class="row">
-          	<form method="post" action="?cont=tour&action=confirmBooking">
+          	<form method="post" action="?cont=tour&action=addRental">
+            <!--<form method="post" action="?cont=tour&action=confirmBooking">-->
+                
           		<input type="hidden" name="tourId" value="<?= $tourDet->getTourId() ?>" />
           		<table>
           			<tr style="">

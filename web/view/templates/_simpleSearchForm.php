@@ -1,7 +1,7 @@
 <hr/>
 <h6>Find Tour Packages</h6>
 <hr/>
-<form class="search-form" style="line-height: 2px;">
+<form class="search-form" style="line-height: 2px;" method="post" action="?cont=tour&action=browse">
 	<div class="row row-bottom-margin">
 		<div class="col-sm-3">
 			<div class="form-group form-control-sm"><label>Tour Type</label></div>
@@ -18,7 +18,7 @@
 		</div>
 		<div class="col-sm-8">
 			<div class="form-inline form-control-sm">
-			<select class="form-control form-control-sm" id="location" style="width:235px;">
+			<select class="form-control form-control-sm" name="location" style="width:235px;">
 				<option>All</option>
 				<?php 
 				foreach($listLoc as $loc) 
@@ -38,7 +38,7 @@
 		</div>
 		<div class="col-sm-8">
 			<div class="form-inline form-control-sm">
-				<select class="form-control form-control-sm" id="month">
+				<select class="form-control form-control-sm" name="month">
 					<option value="0">All</option>
 					<option value="1">January</option>
 					<option value="2">February</option>
@@ -54,7 +54,7 @@
 					<option value="12">December</option>
 				</select>
 				&nbsp;&nbsp;
-				<select class="form-control form-control-sm" id="year">
+				<select class="form-control form-control-sm" name="year">
 					<option value="2017">2017</option>
 					<option value="2018">2018</option>
 				</select>
