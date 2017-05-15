@@ -13,6 +13,14 @@
         </div>
         <div class="col-md-8">
             <?php
+            
+            
+            if(count($allTourPackage)==0) {
+                ?><center><img src="<?=$this->imageurl."no_package.png"?>" width="220px" height="176px" alt="No Package" /></center>
+            <?php
+            }
+            
+            
               $i = 0;
               foreach ($allTourPackage as $tour)
                   {
