@@ -1,0 +1,5 @@
+projectKey=WisataKuApi
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/WisataKuApi
+ceTaskId=AVwMQPMHW-YKguUS3i0G
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVwMQPMHW-YKguUS3i0G

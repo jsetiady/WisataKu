@@ -117,8 +117,8 @@ class TransactionTourModel {
 			$lenTransId = strlen($transIdStr);
 			
 			//generate invoice no, format : TRX0000001.. dst
-			$invNo = "TRX";
-			for($i = 0;$i < (7 - $lenTransId);$i++)
+			$invNo = "TRX".date('Ym');
+			for($i = 0;$i < (4 - $lenTransId);$i++)
 			{
 				$invNo .= "0";
 			}

@@ -75,6 +75,7 @@
 		       <input type="hidden" name="itemPrice" id="priceSouvenir" value="<?= $souvenir['harga'] ?>" />
 		       <input type="hidden" name="itemId" id="itemId" value="<?= $souvenir['idBarang'] ?>" />
 		       <input type="hidden" name="itemName" id="itemName" value="<?= $souvenir['namaBarang'] ?>" />
+	           <input type="hidden" name="itemWeight" id="itemWeight" value="<?= $souvenir['bobot'] ?>"/>
 	           <input type="hidden" name="sessionCount" id="sessionCount" value="<?= $total ?>" />
            </form>
         </div>

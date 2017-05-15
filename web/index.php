@@ -84,6 +84,12 @@
 							case "deleteItemCart" :
 								$controller->deleteItemCart();
 								break;
+							case "doOrder" :
+								$controller->doOrder();
+								break;
+							case "doTransaction" :
+								$controller->doSouvenirTransaction();
+								break;
 						}
 					}
 				}

@@ -4,8 +4,18 @@
 	<script type="text/javascript">
 		$("document").ready(function(){
 			$("#order-history-table").dataTable();
-		});
+			$("#order-souvenir-history-table").dataTable();
 
+			$("#tour-transaction-btn").click(function(){
+				$("#tour-history-tab").show();
+				$("#souvenir-history-tab").hide();
+			});
+
+			$("#souvenir-transaction-btn").click(function(){
+				$("#tour-history-tab").hide();
+				$("#souvenir-history-tab").show();
+			});
+		});
 	</script>
     <div class="py-5">
       <div class="container">
@@ -13,10 +23,17 @@
           <div class="col-md-12" style="margin:auto;text-align:center;">
           	<h5 style="margin:auto;"><b>Transaction History</b></h5>
           	<hr/>
+          	<div style="text-align:left">
+          	<button type="button" id="tour-transaction-btn" class="btn btn-sm btn-primary">Show Tour Transaction</button>
+          	<button type="button" id="souvenir-transaction-btn" class="btn btn-sm btn-primary">Show Souvenir Transaction</button>
+          	<hr/>
+          	</div>
           </div>
            <br/><br/>
-          <div class="col-md-12 form-control-sm" style="margin:auto;border:1px solid black;">
+          <div id="tour-history-tab" class="col-md-12 form-control-sm" style="margin:auto;border:1px solid black;">
+          	<p><b>Tour Transaction History</b></p>
           	<hr style="margin-top:5px;"/>
+          	
           	<table class="form-control-sm" id="order-history-table">
           		<thead>
 	          		<head>
@@ -24,8 +41,8 @@
 	          				<th style="width:40px;">No</th>
 	          				<th style="width:150px;">Invoice No</th>
 	          				<th style="width:250px;">Tour Name</th>
-	          				<th>Type</th>
 	          				<th>Transaction Date</th>
+	          				<th>Total price</th>
 	          				<th>Status</th>
 	          				<th style="width:40px">Options</th>
 	          			</tr>
@@ -39,8 +56,8 @@
 	          				<td style="text-align:right; padding-right:50px;"><?= $no ?></td>
 	          				<td style="padding-left:20px"><?= $trans->getTransInvoiceNo() ?></td>
 	          				<td style="padding-left:20px"><?= $trans->getTransTour()->getTourName() ?></td>
-	          				<td style="padding-left:20px">Tour</td>
 	          				<td style="padding-left:20px"><?= $trans->getTransDate() ?></td>
+	          				<td style="text-align:left;">IDR <?= number_format($trans->getTransTotalPrice(),0,".",",") ?>,-</td>
 	          				<td style="padding-left:20px"><?= strtoupper($trans->getTransStatus()->getStatusDesc()) ?></td>
 	          				<td style="padding-left:20px"><a href="?cont=tour&action=viewTransaction&id=<?= $trans->getTransId() ?>" class="btn btn-primary btn-sm" style="width:30px; height:15px; font-size:12px; padding-top:0px;">View</a></td>
 	          			</tr>
@@ -50,6 +67,30 @@
           		</thead>
           	</table>
           </div>
+          <div id="souvenir-history-tab"  class="col-md-12 form-control-sm" style="display:none;margin:auto;border:1px solid black;">
+          	<p><b>Souvenir Transaction History</b></p>
+          	<hr style="margin-top:5px;"/>
+          	
+          	<table class="form-control-sm" id="order-souvenir-history-table">
+          		<thead>
+	          		<head>
+	          			<tr>
+	          				<th style="width:40px;">No</th>
+	          				<th style="width:150px;">Invoice No</th>
+	          				<th>Transaction Date</th>
+	          				<th>Total Price</th>
+	          				<th>Status</th>
+	          				<th>Payment Date</th>
+	          				<th style="width:40px">Options</th>
+	          			</tr>
+	          		</head>
+	          		<tbody>
+	          			
+	          		</tbody>
+          		</thead>
+          	</table>
+          </div>
+          
         </div>
       </div>
     </div>

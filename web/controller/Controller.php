@@ -9,6 +9,7 @@ class Controller {
 	public $userModel;
 	public $baseurl = "http://localhost/wisataku/web";
 	public $transactionTourModel;
+	public $transactionSouvenirModel;
 	
 	public function __construct()  
     {  
@@ -17,6 +18,7 @@ class Controller {
          $this->tourPackageModel = new TourPackageModel();
          $this->userModel = new UserModel();
          $this->transactionTourModel = new TransactionTourModel();
+         $this->transactionSouvenirModel = new TransactionSouvenirModel();
     } 
 	
 	public function invoke()
@@ -74,6 +76,7 @@ class Controller {
 		unset($_SESSION['itemName']);
 		unset($_SESSION['itemPrice']);
 		unset($_SESSION['itemQty']);
+		unset($_SESSION['itemWeight']);
 		
 		header("Location:".$this->baseurl);
 		echo "<script>alert('Logout sucessfully')</script>";
@@ -137,7 +140,6 @@ class Controller {
 	
 	public function doTransaction()
 	{
-		
 		$transactionId = $this->transactionTourModel->createTransaction();
 		
 		if($transactionId != "fail")
@@ -169,7 +171,19 @@ class Controller {
 	public function doConfirmPayment()
 	{
 		$title= "Confirm Payment - WisataKu";
-		$confirm = $this->transactionTourModel->paymentConfirmation();
+		$confirm = "";
+		if(substr($_POST['invNo'],0,3)== 'TRX')
+		{
+			$confirm = $this->transactionTourModel->paymentConfirmation();
+		}
+		else
+		{
+			$confirm = $this->transactionSouvenirModel->paymentConfirmation();
+			if($confirm)
+			{
+			}
+		}
+		
 		include 'view/account/confirmPayment.php';
 		if($confirm)
 		{
@@ -231,16 +245,17 @@ class Controller {
 			}
 		}
 		
-		
 		if($key == "-1")
 		{
 			$_SESSION['itemId'][]= $_POST['itemId'];
 			$_SESSION['itemName'][]=$_POST['itemName'];
 			$_SESSION['itemPrice'][]=$_POST['itemPrice'];
 			$_SESSION['itemQty'][]=$_POST['qtySouvenir'];
+			$_SESSION['itemWeight'][]=$_POST['itemWeight'];
 		}
 		else {
 			$_SESSION['itemQty'][$key] += $_POST['qtySouvenir'];
+			$_SESSION['itemWeight'][$key] += $_POST['itemWeight'];
 		}
 		
 		$this->viewDetailSouvenir($_POST['itemId'],"true");
@@ -256,14 +271,29 @@ class Controller {
 		unset($_SESSION['itemQty'][$_POST['row']]);
 		
 		include 'view/souvenir/checkoutCart.php';
-
 	}
 	
 	public function checkoutSouvenir()
 	{
 		$title = "View cart and checkout - WisataKu";
-		
 		include 'view/souvenir/checkoutCart.php';
+	}
+	
+	public function doOrder()
+	{
+		$transactionId = $this->transactionSouvenirModel->createTransaction();
+		
+		if($transactionId != "fail")
+		{
+// 			if($_POST['paymentType'] == "trf")
+// 			{
+// 			//	header("Location:".$this->baseurl."?cont=tour&action=transactionConfirm&id=".$transactionId);
+// 			}
+// 			else
+// 			{
+// 			//	header("Location:".$this->baseurl."?cont=tour&action=orderHistory&status=paid&id=".$transactionId);
+// 			}
+		}
 	}
 }
 ?>

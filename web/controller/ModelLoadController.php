@@ -9,7 +9,7 @@
 	include_once("{$base_dir}model{$ds}TourItineraryModel.php");
 	include_once("{$base_dir}model{$ds}TourPackageModel.php");
 // 	include_once("{$base_dir}model{$ds}TransactionRentVehicleModel.php");
-// 	include_once("{$base_dir}model{$ds}TransactionSouvenirModel.php");
+	include_once("{$base_dir}model{$ds}TransactionSouvenirModel.php");
 	include_once("{$base_dir}model{$ds}TransactionTourModel.php");
  	include_once("{$base_dir}model{$ds}UserModel.php");
 ?>
