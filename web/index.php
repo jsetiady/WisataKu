@@ -30,6 +30,9 @@
 				case "transactionConfirm" :
 					$controller->transactionCreatedView($_GET['id']);
 					break;
+                case "viewTransaction" :
+					$controller->viewTransaction($_GET['id']);
+					break;
 			}
 		}
 		else

@@ -7,8 +7,8 @@ class Controller {
 	public $locationModel;
 	public $tourPackageModel;
 	public $userModel;
-	//public $baseurl = "http://localhost:8888/wisataku/web";
-	public $baseurl = "http://localhost/wisataku/web";
+	public $baseurl = "http://localhost:8888/wisataku/web";
+	//public $baseurl = "http://localhost/wisataku/web";
 	//public $imageurl = "http://images.wisataku.jazzle.me/";
 	public $apiurl = "http://api.wisataku.jazzle.me/";
 	public $imageurl = "http://localhost/wisataku/assets/images/";
@@ -251,6 +251,15 @@ class Controller {
 		$transactionSouvenir = $this->transactionSouvenirModel->getAllTransaction(null,$user->getUserId());
 		include 'view/account/orderHistory.php';
 	}
+    
+    public function viewTransaction($transId)
+    {
+        $title= "View Transaction - WisataKu";
+        $user = $_SESSION['user'];
+		$transactions = $this->transactionTourModel->getAllTransactions($transId,$user->getUserId());
+        $transactions = $transactions[0];
+		include 'view/account/transactionDetail.php';
+    }
 	
 	//end of transaction
 	
