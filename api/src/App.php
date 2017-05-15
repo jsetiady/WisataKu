@@ -68,7 +68,11 @@ class App
                     <a href="transaction/list/leasingku/7198ef1c0ddddfcbeee593740f390a46bd562572a12fa9f199a1059e42200381e786e8dfa2922bc132aec2df660b0744b2fe9f8f2ee00dc2dcf8805112365e96">
                         GET transaction/list
                     </a><br/>
-                    Put all requested parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
+                    Parameter:
+                    <ul>
+                        <li>test</li>
+                    </ul>
+                    Put all required parameter in request header, check this out: http://stackoverflow.com/questions/3032643/php-get-request-sending-headers
                 </li>
                 <li>
                     <a href="transaction/new">
@@ -88,6 +92,18 @@ class App
                 </li>
                 <li>
                     <a href="crm">
+                        GET crm
+                    </a><br/>
+                    CRM stubs (Get list of user and their points)
+                </li>
+                <li>
+                    <a href="crm/jejeisha">
+                        GET crm/{username}
+                    </a><br/>
+                    CRM stubs (Get list points history of user:username)
+                </li>
+                <li>
+                    <a href="crm">
                         POST crm
                     </a><br/>
                     CRM stubs
@@ -95,10 +111,13 @@ class App
                 <li>
                     <a href="notification/sms">
                         POST notification/sms
-                    </a>
-                    SMS Gateway Wisataku
-                    <br/>
-                    CRM stubs
+                    </a><br/>
+                    SMS Gateway Wisataku</br>
+                    Request Parameter:
+                    <ul>
+                        <li>number</li>
+                        <li>message</li>
+                    </ul>
                 </li>
 
             </ol>
@@ -188,10 +207,12 @@ class App
                 $randomVal = rand(0,1);
                 if($randomVal<0.5) {
                     $data =  [
+                        'status' => 'OK'];
                         'message' => 'Payment success'];
                     return $response->withJson($data, 200);
                 } else {
                     $data =  [
+                        'status' => 'NOK'];
                         'message' => 'Payment failed'];
                     return $response->withJson($data, 406);
                 }
