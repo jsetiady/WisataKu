@@ -26,7 +26,7 @@
           <div id="tour-history-tab" class="col-md-12 form-control-sm" style="margin:auto;border:1px solid black;">
           	<p><b>Tour Transaction Detail</b></p>
           	<hr style="margin-top:5px;"/>
-              <a href=""> < Back to order history </a>
+              <a href="javascript:history.go('-1')"> < Back to order history </a>
               <pre>
               <?php
               //print_r($transactions);

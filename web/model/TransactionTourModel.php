@@ -149,8 +149,10 @@ class TransactionTourModel {
     	$paymentDate = $_POST['paymentDate'];
     	$accNo = $_POST['accNo'];
     	$accBank = $_POST['accBank'];
+    	$user = $_SESSION['user'];
     	
-    	$sql = "SELECT trans_status_id,trans_user_contact_no,trans_total_price
+    	$sql = "SELECT trans_status_id,trans_user_contact_no,trans_total_price,trans_date,
+						(select tour_points from ws_tour where trans_tour_id=tour_id) tour_points
 				from ws_transaction_tour
 				where trans_invoice_no='".$invNo."'";
     	$resSql = mysqli_query(Connection::getCon(), $sql);
@@ -162,16 +164,20 @@ class TransactionTourModel {
     		$stat = "";
     		$phoneNo = "";
     		$totalPrice = 0;
+    		$tourPoints = 0;
+    		$transDate ="";
     		while($row = mysqli_fetch_assoc($resSql))
     		{
     			$stat = $row['trans_status_id'];
     			$phoneNo = $row['trans_user_contact_no'];
     			$totalPrice = $row['trans_total_price'];
+    			$tourPoints = $row['tour_points'];
+    			$transDate = $row['trans_date'];
     		}
     		
     		if($stat == "0")
     		{
-    			$url = $this->apiurl."payment";
+    			$url = "http://api.wisataku.jazzle.me/payment";
     			$ch = curl_init();
     			curl_setopt($ch, CURLOPT_POST, 1);
     			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -198,7 +204,7 @@ class TransactionTourModel {
     				$retMessage="ok";
     				
     				//send sms to customer
-    				$url = $this->apiurl."notification/sms";
+    				$url = "http://api.wisataku.jazzle.me/notification/sms";
     				$message = "[WisataKu] Payment for inv no : ".$invNo." has been confirmed, thank you.";
     				
     				$ch = curl_init();
@@ -206,6 +212,19 @@ class TransactionTourModel {
     				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     				curl_setopt($ch, CURLOPT_POSTFIELDS,
     						"number=".$phoneNo."&message=".$message);
+    				
+    				curl_setopt($ch, CURLOPT_URL,$url);
+    				$result=curl_exec($ch);
+    				curl_close($ch);
+    				
+    				//send data to crm
+    				$url = "http://api.wisataku.jazzle.me/crm";
+    				$ch = curl_init();
+    				curl_setopt($ch, CURLOPT_POST, 1);
+    				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    				curl_setopt($ch, CURLOPT_POSTFIELDS,
+    						"username=".$user->getUserName()."&transactionInvoice=".$invNo."&transactionDate=".$transDate.
+    						"&productName=tour&issuer=WisataKu&point=".$tourPoints."&contactPhoneNumber=".$phoneNo);
     				
     				curl_setopt($ch, CURLOPT_URL,$url);
     				$result=curl_exec($ch);
