@@ -12,6 +12,9 @@
 				case "find" :
 					$controller->findTour();
 					break;
+                case "browse" :
+					$controller->browsePackage();
+					break;
 				case "detail" :
 					$controller->viewDetailTourPackage($_GET['id']);
 					break;

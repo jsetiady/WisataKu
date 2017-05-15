@@ -19,7 +19,7 @@
                 <th>Year</th>
                 <th>Number of Transaction</th>
                 <th>Number of Confirmed Transaction</th>
-                <th>Total Nominal Transaction</th>
+                <th>Total Nominal of Transaction</th>
                 <th>Total Nominal of Paid Transaction</th>
               </tr>
             </thead>

@@ -7,7 +7,10 @@ class Controller {
 	public $locationModel;
 	public $tourPackageModel;
 	public $userModel;
+	//public $baseurl = "http://localhost:8888/wisataku/web";
 	public $baseurl = "http://localhost:8888/wisataku/web";
+	//public $imageurl = "http://images.wisataku.jazzle.me/";
+	public $imageurl = "http://localhost:8888/wisataku/assets/images/";
 	public $transactionTourModel;
 	
 	public function __construct()  
@@ -89,6 +92,32 @@ class Controller {
 		$listLoc = $this->locationModel->getAllLocation();
 		$allTourPackage = $this->tourPackageModel->getAllTourPackages();
 		include 'view/tour/findTour.php';
+	}
+    
+    
+    public function browsePackage()
+	{    
+        $filter = array();
+        if(!empty($_POST)) {
+            $filter = array(
+                "keyword" => $_POST['keyword'],
+                "tourType" => $_POST['tour_type'],
+                "location" => $_POST['location'],
+                "month" => $_POST['month'],
+                "year" => $_POST['year'],
+                "duration" => $_POST['durationGroup'],
+                "participant" => $_POST['participantGroup'],
+                "price" => $_POST['priceGroup'],
+                "point" => $_POST['pointGroup']
+            );
+        }
+            
+		$title = "Browse Package - WisataKu";
+		$listLoc = $this->locationModel->getAllLocation();
+        
+        $allTourPackage = $this->tourPackageModel->getAllTourPackages(null, $filter);
+                
+		include 'view/tour/browsePackage.php';
 	}
 	
 	
