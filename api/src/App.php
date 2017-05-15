@@ -207,12 +207,12 @@ class App
                 $randomVal = rand(0,1);
                 if($randomVal<0.5) {
                     $data =  [
-                        'status' => 'OK'];
+                        'status' => 'OK',
                         'message' => 'Payment success'];
                     return $response->withJson($data, 200);
                 } else {
                     $data =  [
-                        'status' => 'NOK'];
+                        'status' => 'NOK',
                         'message' => 'Payment failed'];
                     return $response->withJson($data, 406);
                 }
