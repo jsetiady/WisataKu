@@ -70,6 +70,11 @@ class Controller {
 	public function doLogout()
 	{
 		unset($_SESSION['user']);
+		unset($_SESSION['itemId']);
+		unset($_SESSION['itemName']);
+		unset($_SESSION['itemPrice']);
+		unset($_SESSION['itemQty']);
+		
 		header("Location:".$this->baseurl);
 		echo "<script>alert('Logout sucessfully')</script>";
 		
@@ -214,19 +219,49 @@ class Controller {
 	
 	public function storeCartSouvenir()
 	{
-		$_SESSION['itemId'][] = $_POST['itemId'];
-		$_SESSION['itemName'][]=$_POST['itemName'];
-		$_SESSION['itemPrice'][]=$_POST['itemPrice'];
-		$_SESSION['itemQty'][]=$_POST['qtySouvenir'];
-			
+		$key = -1;
+		if(isset($_SESSION['itemId']))
+		{
+			for($i = 0;$i<count($_SESSION['itemId']);$i++)
+			{
+				if(isset($_SESSION['itemId']) && $_SESSION['itemId'][$i] == $_POST['itemId'])
+				{
+					$key = $i;
+				}
+			}
+		}
+		
+		
+		if($key == "-1")
+		{
+			$_SESSION['itemId'][]= $_POST['itemId'];
+			$_SESSION['itemName'][]=$_POST['itemName'];
+			$_SESSION['itemPrice'][]=$_POST['itemPrice'];
+			$_SESSION['itemQty'][]=$_POST['qtySouvenir'];
+		}
+		else {
+			$_SESSION['itemQty'][$key] += $_POST['qtySouvenir'];
+		}
+		
 		$this->viewDetailSouvenir($_POST['itemId'],"true");
+	}
+	
+	public function deleteItemCart()
+	{
+		$title = "View cart and checkout - WisataKu";
+		$_POST['row'] = 0;
+		unset($_SESSION['itemId'][$_POST['row']]);
+		unset($_SESSION['itemName'][$_POST['row']]);
+		unset($_SESSION['itemPrice'][$_POST['row']]);
+		unset($_SESSION['itemQty'][$_POST['row']]);
+		
+		include 'view/souvenir/checkoutCart.php';
+
 	}
 	
 	public function checkoutSouvenir()
 	{
 		$title = "View cart and checkout - WisataKu";
-		
-		
 		
 		include 'view/souvenir/checkoutCart.php';
 	}

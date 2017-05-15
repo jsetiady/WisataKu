@@ -25,6 +25,17 @@
 </script>
 <div class="py-5">
 <hr/>
+<div class="" style="text-align: right;padding-right:130px;">
+<?php 
+       		$total = 0;
+       		if(isset($_SESSION['itemId']))
+       		{
+       			$total = count($_SESSION['itemId']);
+       		}
+       
+?>
+<a href="?cont=souvenir&action=doCheckout" id="view-cart-btn" class="btn btn-sm btn-primary">View Cart (<?= $total ?>)</a>      	
+</div>
 <h4 style="margin-left:120px;"><a href="javascript:history.go('-1')">&lt; Back</a>&nbsp; Souvenir Details</h4>    
 <hr/>
 <div class="row">
