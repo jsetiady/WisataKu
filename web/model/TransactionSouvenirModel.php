@@ -19,7 +19,7 @@ class TransactionSouvenirModel {
 					,trans_sov_city,trans_sov_kecamatan,trans_sov_postal_code,trans_sov_contact_name,trans_sov_contact_no
 					,trans_sov_total_qty,trans_sov_invoice_no,trans_sov_payment_type,trans_sov_payment_acc_no,
 					trans_sov_payment_acc_name,trans_sov_payment_acc_bank,trans_sov_payment_date,trans_sov_expired_date,
-					trans_sov_notes,status_id,user_name,status_desc
+					trans_sov_notes,c.status_id,user_name,status_desc
 				from ws_transaction_souvenir a,ws_user b,ws_status c
 				where a.trans_sov_user_id=b.user_id
 				and a.status_id=c.status_id";
@@ -59,7 +59,7 @@ class TransactionSouvenirModel {
     				->setTransSovPaymentDate($row['trans_sov_payment_date'])
     				->setTransSovExpiredDate($row['trans_sov_expired_date'])
     				->setTransSovNotes($row['trans_sov_notes'])
-    				->setTransStatus(Status::create()
+    				->setTransSovStatus(Status::create()
     									->setStatusId($row['status_id'])
     									->setStatusDesc($row['status_desc']))
     				->setTransSovItems($this->transactionSouvenirItemModel->getAllSouvenirByTransactionId($row['trans_sov_id']))

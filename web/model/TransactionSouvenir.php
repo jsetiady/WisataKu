@@ -79,7 +79,7 @@ class TransactionSouvenir {
     	return $this;
     }
 
-    public function setTransContactNo($transSovContactNo)
+    public function setTransSovContactNo($transSovContactNo)
     {
     	$this->transSovContactNo = $transSovContactNo;
     	return $this;

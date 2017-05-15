@@ -196,6 +196,7 @@ class Controller {
 		$title= "View Order History - WisataKu";
 		$user = $_SESSION['user'];
 		$transactions = $this->transactionTourModel->getAllTransactions(null,$user->getUserId());
+		$transactionSouvenir = $this->transactionSouvenirModel->getAllTransaction(null,$user->getUserId());
 		include 'view/account/orderHistory.php';
 	}
 	

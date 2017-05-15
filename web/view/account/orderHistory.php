@@ -44,7 +44,9 @@
 	          				<th>Transaction Date</th>
 	          				<th>Total price</th>
 	          				<th>Status</th>
+	          				<th style="display:none"></th>
 	          				<th style="width:40px">Options</th>
+	          				
 	          			</tr>
 	          		</head>
 	          		<tbody>
@@ -59,7 +61,16 @@
 	          				<td style="padding-left:20px"><?= $trans->getTransDate() ?></td>
 	          				<td style="text-align:left;">IDR <?= number_format($trans->getTransTotalPrice(),0,".",",") ?>,-</td>
 	          				<td style="padding-left:20px"><?= strtoupper($trans->getTransStatus()->getStatusDesc()) ?></td>
-	          				<td style="padding-left:20px"><a href="?cont=tour&action=viewTransaction&id=<?= $trans->getTransId() ?>" class="btn btn-primary btn-sm" style="width:30px; height:15px; font-size:12px; padding-top:0px;">View</a></td>
+	          				<td style="display:none;padding-left:20px"></td>
+	          				<td style="padding-left:20px">
+	          				<?php 
+	          					if($trans->getTransStatus()->getStatusId() == "0"){
+	          				?>
+	          				<a href="?cont=account&action=confirmPayment&inv=<?= $trans->getTransInvoiceNo() ?>" class="btn btn-primary btn-sm" style="width:40px; height:15px; font-size:12px; padding-top:0px;">Confirm Payment</a>
+	          				<?php
+	          					} ?>
+	          				<a href="?cont=tour&action=viewTransaction&id=<?= $trans->getTransId() ?>" class="btn btn-primary btn-sm" style="width:30px; height:15px; font-size:12px; padding-top:0px;">View</a>
+	          				</td>
 	          			</tr>
 	          			<?php	
 	          			}?>
@@ -73,21 +84,51 @@
           	
           	<table class="form-control-sm" id="order-souvenir-history-table">
           		<thead>
-	          		<head>
 	          			<tr>
 	          				<th style="width:40px;">No</th>
 	          				<th style="width:150px;">Invoice No</th>
-	          				<th>Transaction Date</th>
+	          				<th style="text-align: center">Transaction Date</th>
 	          				<th>Total Price</th>
 	          				<th>Status</th>
 	          				<th>Payment Date</th>
 	          				<th style="width:40px">Options</th>
 	          			</tr>
-	          		</head>
-	          		<tbody>
-	          			
-	          		</tbody>
           		</thead>
+          		<tbody>
+          			<?php 
+          				$no=1;
+          				foreach($transactionSouvenir as $transSov)
+          				{
+	          			?>
+	          			<tr>
+	          				<td><?= $no ?></td>
+	          				<td><?= $transSov->getTransSovInvoiceNo() ?></td>
+	          				<td style="text-align:center;"><?= $transSov->getTransSovDate() ?></td>
+	          				<td style="text-align:right;padding-right:40px;">IDR <?= number_format($transSov->getTransSovPrice(),0,".",",") ?>,-</td>
+	          				<td style="padding-left:20px"><?= strtoupper($transSov->getTransSovStatus()->getStatusDesc()) ?></td>
+	          				<td style="text-align:center;"><?= $transSov->getTransSovPaymentDate() ?></td>
+	          				<td style="padding-left:20px">
+	          				<?php 
+	          					if($transSov->getTransSovStatus()->getStatusId() == "0"){
+	          				?>
+	          				<a href="?cont=account&action=confirmPayment&inv=<?= $transSov->getTransSovInvoiceNo() ?>" class="btn btn-primary btn-sm" style="width:100px; height:15px; font-size:12px; padding-top:0px;">Confirm Payment</a>
+	          				<?php
+	          					}
+	          					else
+	          					{
+	          						?>
+	          				<td style="text-align:center;">
+	          				<?php
+	          					}
+	          				?>
+	          				<a href="?cont=souvenir&action=viewTransactionSouvenir&id=<?= $transSov->getTransSovId() ?>" class="btn btn-primary btn-sm" style="width:30px; height:15px; font-size:12px; padding-top:0px;">View</a>
+	          				</td>
+	          			</tr>
+	          			<?php
+	          			$no++;
+	          				}
+	          			?>
+          		</tbody>
           	</table>
           </div>
           
